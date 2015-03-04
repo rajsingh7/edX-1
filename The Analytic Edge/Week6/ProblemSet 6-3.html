@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Problem Set 6-3</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>Problem Set 6-3</h1>
+
+<p>PREDICTING MEDICAL COSTS WITH CLUSTER-THEN-PREDICT</p>
+
+<p>In the second lecture sequence this week, we heard about cluster-then-predict, a methodology in which you first cluster observations and then build cluster-specific prediction models. In the lecture sequence, we saw how this methodology helped improve the prediction of heart attack risk. In this assignment, we&#39;ll use cluster-then-predict to predict future medical costs using medical claims data.</p>
+
+<p>In Week 4, we discussed the importance of high-quality predictions of future medical costs based on information available in medical claims data. In this problem, you will predict future medical claims using part of the DE-SynPUF dataset, published by the United States Centers for Medicare and Medicaid Services (CMS). This dataset, available in reimbursement.csv, is structured to represent a sample of patients in the Medicare program, which provides health insurance to Americans aged 65 and older as well as some younger people with certain medical conditions. To protect the privacy of patients represented in this publicly available dataset, CMS performs a number of steps to anonymize the data, so we would need to re-train the models we develop in this problem on de-anonymized data if we wanted to apply our models in the real world.</p>
+
+<p>The observations in the dataset represent a 1% random sample of Medicare beneficiaries in 2008, limited to those still alive at the end of 2008. The dependent variable, reimbursement2009, represents the total value of all Medicare reimbursements for a patient in 2009, which is the cost of the patient&#39;s care to the Medicare system. The following independent variables are available:</p>
+
+<p>age: The patient&#39;s age in years at the beginning of 2009
+alzheimers: Binary variable for whether the patient had diagnosis codes for Alzheimer&#39;s disease or a related disorder in 2008
+arthritis: Binary variable for whether the patient had diagnosis codes for rheumatoid arthritis or osteoarthritis in 2008
+cancer: Binary variable for whether the patient had diagnosis codes for cancer in 2008
+copd: Binary variable for whether the patient had diagnosis codes for Chronic Obstructive Pulmonary Disease (COPD) in 2008
+depression: Binary variable for whether the patient had diagnosis codes for depression in 2008
+diabetes: Binary variable for whether the patient had diagnosis codes for diabetes in 2008
+heart.failure: Binary variable for whether the patient had diagnosis codes for heart failure in 2008
+ihd: Binary variable for whether the patient had diagnosis codes for ischemic heart disease (IHD) in 2008
+kidney: Binary variable for whether the patient had diagnosis codes for chronic kidney disease in 2008
+osteoporosis: Binary variable for whether the patient had diagnosis codes for osteoporosis in 2008
+stroke: Binary variable for whether the patient had diagnosis codes for a stroke/transient ischemic attack (TIA) in 2008
+reimbursement2008: The total amount of Medicare reimbursements for this patient for 2008</p>
+
+<p>###PROBLEM 1.1 - PREPARING THE DATASET  (1 point possible)
+Load reimbursement.csv into a data frame called claims.</p>
+
+<pre><code class="r">claims &lt;- read.csv(&quot;reimbursement.csv&quot;)
+nrow(claims)
+</code></pre>
+
+<pre><code>## [1] 458005
+</code></pre>
+
+<p>How many Medicare beneficiaries are included in the dataset?</p>
+
+<p>###PROBLEM 1.2 - PREPARING THE DATASET  (1 point possible)
+What proportion of patients have at least one of the chronic conditions described in the independent variables alzheimers, arthritis, cancer, copd, depression, diabetes, heart.failure, ihd, kidney, osteoporosis, and stroke?</p>
+
+<pre><code class="r">s &lt;- ((claims$alzheimers &gt;= 1) | (claims$arthritis &gt;= 1) | (claims$cancer &gt;= 
+    1) | (claims$copd &gt;= 1) | (claims$depression &gt;= 1) | (claims$diabetes &gt;= 
+    1) | (claims$heart.failure &gt;= 1) | (claims$ihd &gt;= 1) | (claims$kidney &gt;= 
+    1) | (claims$osteoporosis &gt;= 1) | (claims$stroke &gt;= 1))
+sum(s)
+</code></pre>
+
+<pre><code>## [1] 280427
+</code></pre>
+
+<pre><code class="r">280427/458005
+</code></pre>
+
+<pre><code>## [1] 0.6123
+</code></pre>
+
+<p>###PROBLEM 1.3 - PREPARING THE DATASET  (1 point possible)
+What is the maximum correlation between independent variables in the dataset?</p>
+
+<pre><code class="r">cor(claims)
+</code></pre>
+
+<pre><code>##                       age alzheimers arthritis cancer    copd depression
+## age               1.00000    0.04556   0.04178 0.0376 0.04395    0.01584
+## alzheimers        0.04556    1.00000   0.20593 0.1375 0.28151    0.28940
+## arthritis         0.04178    0.20593   1.00000 0.1188 0.21783    0.23046
+## cancer            0.03760    0.13748   0.11879 1.0000 0.17465    0.12064
+## copd              0.04395    0.28151   0.21783 0.1747 1.00000    0.26298
+## depression        0.01584    0.28940   0.23046 0.1206 0.26298    1.00000
+## diabetes          0.06695    0.34001   0.32348 0.1803 0.33593    0.34687
+## heart.failure     0.06684    0.33335   0.26437 0.1742 0.37643    0.30394
+## ihd               0.07348    0.32573   0.31029 0.1923 0.34052    0.32391
+## kidney            0.05588    0.30254   0.24986 0.1877 0.36082    0.27422
+## osteoporosis      0.03957    0.19098   0.21953 0.1131 0.18372    0.19291
+## stroke            0.03557    0.21971   0.11612 0.1010 0.20853    0.15788
+## reimbursement2008 0.04824    0.31267   0.24884 0.2451 0.41401    0.27457
+## reimbursement2009 0.03848    0.22547   0.20199 0.1591 0.26251    0.22512
+##                   diabetes heart.failure     ihd  kidney osteoporosis
+## age                0.06695       0.06684 0.07348 0.05588      0.03957
+## alzheimers         0.34001       0.33335 0.32573 0.30254      0.19098
+## arthritis          0.32348       0.26437 0.31029 0.24986      0.21953
+## cancer             0.18030       0.17424 0.19226 0.18766      0.11306
+## copd               0.33593       0.37643 0.34052 0.36082      0.18372
+## depression         0.34687       0.30394 0.32391 0.27422      0.19291
+## diabetes           1.00000       0.44658 0.51461 0.41119      0.27449
+## heart.failure      0.44658       1.00000 0.46778 0.41974      0.22192
+## ihd                0.51461       0.46778 1.00000 0.37823      0.26574
+## kidney             0.41119       0.41974 0.37823 1.00000      0.19282
+## osteoporosis       0.27449       0.22192 0.26574 0.19282      1.00000
+## stroke             0.19330       0.22167 0.19447 0.23142      0.09936
+## reimbursement2008  0.34888       0.39655 0.36137 0.48207      0.18311
+## reimbursement2009  0.31297       0.30220 0.31225 0.31884      0.16157
+##                    stroke reimbursement2008 reimbursement2009
+## age               0.03557           0.04824           0.03848
+## alzheimers        0.21971           0.31267           0.22547
+## arthritis         0.11612           0.24884           0.20199
+## cancer            0.10105           0.24512           0.15906
+## copd              0.20853           0.41401           0.26251
+## depression        0.15788           0.27457           0.22512
+## diabetes          0.19330           0.34888           0.31297
+## heart.failure     0.22167           0.39655           0.30220
+## ihd               0.19447           0.36137           0.31225
+## kidney            0.23142           0.48207           0.31884
+## osteoporosis      0.09936           0.18311           0.16157
+## stroke            1.00000           0.29429           0.16367
+## reimbursement2008 0.29429           1.00000           0.34959
+## reimbursement2009 0.16367           0.34959           1.00000
+</code></pre>
+
+<pre><code class="r">sort(cor(claims))
+</code></pre>
+
+<pre><code>##   [1] 0.01584 0.01584 0.03557 0.03557 0.03760 0.03760 0.03848 0.03848
+##   [9] 0.03957 0.03957 0.04178 0.04178 0.04395 0.04395 0.04556 0.04556
+##  [17] 0.04824 0.04824 0.05588 0.05588 0.06684 0.06684 0.06695 0.06695
+##  [25] 0.07348 0.07348 0.09936 0.09936 0.10105 0.10105 0.11306 0.11306
+##  [33] 0.11612 0.11612 0.11879 0.11879 0.12064 0.12064 0.13748 0.13748
+##  [41] 0.15788 0.15788 0.15906 0.15906 0.16157 0.16157 0.16367 0.16367
+##  [49] 0.17424 0.17424 0.17465 0.17465 0.18030 0.18030 0.18311 0.18311
+##  [57] 0.18372 0.18372 0.18766 0.18766 0.19098 0.19098 0.19226 0.19226
+##  [65] 0.19282 0.19282 0.19291 0.19291 0.19330 0.19330 0.19447 0.19447
+##  [73] 0.20199 0.20199 0.20593 0.20593 0.20853 0.20853 0.21783 0.21783
+##  [81] 0.21953 0.21953 0.21971 0.21971 0.22167 0.22167 0.22192 0.22192
+##  [89] 0.22512 0.22512 0.22547 0.22547 0.23046 0.23046 0.23142 0.23142
+##  [97] 0.24512 0.24512 0.24884 0.24884 0.24986 0.24986 0.26251 0.26251
+## [105] 0.26298 0.26298 0.26437 0.26437 0.26574 0.26574 0.27422 0.27422
+## [113] 0.27449 0.27449 0.27457 0.27457 0.28151 0.28151 0.28940 0.28940
+## [121] 0.29429 0.29429 0.30220 0.30220 0.30254 0.30254 0.30394 0.30394
+## [129] 0.31029 0.31029 0.31225 0.31225 0.31267 0.31267 0.31297 0.31297
+## [137] 0.31884 0.31884 0.32348 0.32348 0.32391 0.32391 0.32573 0.32573
+## [145] 0.33335 0.33335 0.33593 0.33593 0.34001 0.34001 0.34052 0.34052
+## [153] 0.34687 0.34687 0.34888 0.34888 0.34959 0.34959 0.36082 0.36082
+## [161] 0.36137 0.36137 0.37643 0.37643 0.37823 0.37823 0.39655 0.39655
+## [169] 0.41119 0.41119 0.41401 0.41401 0.41974 0.41974 0.44658 0.44658
+## [177] 0.46778 0.46778 0.48207 0.48207 0.51461 0.51461 1.00000 1.00000
+## [185] 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000 1.00000
+## [193] 1.00000 1.00000 1.00000 1.00000
+</code></pre>
+
+<p>###PROBLEM 1.4 - PREPARING THE DATASET  (1 point possible)
+Plot the histogram of the dependent variable. What is the shape of the distribution?</p>
+
+<pre><code class="r">hist(claims$reimbursement2008)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAolBMVEX9/v0AAAAAACoAAFQAKioAKlQAKn8AVX8AVakqAAAqACoqAFQqKlQqKn8qVakqf38qf9NUAABUACpUAFRUKgBUVSpUVVRUqalUqdNUqf1/KgB/Kip/KlR/VQB/VX9/fyp/f1R/qX9/1NN/1P2pVQCpVSqpfyqpqVSp1H+p/qmp/v3TfyrTqVTT1H/T/qnT/tPT/v39qVT91H/9/qn9/tP9/v0mVKRNAAAANnRSTlP//////////////////////////////////////////////////////////////////////wChj04xAAAACXBIWXMAAAsSAAALEgHS3X78AAAPhklEQVR4nO2dDXfiuBlG62SbkplmFjLbbclMp+3g7rahmwUC//+v1foCGwQWwQTk595zdmGMJCu+vJJsZOsPK5DkD5euAFwGxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIN4zHV66Bu/LRcW/jm6fV6vl0+2zexcoxycUurgvbiY7O9l9v1WToribxeu3wdT0hJptsH9gWRTuzy+KwWrzaqrS0W4OcSXiG5vL4hTx27n3ym6kKQp32A/SlXhbxdLssiqv9Lv2r64qu1/CrrkS8fZdFavVkTDffHMgptWLaX6rf9/+d3Q3Wz7d/KWK5Xm1uYroefGnavtzlShodultbnfYzNuqVFu0z2XeN3K6XVYf3/3y48js2+7DljVe7SSvavqrLd1+A143lfLFrELGZu38Rpc7/IGvo5tJ9W68uHd//eb1bmY+O/exvyLx/rv+uxNvA6B6tYfph3tzjM2nLz4g5kXAB6FPvxFv3xWNomfO5CZn2F4d7V+GIc/dzJU1XG0nd0UWpi5r8fVKrULGRu3CRp/bVXFgBK9K80U20b55deLP39ZfWPzGgPuu282mJVzc2wA1B6I6CFN7sENb7HyYDMU4BMc6/bqptxlLk8IdRfcFaOas7dI2L24fdmv4OtaTVx8PV+7NRnzIsKpl3NmH2Whzz933w1Vxbr/BQ/sXh1fbPpzU16VxReLtv4wk8+fbAKgOwti+8a3qJGQyh3ZgVYat6/S1ozr0OzFlulzO5Cbnepc2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" alt="plot of chunk unnamed-chunk-4"/> </p>
+
+<p>Skew right &ndash; there are a large number of observations with a small value, but only a small number of observations with a large value.</p>
+
+<p>###PROBLEM 1.5 - PREPARING THE DATASET  (1 point possible)
+To address the shape of the data identified in the previous problem, we will log transform the two reimbursement variables with the following code:</p>
+
+<pre><code class="r">claims$reimbursement2008 = log(claims$reimbursement2008 + 1)
+claims$reimbursement2009 = log(claims$reimbursement2009 + 1)
+</code></pre>
+
+<p>Why did we take the log of the reimbursement value plus 1 instead of the log of the reimbursement value? Hint &ndash; What happens when a patient has a reimbursement cost of $0?</p>
+
+<p>To avoid log-transformed values of negative infinity </p>
+
+<p>###PROBLEM 1.6 - PREPARING THE DATASET  (1 point possible)
+Plot the histogram of the log-transformed dependent variable. The distribution is reasonably balanced, other than a large number of people with variable value 0, corresponding to having had $0 in reimbursements in 2009. What proportion of beneficiaries had $0 in reimbursements in 2009?</p>
+
+<pre><code class="r">hist(claims$reimbursement2008)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAn1BMVEX9/v0AAAAAACoAAFQAKioAKlQAKn8AVX8AVakqAAAqACoqAFQqKlQqKn8qf38qf9NUAABUACpUAFRUKgBUKn9UVSpUVVRUqalUqdNUqf1/KgB/Kip/VQB/VX9/fyp/f1R/qX9/1NN/1P2pVQCpVSqpfyqpqVSp1H+p/qmp/v3TfyrTqVTT1H/T/qnT/tPT/v39qVT91H/9/qn9/tP9/v3AfyZpAAAANXRSTlP/////////////////////////////////////////////////////////////////////AHy10AoAAAAJcEhZcwAACxIAAAsSAdLdfvwAAA/ISURBVHic7Z0Le9u2GUZLp/PkZKnsdusmp1lXc+0WraklW///t424kKJIShAvkgG+5zxPIlMEeMERLp9EkN/sQJJv3voA4G1AvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4j3r5VsfwXV5U/Ev9+++7Havj+++uL9K8tWIjW7vspun1k7afzeOJMtun7uPb4850hFHtseeYJ5l7vSzbLHbv5pDmWg3p4hE/MHbeTZGfDP3UdkHabLMFftJphJvDzE3uyy2l/td+1d3KO0P4dREIt7+VdTVoiTMJ98UxLp4Mc1vsfzuv/e3z6+PN38r6vKmeLuo0Zvsz8X7X4pEpWaX3uZ2xWb+LLZqN+1zmb8PcrpdFqtvf/3u3uzb7sNua7VrJS+O9De7dfsJeNkflN/Mrsx4eHT+TZe7PMGX+5un4q/V9s6d/f719tmsu3TZRyTef9b/cOJtBShebTF9e2fK2Kz96ivEJivxldCn34u3f2UHm352Jvc5y/eL0v51Wea5fXbbWu6ayd0mM3Mslfj6Qe3KjAdHV77pc7tDXBjBu9x8kE1t37868Zdv699Y/N6A+6zbt01LuL2zFdQURFEIa1vYZVvsfJgM2aqsHFX6qqm3GXOTwpWi+wAc5qzt0jYvbh/23fLjWE9erF7u3B978WWGXS1jax/mTZt74z4f7hA39hO8tGdcvtr2YVRfdx4RibdLRpI5fVsBikJY2T98q/pUZjJFu7Aqy3er9LVSXfqdmG26XM7kPme1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" alt="plot of chunk unnamed-chunk-6"/> </p>
+
+<pre><code class="r">hist(claims$reimbursement2009)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAAolBMVEX9/v0AAAAAACoAAFQAKioAKlQAKn8AVX8AVakqAAAqACoqAFQqKlQqKn8qf38qf6kqf9NUAABUACpUAFRUKgBUKn9UVSpUVVRUqalUqdNUqf1/KgB/Kip/VQB/VX9/fyp/f1R/qX9/1NN/1P2pVQCpVSqpfyqpqVSp1H+p/qmp/v3TfyrTqVTT1H/T/qnT/tPT/v39qVT91H/9/qn9/tP9/v0VNG70AAAANnRSTlP//////////////////////////////////////////////////////////////////////wChj04xAAAACXBIWXMAAAsSAAALEgHS3X78AAAQfUlEQVR4nO2dDXujxhVGgzd17Wydyps0ae3Npo3VpF01G0u2/v9fK/OBJBDiig8jhvec59mVEDPAncMMMzIjvtqCJF9d+gDgMiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxoiBeFMSLgnhREC8K4kVBvCiIFwXxkdXi0kcwLhcV/3L/7vN2+/r47nN4V7B86LHRzW129XS0k+P3lSPJsuvn+uPb4460x5Ht8QEusyyEn2U32/2rO5SbQfbSyETElz5eZn3EV3OflF1Kk2VnFPdQ4v0hLt0u8+0t467jaziUt29+JiLev8vral4S7sx3BbGK8efL7/57f/38+nj1Q16X1/nHeY1eZ3/OP/+cJyo0h/Q+d6i77m2+Vb/pmMu9L+UMu8xXX//67b3bt9+H39bD9ih5fqS/+a37M+Blf1BxM9siY/no4ochdxHgy/3VU/7uYXMboi9e13nsg7UsDUxIfDjXr/8I4n0F8IWQv3x968rYrf0SEj2vs4JYRjH9Xrx/l5U2/RxKdp+z+Hxze/3roshz/Ry2tdhWk4dNZu5YduIPD2pbZCwdXfFhzB0O8SbfZZ7enciutpdf89PpqbHgBuDC4vcG3Dkfr7KuJdzc+grqKlNeditf2EVbHHy4DNmDS+I+26XfNfU+49KlCKdGOAHKOQ926ZuXsA//aXE6HibPVy+24c1efJFhe5DxaB/uQ597Hc6PcIhrfwYvfMTFayyTPhe7s5iQeL/kJLly8RUgF/7g38RW9anIFFrEl9A4+0936Q9KdRF34rYZchVtaZFzt0tfHYt9xPrqVpeThyY438FhU/8U44gXFJ/xMNPuQ5/WZSoOcR2uWWXxvnP6w+zFH13js1hnT4n3aXbi96dDnfib3U6KXHuTMWexSzecWzmhJ8SH5KfEF5upiA+rD8THTPEQV1nYWbmp98e8nH1TfzScW0Z1dU29K41VXjHcR1XxJ5r6PLnbdJHrSHzcZf7ZgfjdBeBY/K6pz3eyP6hiM7uMh5l2H1bEr0JTU+3cueT+0N+YCYkvqqW74NZ27va1sVZfSL8Tf9i5K3JVTe5bgqLT5re2zA77giXxpV5ctRnafVw6un3avXjXq4/X8spwLuxDbzgXyzEvnWI4l5dQMZyLUhbxClASv0u/H8cvd0O4IldtU19cpX0fLGxtGfTWNPVhOOfT/73c1O9OmXx9+ejih3vxLsD/ZVF83Rc4I3yLmMZXtuuar9UGhq9sJ0ZsEsW0vD2TFx+u6iN8eS3G9MXDm4B4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEizKg+KzCcFuG4RlSfOMiTAvEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBfFFh8elZzZD7ZGfEqY4l8fw8OZ1+ZjfRGfEqb4l+8+l15Pg/iUoMaLYl/j43O8ucbPC3r1oiBeFIZzotC5E4XhnCjUeFEYzolCr14UxIvCcE4UOneidBnOnfglO8SnRJ8aj/iE6TOcQ3zC9OnVIz5hEC9Kn+Ec4hOGzp0off46h/iEocaLwnBOFHr1oiBelLOGczcrmvq5YXfuPj5tVze5/zs6d3PirOHcasFwbm5Q40U56xq/4Bo/O+jVi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCuJFQbwoiBcF8aIgXhTEi4J4URAvCo8fE4WHEYnC48dEocaLwuPHRKFXLwriRWE4JwqdO1EYzolCjReF4Zwo9OpFQbwoDOdEoXMnSpfhXFZQTon4lKDGi8JwThR69S3Jqlz6gDqC+JZUw0o1TIZzLZERT+eujIx4/jpXRkY8Nb6MjHiGc2V0xJ8G8TXLqYD4luiI39w+vD5m2fElHvF1y6lwVudumffvNnd07hwy4vNh3OvHJ4ZzBTLiXXVfL/Lh3M3RGsTXLKfCGZ27pR/OHXtHfN1yKtCrbwniEV+7nAqIbwniEV+7nAqIbwniEV+7nAqIbwniEV+7nAqIbwniEV+7nAqIb8m8xL/c13wVb4L4muVUKGr8OsuunlrmRXzNciocNPXuPpuHNnkRX7OcCoX4za2r8TV3WzSgId6YK5dqmMU1vuaWOhMR8Y2LyYZJr97CEp/o5Nkofp1f3Vdte3eIt1dPltjUf3DON+/bXOERf87qyRLEhwlyNdPjGkG8vXqyxKbeT5CrmR7XCOLt1ZOFzp0F4o9AvL16sux69SemQjeBeHv1ZCm+wGn1XW0E8fbqyRLFt/qqtgDx9urJEpv65aJDXsTbqydL0dRzjT/FrMV3A/H26smCeIt5i399zK6/fOCPNDXMWvzr42Jz98x39XXMWnw+nMvFtx3UId5ePVkOa/yKGl/DrMX7Gy3rftGsEcTbqycLvXoLxB+BeHv1ZOGbO4tZiw+sWn5hj3h79WQ5FM9wrg4B8Wua+hpmLT5e41vejYF4e/VkoVdvISte/fFjsxYfm/o6vfIPI5q1+O3qpvivivzjx2YtPlitHc5R4xsXk41699e57YkaL//4sVmLD3+da/sDSIi3V08WhnMWsuIZzjUtJhu1ebMlnbvGxWSjNm+2ZDjXuJhs1ObNltT4xsVko7ZvtmQ417SYbNTcbGkxb/GdQLy9erLY8+MZzjUtJht1vMZ/PDltjs5d42KyUZt32dYM5078fGeqRWAwa/ENUOMbF5ON2u7cMZxrWkw2aie+208fIf6c1ZOlEL+5a/+D9Yi3V08WWzzDuabFZKM2xdO5a1xMNmov/vQ9tvx1bs7iG6HGNy4mGzXDOQtZ8adBfM3qVJ5NhHiLXjV+uoVwpvja5xSlGnM7VMU3dPlTjbkdquJz87lyavyJxWQL4Zym/uX++nfE1y8mWwjnXeM3t3Xf7aQaczukxdeTasztQPwRqcbcDsQfkWrM7UD8EanG3A7EH5FqzO1A/BGpxtwOxB+RaswGzX9nQXy6MRu0CyvVQkD8EYi3SDVmA8RbpBqzAeItUo3ZAPEWqcZsgHiLVGM2QLxFqjEbIN4i1ZgNEG+RaswGiLdINWYDxFukGrMB4i1SjdkA8RapxmyAeItUYzZAvEWqMRsg3iLVmA0Qb5FqzAaIt0g1ZgPEW6QaswHiLVKN2QDxFqnGbIB4i1RjNkC8RaoxGyDeItWYDRBvkWrMBoi3SDVmA8RbpBqzAeItUo3ZAPEWqcZsgHiLVGM2GFT8ZH/bFvFHvGWNn06hIP4IxFsgvm/qC4L4IxBvgfi+qS+ILV7u8WOI9+g9jAjxHr3HjyHeQ41vXJyveL3HjyHeAvF9U18QxB+B+ADDuabF+Yqnc9e4OF/xDOcaF+crnhrfuDhf8QznGhdnLP40iO+b+oIg/gjEB2Y/nDPui1MVP//O3aAq5yO+ZjjXrWpMFsTXQo1/w9QXhOEc4luD+PapJzO/AvGXrPGTFj//4Vzzsqp4OnfjpR4T/jqH+Hqo8eOlHhOGc4hvDeIHTj0miEf8CfLh3NUTnbsxUo/JWZ2718cF4kdIPSZnDueWN4h/+9Rjcu5wbvX1e8S/deoxOWc4t3Avq+PxHOIHTj0m9OoR3xrED5x6TBCP+NYgfuDUY4J4xLcG8QOnHhPEI741iB849ZggHvGtQfzAqcdEUbxxczviLZIV37iIeBPED5x6TBCP+NYgfuDUY4J4xLcG8QOnHhPEI741qYhv9+tGiDdJRnzz8iXFX+53EhA/oRqP+GFBfA2IR3xrphNFhV5/hUG8yXSiqNCva414i+lEUQHxNohHfGumE0UFxNsgHvGtmU4UFRBvg3jEt2Y6UVRAvA3iEd+a6URRAfE2iEd8a6YTRQXE28xD/JC32CDeZDpRDFn6iDeZThSIbw3iEd+a6UQxF/Ej3nyJ+CmJb049KIhHfGtGFH/UCLYZvyG+hlTEN28b8a1BPOJbg/hxUw8K4hHfGsSPm3pQEI/41iB+3NSDMhXxbzkyR3wNkxHfa9uIbw3iJ7Tro9Rv+DcbxE9o1y0PtBeIn9CuEY/4c1b34qynSTuOHzSJ+Mum7se5z5bdrq+fq6sQf9HU/TjzadKl58efGmvDZRlWfEONh4Q552nS/nSqucZDwvTp1UPCIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIsyoPgL/21KkD62hhR/sczsuj2IF9014kV3jXjRXSNedNeIF9014kV3zRc4oiBeFMSLgnhREC8K4kVBvCiIFwXxoiBelKHEv9xn3edRux/deOix82Iqd6es2dVT5x3nB955FvHm/ecexeZz9ym3gcS7ol/ddMz88uFpu/mme/FvV91Pm+VDj5n/7sBXHXOv3SnTudh87l7lNpB493sZ/iTswtqFvuxe5Td/+b5r5oPf+eiy47vnrltYXv0rL66uxRZy9yq3gcT7IvjQo9L2yPz68ZfOTf3m7qceTX2fGu+Fdy+24nTpXG4DiXfNZR/xr4+LznlXi+7X+M3tgy/9jvTp2Th13Ystiu9ebtOo8S/33b3nu+4hvtdxuwvsumvvboga36PcpnCN9/WuMyt/i3nHAnj5Wx/xvdq5TY9r/K5X373cBuvVL7r36nt5D3vv06vv3tT3rvHdi823F33KbQrj+FBnewTRQ3x+3D1+z2udde8a9h/H9yo3vrkTBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuSvvj97cn1NyqvqzckVpJ1nYMU7nP12463TMaXPjMpx2NO4utXf/PLpy9N89t6iI+zFuPUx/jycv/QfV7VeCQtPq9iV0/7mpe/e/34zyxbrP0Ei7V/EvLm7o9Pz35i5bvP4V7qSrLljzGv++eThYzxzuvDpDH/3U95Dvf+tzBrMU6LiC+9pxGOQ8riXRVbX/8ea15e5LnRx5v8LLgpPPgK+A8v3k0+WPrpC+Vk2+X1c8jrN5Enixlj6lLSkP924ebQxJYm33dUXX65dOFYpCw+FH0h4Dsv/uPT1v3LS35X+EtXW/2EpfyTo2S+qV8+FOJjsu22SF3ZYshfJA1TiOJMqvjim/oeP7YwEkmL93OfvICla50rRvP235f/66cv915s3jpn4dpwmOzfTxXxMWNMfSh+l3+X1M9arFT1PPtfPyL+DdnVeFfJYlN/YHTrZzWub14/PS8XxRTFkKFS4/NrRqka+4wx9aH4Xf4iaZi9Vr7Gb7d9f29hFFIW767xm/f/iQ6+qVRl1/I6fx/yXv2Hp9AuFBfnkvibooO+8o3GNmaMqUtJdxf3ID7OWoxTH+OL31LX+aPjkbL4fa9+lWV/+v6hajR0znc9/pj+qMb/6K8I+Sa+DdfvImNIfZh0lz90EN/9HGctlsfx+Qhg+qO5tMWfx+un6WsYHwHxUAfiRUG8KIgXBfGiIF4UxIuCeFEQLwriRUG8KIgXBfGiIF4UxIuCeFEQL8r/Ae4VpewatFmPAAAAAElFTkSuQmCC" alt="plot of chunk unnamed-chunk-6"/> </p>
+
+<pre><code class="r">sum(claims$reimbursement2009 == 0)/nrow(claims)
+</code></pre>
+
+<pre><code>## [1] 0.1976
+</code></pre>
+
+<p>###PROBLEM 2.1 - INITIAL LINEAR REGRESSION MODEL  (1 point possible)
+In Week 3 when we learned about the sample.split function, we mentioned that you split data into a training and testing set a bit differently when there is a continuous outcome. Run the following commands to randomly select 70% of the data for the training set and 30% of the data for the testing set:</p>
+
+<pre><code class="r">set.seed(144)
+spl = sample(1:nrow(claims), size = 0.7 * nrow(claims))
+train = claims[spl, ]
+test = claims[-spl, ]
+</code></pre>
+
+<p>Use the train data frame to train a linear regression model (name it lm.claims) to predict reimbursement2009 using all the independent variables.</p>
+
+<pre><code class="r">lm.claims &lt;- lm(reimbursement2009 ~ ., data = train)
+</code></pre>
+
+<p>What is the training set Multiple R-squared value of lm.claims?</p>
+
+<pre><code class="r">summary(lm.claims)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = reimbursement2009 ~ ., data = train)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -10.708  -1.428  -0.062   0.887   9.382 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        1.857321   0.019604   94.74  &lt; 2e-16 ***
+## age               -0.001014   0.000262   -3.87  0.00011 ***
+## alzheimers        -0.015690   0.009434   -1.66  0.09628 .  
+## arthritis          0.047807   0.009933    4.81  1.5e-06 ***
+## cancer            -0.040556   0.013893   -2.92  0.00351 ** 
+## copd              -0.185806   0.010966  -16.94  &lt; 2e-16 ***
+## depression         0.089939   0.009008    9.98  &lt; 2e-16 ***
+## diabetes           0.251835   0.008958   28.11  &lt; 2e-16 ***
+## heart.failure      0.008988   0.009132    0.98  0.32501    
+## ihd                0.154717   0.008999   17.19  &lt; 2e-16 ***
+## kidney            -0.226933   0.010635  -21.34  &lt; 2e-16 ***
+## osteoporosis       0.105285   0.009271   11.36  &lt; 2e-16 ***
+## stroke            -0.254776   0.016667  -15.29  &lt; 2e-16 ***
+## reimbursement2008  0.759142   0.001407  539.69  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.85 on 320589 degrees of freedom
+## Multiple R-squared:  0.692,  Adjusted R-squared:  0.692 
+## F-statistic: 5.55e+04 on 13 and 320589 DF,  p-value: &lt;2e-16
+</code></pre>
+
+<p>###PROBLEM 2.2 - INITIAL LINEAR REGRESSION MODEL  (1 point possible)
+Obtain testing set predictions from lm.claims. What is the testing set RMSE of the model?</p>
+
+<pre><code class="r">lm.pred &lt;- predict(lm.claims, newdata = test)
+sqrt(mean((lm.pred - test$reimbursement2009)^2))
+</code></pre>
+
+<pre><code>## [1] 1.849
+</code></pre>
+
+<p>###PROBLEM 2.3 - INITIAL LINEAR REGRESSION MODEL  (1 point possible)
+What is the &ldquo;naive baseline model&rdquo; that we would typically use to compute the R-squared value of lm.claims?</p>
+
+<p>Predict mean(train$reimbursement2009) for every observation </p>
+
+<p>###PROBLEM 2.4 - INITIAL LINEAR REGRESSION MODEL  (1 point possible)
+What is the testing set RMSE of the naive baseline model?</p>
+
+<pre><code class="r">sqrt(mean((mean(train$reimbursement2009) - test$reimbursement2009)^2))
+</code></pre>
+
+<pre><code>## [1] 3.335
+</code></pre>
+
+<p>###PROBLEM 2.5 - INITIAL LINEAR REGRESSION MODEL  (1 point possible)
+In Week 4, we saw how D2Hawkeye used a &ldquo;smart baseline model&rdquo; that predicted that a patient&#39;s medical costs would be equal to their costs in the previous year. For our problem, this baseline would predict reimbursement2009 to be equal to reimbursement2008.</p>
+
+<p>What is the testing set RMSE of this smart baseline model?</p>
+
+<pre><code class="r">sqrt(mean((test$reimbursement2008 - test$reimbursement2009)^2))
+</code></pre>
+
+<pre><code>## [1] 2.095
+</code></pre>
+
+<p>###PROBLEM 3.1 - CLUSTERING MEDICARE BENEFICIARIES  (1 point possible)
+In this section, we will cluster the Medicare beneficiaries. The first step in this process is to remove the dependent variable using the following commands:</p>
+
+<pre><code class="r">train.limited = train
+train.limited$reimbursement2009 = NULL
+test.limited = test
+test.limited$reimbursement2009 = NULL
+</code></pre>
+
+<p>Why do we need to remove the dependent variable in the clustering phase of the cluster-then-predict methodology?</p>
+
+<p>Needing to know the dependent variable value to assign an observation to a cluster defeats the purpose of the methodology</p>
+
+<p>###PROBLEM 3.2 - CLUSTERING MEDICARE BENEFICIARIES  (2 points possible)
+In the market segmentation assignment in this week&#39;s homework, you were introduced to the preProcess command from the caret package, which normalizes variables by subtracting by the mean and dividing by the standard deviation.</p>
+
+<p>In cases where we have a training and testing set, we&#39;ll want to normalize by the mean and standard deviation of the variables in the training set. We can do this by passing just the training set to the preProcess function:</p>
+
+<pre><code class="r">library(caret)
+</code></pre>
+
+<pre><code>## Loading required package: lattice
+## Loading required package: ggplot2
+</code></pre>
+
+<pre><code class="r">
+preproc = preProcess(train.limited)
+
+train.norm = predict(preproc, train.limited)
+
+test.norm = predict(preproc, test.limited)
+</code></pre>
+
+<p>What is the mean of the arthritis variable in train.norm?</p>
+
+<pre><code class="r">mean(train.norm$arthritis)
+</code></pre>
+
+<pre><code>## [1] 2.049e-17
+</code></pre>
+
+<p>What is the mean of the arthritis variable in test.norm?</p>
+
+<pre><code class="r">mean(test.norm$arthritis)
+</code></pre>
+
+<pre><code>## [1] -0.006125
+</code></pre>
+
+<p>###PROBLEM 3.3 - CLUSTERING MEDICARE BENEFICIARIES  (1 point possible)
+Why is the mean arthritis variable much closer to 0 in train.norm than in test.norm?</p>
+
+<p>The distribution of the arthritis variable is different in the training and testing set</p>
+
+<p>###PROBLEM 3.4 - CLUSTERING MEDICARE BENEFICIARIES  (1 point possible)
+Set the random seed to 144 (it is important to do this again, even though we did it earlier). Run k-means clustering with 3 clusters on train.norm, storing the result in an object called km.</p>
+
+<pre><code class="r">k = 3
+set.seed(144)
+km = kmeans(train.norm, centers = k)
+</code></pre>
+
+<p>The description &ldquo;older-than-average beneficiaries with below average incidence of stroke and above-average 2008 reimbursements&rdquo; uniquely describes which cluster center?</p>
+
+<pre><code class="r">km$centers
+</code></pre>
+
+<pre><code>##        age alzheimers arthritis   cancer    copd depression diabetes
+## 1  0.14799    1.01893    0.8219  0.63518  1.3529     0.8948   1.0260
+## 2 -0.10237   -0.43237   -0.3959 -0.23297 -0.3746    -0.4447  -0.7613
+## 3  0.05684    0.05456    0.1023 -0.01118 -0.1742     0.1282   0.4578
+##   heart.failure     ihd  kidney osteoporosis  stroke reimbursement2008
+## 1        1.1909  0.9646  1.4830       0.5605  0.8531            0.9973
+## 2       -0.5741 -0.8342 -0.4219      -0.3907 -0.2059           -0.8435
+## 3        0.1487  0.5769 -0.1769       0.2189 -0.1473            0.5730
+</code></pre>
+
+<p>###PROBLEM 3.5 - CLUSTERING MEDICARE BENEFICIARIES  (1 point possible)
+Recall from the recitation that we can use the flexclust package to obtain training set and testing set cluster assignments for our observations (note that the call to as.kcca may take a while to complete):</p>
+
+<pre><code class="r">install.packages(&quot;flexclust&quot;)
+</code></pre>
+
+<pre><code>## Error: trying to use CRAN without setting a mirror
+</code></pre>
+
+<pre><code class="r">library(flexclust)
+</code></pre>
+
+<pre><code>## Loading required package: grid
+## Loading required package: modeltools
+## Loading required package: stats4
+</code></pre>
+
+<pre><code class="r">km.kcca = as.kcca(km, train.norm)
+cluster.train = predict(km.kcca)
+cluster.test = predict(km.kcca, newdata = test.norm)
+</code></pre>
+
+<p>How many test-set observations were assigned to Cluster 2?</p>
+
+<pre><code class="r">sum(cluster.test == 2)
+</code></pre>
+
+<pre><code>## [1] 62651
+</code></pre>
+
+<p>###PROBLEM 4.1 - CLUSTER-SPECIFIC PREDICTIONS  (1 point possible)
+Using the subset function, build data frames train1, train2, and train3, containing the elements in the train data frame assigned to clusters 1, 2, and 3, respectively (be careful to take subsets of train, not of train.norm). Similarly build test1, test2, and test3 from the test data frame.</p>
+
+<pre><code class="r">train1 &lt;- subset(train, cluster.train == 1)
+train2 &lt;- subset(train, cluster.train == 2)
+train3 &lt;- subset(train, cluster.train == 3)
+test1 &lt;- subset(test, cluster.test == 1)
+test2 &lt;- subset(test, cluster.test == 2)
+test3 &lt;- subset(test, cluster.test == 3)
+</code></pre>
+
+<p>Which training set data frame has the highest average value of the dependent variable?</p>
+
+<pre><code class="r">mean(train1$reimbursement2009)
+</code></pre>
+
+<pre><code>## [1] 8.724
+</code></pre>
+
+<pre><code class="r">mean(train2$reimbursement2009)
+</code></pre>
+
+<pre><code>## [1] 3.661
+</code></pre>
+
+<pre><code class="r">mean(train3$reimbursement2009)
+</code></pre>
+
+<pre><code>## [1] 7.882
+</code></pre>
+
+<pre><code class="r">mean(test1$reimbursement2009)
+</code></pre>
+
+<pre><code>## [1] 8.706
+</code></pre>
+
+<pre><code class="r">mean(test2$reimbursement2009)
+</code></pre>
+
+<pre><code>## [1] 3.657
+</code></pre>
+
+<pre><code class="r">mean(test3$reimbursement2009)
+</code></pre>
+
+<pre><code>## [1] 7.88
+</code></pre>
+
+<p>###PROBLEM 4.2 - CLUSTER-SPECIFIC PREDICTIONS  (1 point possible)
+Build linear regression models lm1, lm2, and lm3, which predict reimbursement2009 using all the variables. lm1 should be trained on train1, lm2 should be trained on train2, and lm3 should be trained on train3.</p>
+
+<pre><code class="r">lm1 &lt;- lm(reimbursement2009 ~ ., data = train1)
+lm2 &lt;- lm(reimbursement2009 ~ ., data = train2)
+lm3 &lt;- lm(reimbursement2009 ~ ., data = train3)
+</code></pre>
+
+<p>Which variables have a positive sign for the coefficient in at least one of lm1, lm2, and lm3 and a negative sign for the coefficient in at least one of lm1, lm2, and lm3?</p>
+
+<pre><code class="r">summary(lm1)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = reimbursement2009 ~ ., data = train1)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -9.374 -0.645 -0.102  0.669  3.547 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        6.128373   0.045509  134.66  &lt; 2e-16 ***
+## age               -0.000778   0.000332   -2.34    0.019 *  
+## alzheimers         0.048863   0.009049    5.40  6.7e-08 ***
+## arthritis          0.127756   0.008960   14.26  &lt; 2e-16 ***
+## cancer             0.167001   0.010825   15.43  &lt; 2e-16 ***
+## copd               0.101623   0.009457   10.75  &lt; 2e-16 ***
+## depression         0.140563   0.008948   15.71  &lt; 2e-16 ***
+## diabetes           0.279173   0.013516   20.66  &lt; 2e-16 ***
+## heart.failure      0.163891   0.011716   13.99  &lt; 2e-16 ***
+## ihd                0.183921   0.014718   12.50  &lt; 2e-16 ***
+## kidney             0.179917   0.010407   17.29  &lt; 2e-16 ***
+## osteoporosis       0.064333   0.009030    7.12  1.1e-12 ***
+## stroke             0.046074   0.010844    4.25  2.2e-05 ***
+## reimbursement2008  0.185733   0.004539   40.92  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.03 on 55766 degrees of freedom
+## Multiple R-squared:  0.0962, Adjusted R-squared:  0.096 
+## F-statistic:  457 on 13 and 55766 DF,  p-value: &lt;2e-16
+</code></pre>
+
+<pre><code class="r">summary(lm2)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = reimbursement2009 ~ ., data = train2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -10.247  -1.653  -0.617   1.393   9.471 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        1.795041   0.036950   48.58  &lt; 2e-16 ***
+## age               -0.002001   0.000506   -3.95  7.8e-05 ***
+## alzheimers         0.298556   0.043913    6.80  1.1e-11 ***
+## arthritis          0.553770   0.059267    9.34  &lt; 2e-16 ***
+## cancer             0.423085   0.076207    5.55  2.8e-08 ***
+## copd               0.217739   0.072533    3.00   0.0027 ** 
+## depression         0.416892   0.037593   11.09  &lt; 2e-16 ***
+## diabetes           0.824799   0.062367   13.22  &lt; 2e-16 ***
+## heart.failure      0.314764   0.040683    7.74  1.0e-14 ***
+## ihd                0.263823   0.067988    3.88   0.0001 ***
+## kidney             0.132773   0.081331    1.63   0.1026    
+## osteoporosis       0.467177   0.040381   11.57  &lt; 2e-16 ***
+## stroke             0.003150   0.133760    0.02   0.9812    
+## reimbursement2008  0.770075   0.002401  320.71  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.39 on 146383 degrees of freedom
+## Multiple R-squared:  0.507,  Adjusted R-squared:  0.507 
+## F-statistic: 1.16e+04 on 13 and 146383 DF,  p-value: &lt;2e-16
+</code></pre>
+
+<pre><code class="r">summary(lm3)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = reimbursement2009 ~ ., data = train3)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -9.098 -0.577 -0.062  0.570  4.302 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       5.072540   0.033288  152.38   &lt;2e-16 ***
+## age               0.000487   0.000275    1.77    0.076 .  
+## alzheimers        0.073427   0.008363    8.78   &lt;2e-16 ***
+## arthritis         0.234484   0.008828   26.56   &lt;2e-16 ***
+## cancer            0.277148   0.014359   19.30   &lt;2e-16 ***
+## copd              0.144986   0.012966   11.18   &lt;2e-16 ***
+## depression        0.136755   0.007778   17.58   &lt;2e-16 ***
+## diabetes          0.229013   0.007058   32.45   &lt;2e-16 ***
+## heart.failure     0.113918   0.007162   15.91   &lt;2e-16 ***
+## ihd               0.142788   0.007608   18.77   &lt;2e-16 ***
+## kidney            0.189291   0.011890   15.92   &lt;2e-16 ***
+## osteoporosis      0.094386   0.007774   12.14   &lt;2e-16 ***
+## stroke            0.033999   0.028590    1.19    0.234    
+## reimbursement2008 0.308355   0.003738   82.49   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.16 on 118412 degrees of freedom
+## Multiple R-squared:  0.118,  Adjusted R-squared:  0.117 
+## F-statistic: 1.21e+03 on 13 and 118412 DF,  p-value: &lt;2e-16
+</code></pre>
+
+<p>age </p>
+
+<p>###PROBLEM 4.3 - CLUSTER-SPECIFIC PREDICTIONS  (1 point possible)
+Using lm1, make test-set predictions called pred.test1 on data frame test1. Using lm2, make test-set predictions called pred.test2 on data frame test2. Using lm3, make test-set predictions called pred.test3 on data frame test3.</p>
+
+<pre><code class="r">pred.test1 &lt;- predict(lm1, newdata = test1)
+pred.test2 &lt;- predict(lm2, newdata = test2)
+pred.test3 &lt;- predict(lm3, newdata = test3)
+</code></pre>
+
+<p>Which vector of test-set predictions has the smallest average predicted reimbursement amount?</p>
+
+<pre><code class="r">mean(pred.test1)
+</code></pre>
+
+<pre><code>## [1] 8.726
+</code></pre>
+
+<pre><code class="r">mean(pred.test2)
+</code></pre>
+
+<pre><code>## [1] 3.651
+</code></pre>
+
+<pre><code class="r">mean(pred.test3)
+</code></pre>
+
+<pre><code>## [1] 7.881
+</code></pre>
+
+<p>pred.test2</p>
+
+<p>###PROBLEM 4.4 - CLUSTER-SPECIFIC PREDICTIONS  (1 point possible)
+Obtain the test-set RMSE for each cluster. Which cluster has the largest test-set RMSE?</p>
+
+<pre><code class="r">sqrt(mean((pred.test1 - test1$reimbursement2009)^2))
+</code></pre>
+
+<pre><code>## [1] 1.039
+</code></pre>
+
+<pre><code class="r">sqrt(mean((pred.test2 - test2$reimbursement2009)^2))
+</code></pre>
+
+<pre><code>## [1] 2.383
+</code></pre>
+
+<pre><code class="r">sqrt(mean((pred.test3 - test3$reimbursement2009)^2))
+</code></pre>
+
+<pre><code>## [1] 1.166
+</code></pre>
+
+<p>Cluster 2</p>
+
+<p>###PROBLEM 4.5 - CLUSTER-SPECIFIC PREDICTIONS  (1 point possible)
+To compute the overall test-set RMSE of the cluster-then-predict approach, we can combine all the test-set predictions into a single vector and all the true outcomes into a single vector:</p>
+
+<pre><code class="r">all.predictions = c(pred.test1, pred.test2, pred.test3)
+all.outcomes = c(test1$reimbursement2009, test2$reimbursement2009, test3$reimbursement2009)
+</code></pre>
+
+<p>What is the test-set RMSE of the cluster-then-predict approach?</p>
+
+<pre><code class="r">sqrt(mean((all.predictions - all.outcomes)^2))
+</code></pre>
+
+<pre><code>## [1] 1.811
+</code></pre>
+
+<ul>
+<li><p>unanswered
+[] 
+We see a modest improvement over the original linear regression model, which is typical in situations where the observations do not cluster strongly into different &ldquo;types&rdquo; of observations. However, it is often a good idea to try the cluster-then-predict approach on datasets with a large number of observations to see if you can improve the accuracy of your model.</p>
+
+<p>You have used 0 of 3 submissions
+Please remember not to ask for or post complete answers to homework questions in this discussion forum.</p></li>
+</ul>
+
+</body>
+
+</html>
+

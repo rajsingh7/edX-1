@@ -1,0 +1,243 @@
+Final Exam 2
+========================================================
+##CLUSTERING STOCK RETURNS
+
+When building portfolios of stocks, investors seek to obtain good returns while limiting the variability in those returns over time. This can be achieved by selecting stocks that show different patterns of returns. In this problem, we will use clustering to identify clusters of stocks that have similar returns over time; an investor might select a diverse portfolio by selecting stocks from different clusters.
+
+For this problem, we'll use nasdaq_returns.csv, which contains monthly stock returns from the NASDAQ stock exchange from 2000-2009, limiting to tickers that were listed on the exchange that entire period and whose stock price never fell below $1. The NASDAQ is the second-largest stock exchange in the world, and it lists many technology companies. The stock price data used in this problem was obtained from infochimps, a website providing access to many datasets, and the industry information was obtained from Yahoo! Finance. This dataset contains the following variables:
+
+stock_symbol: The symbol identifying the company for the stock
+industry: The industry the stock is classified under
+subindustry: The sub-industry the stock is classified under
+ret2000.01-ret2009.12: The return for the stock during the variable's indicated month. The variable names have format "retYYYY.MM", where YYYY is the year and MM is the month. For instance, variable ret2005.02 refers to February 2005. The value stored is a proportional change in stock value during that month. For instance, a value of 0.05 means the stock increased in value 5% during the month, while a value of -0.02 means the stock decreased in value 2% during the month. There are 120 of these variables, for the 120 months in our dataset.
+
+###PROBLEM 1 - LOADING THE DATA  (1 point possible)
+Load nasdaq_returns.csv into a data frame called "stocks". How many companies are in the dataset?
+```{r}
+stocks <- read.csv("nasdaq_returns.csv")
+unique(stocks$stock_symbol)
+```
+
+###PROBLEM 2 - SUMMARIZING THE DATA  (1 point possible)
+For which industries are there 40 or more companies in our dataset?
+```{r}
+which(table(stocks$industry)>=40)
+```
+
+###PROBLEM 3 - STOCK TRENDS IN THE DATA  (2 points possible)
+In the aftermath of the dot-com bubble bursting in the early 2000s, the NASDAQ was quite tumultuous. In December 2000, how many stocks in our dataset saw their value increase by 10% or more?
+```{r}
+sum(stocks$ret2000.12 >= 0.1)
+```
+
+In December 2000, how many stocks in our dataset saw their value decrease by 10% or more?
+```{r}
+sum(stocks$ret2000.12 <= -0.1)
+```
+
+###PROBLEM 4 - STOCK TRENDS IN THE DATA  (2 points possible)
+Entering the Great Recession most stocks lost significant value, but some sectors were hit harder than others. In October 2008, which of the following industries had the worst average return across the stocks in that industry?
+```{r}
+library(plyr)
+averagePerIndustry2008.10 <- ddply(stocks, .(industry), summarise, average=mean(ret2008.10))
+averagePerIndustry2008.10
+tapply(stocks$ret2008.10, stocks$industry, mean)
+```
+
+February 2000 was the third strongest month in the dataset in terms of average returns. However, which of the following industries actually had a negative average return during that month?
+```{r}
+averagePerIndustry2000.02 <- ddply(stocks, .(industry), summarise, average=mean(ret2000.02))
+averagePerIndustry2000.02
+tapply(stocks$ret2000.02, stocks$industry, mean)
+```
+
+###PROBLEM 5 - PREPARING THE DATASET  (2 points possible)
+Copy the stocks data frame into a new data frame called "limited", and remove the first three variables of limited: stock_symbol, industry, and subindustry.
+```{r}
+limited <- stocks[,4:ncol(stocks)]
+```
+
+Now, identify the month with the largest average return across all stocks in the dataset. What is the variable name associated with this month (for instance, if your answer were February 2004, you would answer ret2004.02)?
+```{r}
+which.max(colSums(limited)/nrow(limited))
+```
+
+Identify the month with the lowest average return across all the stocks in the dataset. What is the variable name associated with this month?
+```{r}
+which.min(colSums(limited)/nrow(limited))
+```
+
+###PROBLEM 6 - PREPARING FOR CLUSTERING  (1 point possible)
+We are about to cluster our data. Why did we remove the stock_symbol, industry, and subindustry variables prior to clustering our data?
+
+ANS If we had included these variables in our clustering analysis, they would have caused an error.
+
+Because these are text variables, they would have caused an error when clustering
+
+###PROBLEM 7 - NORMALIZING  (1 point possible)
+In this analysis, we will not normalize our data prior to clustering. Why is this a valid approach?
+
+ANS All the variables have the same scale, so no normalization is necessary 
+
+###PROBLEM 8 - HIERARCHICAL CLUSTERING  (1 point possible)
+Using Euclidean distances (the default) and the Ward method, perform hierarchical clustering on the "limited" data frame, and plot the resulting dendrogram.
+```{r}
+distance = dist(limited, method="euclidean")
+HClust = hclust(distance, method="ward")
+plot(HClust)
+```
+
+Which of the following number of clusters is least appropriate, based on the dendrogram?
+
+answered 4
+   
+###PROBLEM 9 - THE HIERARCHICAL CLUSTERS  (1 point possible)
+Extract cluster assignments from your hierarchical clustering object, using 5 clusters in total. Which cluster has the largest number of stocks?
+```{r}
+HGroups = cutree(HClust, k = 5)
+table(HGroups)
+```
+
+###PROBLEM 10 - UNDERSTANDING THE CLUSTERS  (2 points possible)
+Which cluster best fits the description "healthcare and technology stocks"?
+```{r}
+HCluster1 = subset(stocks, HGroups == 1)
+HCluster2 = subset(stocks, HGroups == 2)
+HCluster3 = subset(stocks, HGroups == 3)
+HCluster4 = subset(stocks, HGroups == 4)
+HCluster5 = subset(stocks, HGroups == 5)
+table(HCluster1$industry)
+table(HCluster2$industry)
+table(HCluster3$industry)
+table(HCluster4$industry)
+table(HCluster5$industry)
+table(stocks$industry)
+```
+ANS Cluster4
+
+Which of the following industries have more than half of their stocks assigned to a single cluster?
+ANS Basic Materials, Consumer Goods ,Financial , Services ,Technology 
+
+###PROBLEM 11 - SUB-INDUSTRIES  (2 points possible)
+We can get a finer-grained understanding of the composition of the clusters by looking at subindustry information. Which cluster contains nearly all companies categorized in the subindustry "Apparel Stores" (part of the services industry)?
+```{r}
+sum(stocks$subindustry == "Apparel Stores")
+sum(HCluster5$subindustry=="Apparel Stores")
+sum(HCluster4$subindustry=="Apparel Stores")
+sum(HCluster3$subindustry=="Apparel Stores")
+sum(HCluster2$subindustry=="Apparel Stores")
+sum(HCluster1$subindustry=="Apparel Stores")
+```
+
+ANS Cluster3
+Which cluster contains all stocks categorized in sub-industry "Electronics Wholesale" (another part of the services industry)?
+```{r}
+sum(stocks$subindustry == "Electronics Wholesale")
+sum(HCluster5$subindustry=="Electronics Wholesale")
+sum(HCluster4$subindustry=="Electronics Wholesale")
+sum(HCluster3$subindustry=="Electronics Wholesale")
+sum(HCluster2$subindustry=="Electronics Wholesale")
+sum(HCluster1$subindustry=="Electronics Wholesale")
+```
+
+###PROBLEM 12 - STOCK TRENDS IN THE CLUSTERS  (2 points possible)
+For some months, we expect there to be significant differences between the returns of stocks in different clusters. In February 2000, the average return of stocks in Cluster 3 was negative, while the average return of stocks in one of the other clusters was more than 100%. What cluster had the average return exceeding 100%?
+```{r}
+mean(HCluster1$ret2000.02)
+mean(HCluster2$ret2000.02)
+mean(HCluster3$ret2000.02)
+mean(HCluster4$ret2000.02)
+mean(HCluster5$ret2000.02)
+```
+
+ANS Cluster 4 
+For which of the following months did one cluster have an average return exceeding 30% and another cluster have a negative average return?
+March 2000 May 2005 October 2009 December 2009
+
+```{r}
+c(mean(HCluster1$ret2000.03),mean(HCluster2$ret2000.03),mean(HCluster3$ret2000.03),mean(HCluster4$ret2000.03),mean(HCluster5$ret2000.03))
+c(mean(HCluster1$ret2005.05),mean(HCluster2$ret2005.05),mean(HCluster3$ret2005.05),mean(HCluster4$ret2005.05),mean(HCluster5$ret2005.05))
+c(mean(HCluster1$ret2009.10),mean(HCluster2$ret2009.10),mean(HCluster3$ret2009.10),mean(HCluster4$ret2009.10),mean(HCluster5$ret2009.10))
+c(mean(HCluster1$ret2009.12),mean(HCluster2$ret2009.12),mean(HCluster3$ret2009.12),mean(HCluster4$ret2009.12),mean(HCluster5$ret2009.12))
+```
+
+ANS March 2000
+
+###PROBLEM 13 - USING A VISUALIZATION  (1 point possible)
+Which of the following visualizations could be used to observe the distribution of stock returns in February 2000, broken down by cluster? Select all that apply.
+
+ANS: A box plot of the variable ret2000.02, subdivided by cluster and ggplot with ret2000.02 on the x-axis and the cluster number on the y-axis, plotting with geom_point()
+
+```{r}
+par(mfcol=c(1,5))
+boxplot(HCluster1$ret2000.02)
+boxplot(HCluster2$ret2000.02)
+boxplot(HCluster3$ret2000.02)
+boxplot(HCluster4$ret2000.02)
+boxplot(HCluster5$ret2000.02)
+```
+
+```{r}
+library(ggplot2)
+```
+
+###PROBLEM 14 - K-MEANS CLUSTERING  (1 point possible)
+Now set the seed to 144 and immediately afterward run k-means clustering on the "limited" data frame, using 5 clusters. How many stocks are in the smallest cluster?
+```{r}
+k=5
+set.seed(144)
+KMC = kmeans(limited, centers = k)
+table(KMC$cluster)
+```
+
+###PROBLEM 15 - COMPARING CLUSTERING ALGORITHMS  (1 point possible)
+k-means cluster number 4 contains more than half of its members from which hierarchical cluster?
+```{r}
+KMCluster1 <- subset(stocks, KMC$cluster == 1)
+KMCluster2 <- subset(stocks, KMC$cluster == 2)
+KMCluster3 <- subset(stocks, KMC$cluster == 3)
+KMCluster4 <- subset(stocks, KMC$cluster == 4)
+KMCluster5 <- subset(stocks, KMC$cluster == 5)
+sum(KMCluster4$stock_symbol %in% HCluster1$stock_symbol)/nrow(KMCluster4)
+sum(KMCluster4$stock_symbol %in% HCluster2$stock_symbol)/nrow(KMCluster4)
+sum(KMCluster4$stock_symbol %in% HCluster3$stock_symbol)/nrow(KMCluster4)
+sum(KMCluster4$stock_symbol %in% HCluster4$stock_symbol)/nrow(KMCluster4)
+sum(KMCluster4$stock_symbol %in% HCluster5$stock_symbol)/nrow(KMCluster4)
+```
+
+ANS Hierarchical Cluster 
+
+###PROBLEM 16 - RANDOM BEHAVIOR  (2 points possible)
+If we re-ran hierarchical clustering a second time without making any additional calls to set.seed(), would we expect:
+
+ANS Identical results to the first hierarchical clustering
+
+If we re-ran k-means clustering a second time without making any additional calls to set.seed(), would we expect:
+
+Different results from the first k-means clustering
+
+###PROBLEM 17 - CREATING A DIVERSE PORTFOLIO  (1 point possible)
+In the introduction to the problem, we discussed the value of a diverse portfolio and how we might achieve this objective by selecting stocks from different clusters. Consider an investor with a large holding of stock from the company with stock_symbol AAPL. Which of the following stock symbols is neither in the same hierarchical cluster nor in the same k-means cluster as AAPL?
+```{r}
+sum(HCluster2$stock_symbol == "AAPL")
+sum(KMCluster3$stock_symbol == "AAPL")
+# in HCluster 2 KMCluster 3
+```
+
+```{r}
+sum(HCluster2$stock_symbol == "AMZN")
+sum(KMCluster4$stock_symbol == "AMZN")
+# in HCluster 2 KMCluster 4
+```
+
+```{r}
+sum(HCluster3$stock_symbol == "MSFT")
+sum(KMCluster3$stock_symbol == "MSFT")
+# in HCluster 3 KMCluster 3
+```
+
+```{r}
+sum(HCluster3$stock_symbol == "TROW")
+sum(KMCluster1$stock_symbol == "TROW")
+# in HCluster 3 KMCluster 1
+```

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Problem Set 3-3</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>Problem Set 3-3</h1>
+
+<p>PROBLEM 1.1 - LOADING THE DATASET  (1 point possible)
+Load the dataset parole.csv into a data frame called parole, and investigate it using the str() and summary() functions.</p>
+
+<p>How many parolees are contained in the dataset?</p>
+
+<pre><code class="r">parole &lt;- read.csv(file.choose())
+str(parole)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    675 obs. of  9 variables:
+##  $ male             : int  1 0 1 1 1 1 1 0 0 1 ...
+##  $ race             : int  1 1 2 1 2 2 1 1 1 2 ...
+##  $ age              : num  33.2 39.7 29.5 22.4 21.6 46.7 31 24.6 32.6 29.1 ...
+##  $ state            : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ time.served      : num  5.5 5.4 5.6 5.7 5.4 6 6 4.8 4.5 4.7 ...
+##  $ max.sentence     : int  18 12 12 18 12 18 18 12 13 12 ...
+##  $ multiple.offenses: int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ crime            : int  4 3 3 1 1 4 3 1 3 2 ...
+##  $ violator         : int  0 0 0 0 0 0 0 0 0 0 ...
+</code></pre>
+
+<pre><code class="r">summary(parole)
+</code></pre>
+
+<pre><code>##       male            race           age           state     
+##  Min.   :0.000   Min.   :1.00   Min.   :18.4   Min.   :1.00  
+##  1st Qu.:1.000   1st Qu.:1.00   1st Qu.:25.4   1st Qu.:2.00  
+##  Median :1.000   Median :1.00   Median :33.7   Median :3.00  
+##  Mean   :0.807   Mean   :1.42   Mean   :34.5   Mean   :2.89  
+##  3rd Qu.:1.000   3rd Qu.:2.00   3rd Qu.:42.5   3rd Qu.:4.00  
+##  Max.   :1.000   Max.   :2.00   Max.   :67.0   Max.   :4.00  
+##   time.served    max.sentence  multiple.offenses     crime     
+##  Min.   :0.00   Min.   : 1.0   Min.   :0.000     Min.   :1.00  
+##  1st Qu.:3.25   1st Qu.:12.0   1st Qu.:0.000     1st Qu.:1.00  
+##  Median :4.40   Median :12.0   Median :1.000     Median :2.00  
+##  Mean   :4.20   Mean   :13.1   Mean   :0.536     Mean   :2.06  
+##  3rd Qu.:5.20   3rd Qu.:15.0   3rd Qu.:1.000     3rd Qu.:3.00  
+##  Max.   :6.00   Max.   :18.0   Max.   :1.000     Max.   :4.00  
+##     violator    
+##  Min.   :0.000  
+##  1st Qu.:0.000  
+##  Median :0.000  
+##  Mean   :0.116  
+##  3rd Qu.:0.000  
+##  Max.   :1.000
+</code></pre>
+
+<hr/>
+
+<p>PROBLEM 1.2 - LOADING THE DATASET  (1 point possible)
+How many of the parolees in the dataset violated the terms of their parole?</p>
+
+<pre><code class="r">table(parole$violator)
+</code></pre>
+
+<pre><code>## 
+##   0   1 
+## 597  78
+</code></pre>
+
+<hr/>
+
+<p>PROBLEM 1.3 - LOADING THE DATASET  (1 point possible)
+You should be familiar with unordered factors (if not, review the Week 2 homework problem &ldquo;Reading Test Scores&rdquo;). Which variables in this dataset are unordered factors with at least three levels?</p>
+
+<p>male race age state time.served max.sentence multiple.offenses crime violator</p>
+
+<pre><code class="r">unique(parole$male)
+</code></pre>
+
+<pre><code>## [1] 1 0
+</code></pre>
+
+<pre><code class="r">unique(parole$race)
+</code></pre>
+
+<pre><code>## [1] 1 2
+</code></pre>
+
+<pre><code class="r">unique(parole$age)
+</code></pre>
+
+<pre><code>##   [1] 33.2 39.7 29.5 22.4 21.6 46.7 31.0 24.6 32.6 29.1 28.4 20.5 30.1 37.8
+##  [15] 41.7 43.5 42.3 21.3 24.5 31.6 35.4 41.9 38.9 23.0 32.8 32.4 29.7 28.7
+##  [29] 50.2 25.9 49.9 47.1 36.7 37.2 23.2 31.4 39.1 50.6 36.3 29.9 27.5 28.1
+##  [43] 34.2 36.5 33.5 55.0 31.2 39.6 37.3 21.1 34.9 24.9 61.6 48.0 21.4 54.5
+##  [57] 38.8 20.2 41.4 48.2 32.2 33.7 35.0 57.5 42.4 25.3 37.5 22.3 40.1 40.3
+##  [71] 43.6 20.6 34.8 25.0 39.0 30.8 37.4 41.1 26.6 51.1 27.7 25.7 22.0 26.9
+##  [85] 47.2 31.5 21.0 24.2 22.6 51.2 41.0 27.0 21.9 21.5 18.8 32.5 24.3 50.5
+##  [99] 23.4 45.0 41.3 43.4 40.4 23.3 18.7 32.0 28.3 35.1 39.8 29.0 36.2 44.4
+## [113] 32.3 45.9 26.8 56.8 48.9 39.2 38.3 25.6 30.2 53.5 43.0 21.8 32.7 26.3
+## [127] 44.0 27.4 19.2 19.5 46.1 46.3 45.1 45.4 48.5 48.7 39.4 20.7 46.5 43.8
+## [141] 41.2 38.7 44.9 44.7 48.8 37.0 35.5 35.2 35.9 28.8 45.8 34.5 38.4 28.9
+## [155] 51.4 26.4 30.7 27.3 23.7 52.5 38.1 28.0 49.3 27.2 21.2 25.8 23.6 21.7
+## [169] 19.9 22.5 20.3 42.1 43.2 43.3 30.0 20.0 22.8 31.1 18.4 25.5 34.1 35.8
+## [183] 47.5 54.4 39.9 31.3 35.6 51.8 44.8 26.0 19.6 48.4 63.4 20.9 34.7 19.4
+## [197] 33.3 54.9 19.1 61.4 25.1 59.4 56.4 53.0 54.8 52.1 47.7 42.0 33.9 26.5
+## [211] 58.5 53.9 42.6 24.0 50.9 44.6 36.1 30.3 55.7 19.7 29.6 34.6 45.5 44.3
+## [225] 53.8 47.8 23.1 42.5 20.8 31.7 34.4 31.8 39.5 29.2 46.0 38.0 40.8 33.8
+## [239] 52.6 38.6 22.1 46.9 40.9 27.1 36.6 28.5 24.7 18.5 32.9 45.6 33.4 20.4
+## [253] 51.7 46.4 27.9 23.8 34.3 65.1 46.2 32.1 67.0 41.6 47.0 49.0 35.3 50.1
+## [267] 42.8 25.2 51.3 44.1 22.9 27.8 51.0 24.4 36.8 38.5 24.8 38.2 28.2 36.0
+## [281] 19.0 37.6 46.6 30.4 40.0 43.1 33.6 27.6 33.0 44.2 40.6 34.0 22.2 19.3
+## [295] 43.7 46.8 47.3 54.1 44.5 56.5 36.4 25.4
+</code></pre>
+
+<pre><code class="r">unique(parole$state)
+</code></pre>
+
+<pre><code>## [1] 1 2 3 4
+</code></pre>
+
+<pre><code class="r">unique(parole$time.served)
+</code></pre>
+
+<pre><code>##  [1] 5.5 5.4 5.6 5.7 6.0 4.8 4.5 4.7 5.9 5.3 5.2 5.1 5.8 4.9 3.9 0.5 0.9
+## [18] 2.0 0.7 0.0 3.0 3.8 4.2 4.4 4.6 0.1 4.3 4.1 3.7 2.1 0.2 1.2 3.6 4.0
+## [35] 2.5 2.6 3.2 3.5 5.0 3.4 1.8 2.4 1.1 2.7 2.9 0.8 2.2 2.8 1.3 1.7 1.9
+## [52] 1.6 0.3 1.4 3.1 1.5 3.3 2.3
+</code></pre>
+
+<pre><code class="r">unique(parole$max.sentence)
+</code></pre>
+
+<pre><code>##  [1] 18 12 13 16  8 15 14  1  9 10  3  4  6  2 11  5 17
+</code></pre>
+
+<pre><code class="r">unique(parole$multiple.offenses)
+</code></pre>
+
+<pre><code>## [1] 0 1
+</code></pre>
+
+<pre><code class="r">unique(parole$crime)
+</code></pre>
+
+<pre><code>## [1] 4 3 1 2
+</code></pre>
+
+<pre><code class="r">unique(parole$violator)
+</code></pre>
+
+<pre><code>## [1] 0 1
+</code></pre>
+
+<p>ans state and crime</p>
+
+<hr/>
+
+<p>PROBLEM 2.1 - PREPARING THE DATASET  (1 point possible)
+In the last subproblem, we identified variables that are unordered factors with at least 3 levels, so we need to convert them to factors for our prediction problem (we introduced this idea in the &ldquo;Reading Test Scores&rdquo; problem last week). Using the as.factor() function, convert these variables to factors. Keep in mind that we are not changing the values, just the way R understands them (the values are still numbers).</p>
+
+<p>How does the output of summary() change for a factor variable as compared to a numerical variable?</p>
+
+<pre><code class="r">summary(parole)
+</code></pre>
+
+<pre><code>##       male            race           age           state     
+##  Min.   :0.000   Min.   :1.00   Min.   :18.4   Min.   :1.00  
+##  1st Qu.:1.000   1st Qu.:1.00   1st Qu.:25.4   1st Qu.:2.00  
+##  Median :1.000   Median :1.00   Median :33.7   Median :3.00  
+##  Mean   :0.807   Mean   :1.42   Mean   :34.5   Mean   :2.89  
+##  3rd Qu.:1.000   3rd Qu.:2.00   3rd Qu.:42.5   3rd Qu.:4.00  
+##  Max.   :1.000   Max.   :2.00   Max.   :67.0   Max.   :4.00  
+##   time.served    max.sentence  multiple.offenses     crime     
+##  Min.   :0.00   Min.   : 1.0   Min.   :0.000     Min.   :1.00  
+##  1st Qu.:3.25   1st Qu.:12.0   1st Qu.:0.000     1st Qu.:1.00  
+##  Median :4.40   Median :12.0   Median :1.000     Median :2.00  
+##  Mean   :4.20   Mean   :13.1   Mean   :0.536     Mean   :2.06  
+##  3rd Qu.:5.20   3rd Qu.:15.0   3rd Qu.:1.000     3rd Qu.:3.00  
+##  Max.   :6.00   Max.   :18.0   Max.   :1.000     Max.   :4.00  
+##     violator    
+##  Min.   :0.000  
+##  1st Qu.:0.000  
+##  Median :0.000  
+##  Mean   :0.116  
+##  3rd Qu.:0.000  
+##  Max.   :1.000
+</code></pre>
+
+<pre><code class="r">parole$state &lt;- as.factor(parole$state)
+parole$crime &lt;- as.factor(parole$crime)
+summary(parole)
+</code></pre>
+
+<pre><code>##       male            race           age       state    time.served  
+##  Min.   :0.000   Min.   :1.00   Min.   :18.4   1:143   Min.   :0.00  
+##  1st Qu.:1.000   1st Qu.:1.00   1st Qu.:25.4   2:120   1st Qu.:3.25  
+##  Median :1.000   Median :1.00   Median :33.7   3: 82   Median :4.40  
+##  Mean   :0.807   Mean   :1.42   Mean   :34.5   4:330   Mean   :4.20  
+##  3rd Qu.:1.000   3rd Qu.:2.00   3rd Qu.:42.5           3rd Qu.:5.20  
+##  Max.   :1.000   Max.   :2.00   Max.   :67.0           Max.   :6.00  
+##   max.sentence  multiple.offenses crime      violator    
+##  Min.   : 1.0   Min.   :0.000     1:315   Min.   :0.000  
+##  1st Qu.:12.0   1st Qu.:0.000     2:106   1st Qu.:0.000  
+##  Median :12.0   Median :1.000     3:153   Median :0.000  
+##  Mean   :13.1   Mean   :0.536     4:101   Mean   :0.116  
+##  3rd Qu.:15.0   3rd Qu.:1.000             3rd Qu.:0.000  
+##  Max.   :18.0   Max.   :1.000             Max.   :1.000
+</code></pre>
+
+<p>ans The output becomes similar to that of the table() function applied to that variable</p>
+
+<hr/>
+
+<p>PROBLEM 2.2 - PREPARING THE DATASET  (1 point possible)
+Why are we taking this step of preparing the variables before splitting the data into a training and testing set?</p>
+
+<p>ans Preparing the data before splitting the dataset saves work: we only need to do these steps once instead of twice </p>
+
+<hr/>
+
+<p>PROBLEM 3.1 - SPLITTING INTO A TRAINING AND TESTING SET  (1 point possible)
+To ensure consistent training/testing set splits, run the following 5 lines of code (do not include the line numbers at the beginning):</p>
+
+<pre><code class="r">set.seed(144)
+library(caTools)
+</code></pre>
+
+<pre><code>## Warning: package &#39;caTools&#39; was built under R version 3.0.3
+</code></pre>
+
+<pre><code class="r">split = sample.split(parole$violator, SplitRatio = 0.7)
+train = subset(parole, split == TRUE)
+test = subset(parole, split == FALSE)
+</code></pre>
+
+<p>Roughly what proportion of parolees have been allocated to the training and testing sets?</p>
+
+<pre><code class="r">nrow(train)/(nrow(test) + nrow(train))
+</code></pre>
+
+<pre><code>## [1] 0.7007
+</code></pre>
+
+<pre><code class="r">nrow(test)/(nrow(test) + nrow(train))
+</code></pre>
+
+<pre><code>## [1] 0.2993
+</code></pre>
+
+<hr/>
+
+<p>Problem 3.2 - Splitting into a Training and Testing Set </p>
+
+<p>(3 points possible)</p>
+
+<p>Now, suppose you re-ran lines [1]-[5] of Problem 3.1. What would you expect?</p>
+
+<p>ANS The exact same training/testing set split as the first execution of [1]-[5] </p>
+
+<p>If you instead ONLY re-ran lines [3]-[5], what would you expect?
+ANS A different training/testing set split from the first execution of [1]-[5] </p>
+
+<p>If you instead called set.seed() with a different number and then re-ran lines [3]-[5] of Problem 3.1, what would you expect?
+ANS A different training/testing set split from the first execution of [1]-[5] </p>
+
+<hr/>
+
+<p>PROBLEM 4.1 - BUILDING A LOGISTIC REGRESSION MODEL  (1 point possible)
+If you tested other training/testing set splits in the previous section, please re-run the original 5 lines of code to obtain the original split.</p>
+
+<p>Using glm (and remembering the parameter family=&ldquo;binomial&rdquo;), train a logistic regression model on the training set. Your dependent variable is &ldquo;violator&rdquo;, and you should use all of the other variables as independent variables.</p>
+
+<pre><code class="r">model0 &lt;- glm(violator ~ ., data = train, family = &quot;binomial&quot;)
+</code></pre>
+
+<p>What variables are significant in this model? Significant variables should have a least one star, or should have a probability less than 0.05 (the column Pr(&gt;|z|) in the summary output).</p>
+
+<pre><code class="r">summary(model0)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = violator ~ ., family = &quot;binomial&quot;, data = train)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -1.704  -0.424  -0.272  -0.169   2.837  
+## 
+## Coefficients:
+##                    Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)       -4.241157   1.293885   -3.28    0.001 ** 
+## male               0.386990   0.437961    0.88    0.377    
+## race               0.886719   0.395066    2.24    0.025 *  
+## age               -0.000176   0.016085   -0.01    0.991    
+## state2             0.443301   0.481662    0.92    0.357    
+## state3             0.834980   0.556270    1.50    0.133    
+## state4            -3.396788   0.611586   -5.55  2.8e-08 ***
+## time.served       -0.123887   0.120423   -1.03    0.304    
+## max.sentence       0.080295   0.055375    1.45    0.147    
+## multiple.offenses  1.611992   0.385305    4.18  2.9e-05 ***
+## crime2             0.683714   0.500355    1.37    0.172    
+## crime3            -0.278105   0.432836   -0.64    0.521    
+## crime4            -0.011763   0.571304   -0.02    0.984    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 340.04  on 472  degrees of freedom
+## Residual deviance: 251.48  on 460  degrees of freedom
+## AIC: 277.5
+## 
+## Number of Fisher Scoring iterations: 6
+</code></pre>
+
+<p>ans : race state4 multiple.offenses</p>
+
+<hr/>
+
+<p>PROBLEM 4.2 - BUILDING A LOGISTIC REGRESSION MODEL  (1 point possible)
+What can we say based on the coefficient of the multiple.offenses variable?</p>
+
+<p>The following two properties might be useful to you when answering this question:</p>
+
+<p>1) If we have a coefficient c for a variable, then that means the log odds (or Logit) are increased by c for a unit increase in the variable.</p>
+
+<p>2) If we have a coefficient c for a variable, then that means the odds are multiplied by e<sup>c</sup> for a unit increase in the variable.</p>
+
+<pre><code class="r">exp(1.6119919)
+</code></pre>
+
+<pre><code>## [1] 5.013
+</code></pre>
+
+<p>ANS Our model predicts that a parolee who committed multiple offenses has 5.01 times higher odds of being a violator than a parolee who did not commit multiple offenses but is otherwise identical. Status: correct </p>
+
+<hr/>
+
+<p>PROBLEM 4.3 - BUILDING A LOGISTIC REGRESSION MODEL  (2 points possible)
+Consider a parolee who is male, of white race, aged 50 years at prison release, from the state of Maryland, served 3 months, had a maximum sentence of 12 months, did not commit multiple offenses, and committed a larceny. Answer the following questions based on the model&#39;s predictions for this individual. (HINT: You should use the coefficients of your model, the Logistic Response Function, and the Odds equation to solve this problem.)</p>
+
+<p>According to the model, what are the odds this individual is a violator?</p>
+
+<p>According to the model, what is the probability this individual is a violator?</p>
+
+<pre><code class="r">y = -4.2411574 + 0.3869904 + 0.8867192 - 0.0001756 * 50 - 0.1238867 * 3 + 12 * 
+    0.0802954 + 0.6837143
+odds = exp(y)
+logit = log(odds)
+Py = 1/(1 + exp(-1 * y))
+</code></pre>
+
+<hr/>
+
+<p>Problem 5.1 - Evaluating the Model on the Testing Set </p>
+
+<p>(1 point possible)</p>
+
+<p>Use the predict() function to obtain the model&#39;s predicted probabilities for parolees in the testing set, remembering to pass type=&ldquo;response&rdquo;.</p>
+
+<p>What is the maximum predicted probability of a violation?</p>
+
+<pre><code class="r">parolePred &lt;- predict(model0, newdata = test, type = &quot;response&quot;)
+summary(parolePred)
+</code></pre>
+
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0023  0.0238  0.0579  0.1470  0.1470  0.9070
+</code></pre>
+
+<hr/>
+
+<p>PROBLEM 5.2 - EVALUATING THE MODEL ON THE TESTING SET (3 points possible)
+In the following questions, evaluate the model&#39;s predictions on the test set using a threshold of 0.5.</p>
+
+<p>What is the model&#39;s sensitivity?
+What is the model&#39;s specificity?
+What is the model&#39;s accuracy?</p>
+
+<pre><code class="r">TN = table(test$violator, parolePred &gt; 0.5)[1]
+FN = table(test$violator, parolePred &gt; 0.5)[2]
+FP = table(test$violator, parolePred &gt; 0.5)[3]
+TP = table(test$violator, parolePred &gt; 0.5)[4]
+Sen = TP/(TP + FN)
+Sen
+</code></pre>
+
+<pre><code>## [1] 0.5217
+</code></pre>
+
+<pre><code class="r">Spec = TN/(TN + FP)
+Spec
+</code></pre>
+
+<pre><code>## [1] 0.933
+</code></pre>
+
+<pre><code class="r">Acc = (TN + TP)/(TN + TP + FN + FP)
+Acc
+</code></pre>
+
+<pre><code>## [1] 0.8861
+</code></pre>
+
+<hr/>
+
+<p>Problem 5.3 - Evaluating the Model on the Testing Set </p>
+
+<p>(1 point possible)</p>
+
+<p>What is the accuracy of a simple model that predicts that every parolee is a non-violator? </p>
+
+<pre><code class="r">Baseline = (TN + FP)/(TN + TP + FN + FP)
+Baseline
+</code></pre>
+
+<pre><code>## [1] 0.8861
+</code></pre>
+
+<hr/>
+
+<p>PROBLEM 5.4 - EVALUATING THE MODEL ON THE TESTING SET (1 point possible)
+Consider a parole board using the model to predict whether parolees will be violators or not. Which of the following most likely describes their preferences and best course of action?</p>
+
+<pre><code class="r">table(test$violator, parolePred &gt; 0.5)
+</code></pre>
+
+<pre><code>##    
+##     FALSE TRUE
+##   0   167   12
+##   1    11   12
+</code></pre>
+
+<pre><code class="r">table(test$violator, parolePred &gt; 0.7)
+</code></pre>
+
+<pre><code>##    
+##     FALSE TRUE
+##   0   176    3
+##   1    20    3
+</code></pre>
+
+<pre><code class="r">table(test$violator, parolePred &gt; 0.3)
+</code></pre>
+
+<pre><code>##    
+##     FALSE TRUE
+##   0   160   19
+##   1     9   14
+</code></pre>
+
+<p>ANS The board assigns more cost to a false negative than a false positive, and should therefore use a logistic regression cutoff less than 0.5.</p>
+
+<hr/>
+
+<p>Problem 5.5 - Evaluating the Model on the Testing Set </p>
+
+<p>(1 point possible)</p>
+
+<p>Which of the following is the most accurate assessment of the value of the logistic regression model with a cutoff 0.5 to a parole board, based on the model&#39;s accuracy as compared to the simple baseline model?</p>
+
+<p>ANS The model is likely of value to the board, and using a different logistic regression cutoff is likely to improve the model&#39;s value.</p>
+
+<hr/>
+
+<p>Problem 5.6 - Evaluating the Model on the Testing Set </p>
+
+<p>(1 point possible)</p>
+
+<p>Using the ROCR package, what is the AUC value for the model?</p>
+
+<pre><code class="r">library(ROCR)
+</code></pre>
+
+<pre><code>## Warning: package &#39;ROCR&#39; was built under R version 3.0.3
+</code></pre>
+
+<pre><code>## Loading required package: gplots
+</code></pre>
+
+<pre><code>## Warning: package &#39;gplots&#39; was built under R version 3.0.3
+</code></pre>
+
+<pre><code>## KernSmooth 2.23 loaded
+## Copyright M. P. Wand 1997-2009
+## 
+## Attaching package: &#39;gplots&#39;
+## 
+## ???Ð¶??????Á±???from &#39;package:stats&#39;:
+## 
+##     lowess
+</code></pre>
+
+<pre><code class="r">ROCRpred = prediction(parolePred, test$violator)
+ROCRperf = performance(ROCRpred, &quot;tpr&quot;, &quot;fpr&quot;)
+plot(ROCRperf, colorize = TRUE)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-16"/> </p>
+
+<pre><code class="r">ROCRauc = performance(ROCRpred, &quot;auc&quot;)
+ROCRauc
+</code></pre>
+
+<pre><code>## An object of class &quot;performance&quot;
+## Slot &quot;x.name&quot;:
+## [1] &quot;None&quot;
+## 
+## Slot &quot;y.name&quot;:
+## [1] &quot;Area under the ROC curve&quot;
+## 
+## Slot &quot;alpha.name&quot;:
+## [1] &quot;none&quot;
+## 
+## Slot &quot;x.values&quot;:
+## list()
+## 
+## Slot &quot;y.values&quot;:
+## [[1]]
+## [1] 0.8946
+## 
+## 
+## Slot &quot;alpha.values&quot;:
+## list()
+</code></pre>
+
+<hr/>
+
+<p>Problem 5.7 - Evaluating the Model on the Testing Set </p>
+
+<p>(1 point possible)</p>
+
+<p>Describe the meaning of AUC in this context.</p>
+
+<p>ANS The probability the model can correctly differentiate between a randomly selected parole violator and a randomly selected parole non-violator. </p>
+
+<hr/>
+
+<p>PROBLEM 6.1 - IDENTIFYING BIAS IN OBSERVATIONAL DATA  (1 point possible)
+Our goal has been to predict the outcome of a parole decision, and we used a publicly available dataset of parole releases for predictions. In this final problem, we&#39;ll evaluate a potential source of bias associated with our analysis. It is always important to evaluate a dataset for possible sources of bias.</p>
+
+<p>The dataset contains all individuals released from parole in 2004, either due to completing their parole term or violating the terms of their parole. However, it does not contain parolees who neither violated their parole nor completed their term in 2004, causing non-violators to be underrepresented. This is called &ldquo;selection bias&rdquo; or &ldquo;selecting on the dependent variable,&rdquo; because only a subset of all relevant parolees were included in our analysis, based on our dependent variable in this analysis (parole violation). How could we improve our dataset to best address selection bias?</p>
+
+<p>ANS We should use a dataset tracking a group of parolees from the start of their parole until either they violated parole or they completed their term. </p>
+
+</body>
+
+</html>
+

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>ProblemSet 5-2</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>ProblemSet 5-2</h1>
+
+<p>AUTOMATING REVIEWS IN MEDICINE</p>
+
+<p>The medical literature is enormous. Pubmed, a database of medical publications maintained by the U.S. National Library of Medicine, has indexed over 23 million medical publications. Further, the rate of medical publication has increased over time, and now there are nearly 1 million new publications in the field each year, or more than one per minute.</p>
+
+<p>The large size and fast-changing nature of the medical literature has increased the need for reviews, which search databases like Pubmed for papers on a particular topic and then report results from the papers found. While such reviews are often performed manually, with multiple people reviewing each search result, this is tedious and time consuming. In this problem, we will see how text analytics can be used to automate the process of information retrieval.</p>
+
+<p>The dataset consists of the titles (variable title) and abstracts (variable abstract) of papers retrieved in a Pubmed search. Each search result is labeled with whether the paper is a clinical trial testing a drug therapy for cancer (variable trial). These labels were obtained by two people reviewing each search result and accessing the actual paper if necessary, as part of a literature review of clinical trials testing drug therapies for advanced and metastatic breast cancer.</p>
+
+<p>###PROBLEM 1.1 - LOADING THE DATA  (1 point possible)
+Load clinical_trial.csv into a data frame called trials (remembering to add the argument stringsAsFactors=FALSE), and investigate the data frame with summary() and str().</p>
+
+<pre><code class="r">trials &lt;- read.csv(file.choose(), stringsAsFactors = F)
+str(trials)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    1860 obs. of  3 variables:
+##  $ title   : chr  &quot;Treatment of Hodgkin&#39;s disease and other cancers with 1,3-bis(2-chloroethyl)-1-nitrosourea (BCNU; NSC-409962).&quot; &quot;Cell mediated immune status in malignancy--pretherapy and post-therapy assessment.&quot; &quot;Neoadjuvant vinorelbine-capecitabine versus docetaxel-doxorubicin-cyclophosphamide in early nonresponsive breast cancer: phase &quot;| __truncated__ &quot;Randomized phase 3 trial of fluorouracil, epirubicin, and cyclophosphamide alone or followed by Paclitaxel for early breast can&quot;| __truncated__ ...
+##  $ abstract: chr  &quot;&quot; &quot;Twenty-eight cases of malignancies of different kinds were studied to assess T-cell activity and population before and after in&quot;| __truncated__ &quot;BACKGROUND: Among breast cancer patients, nonresponse to initial neoadjuvant chemotherapy is associated with unfavorable outcom&quot;| __truncated__ &quot;BACKGROUND: Taxanes are among the most active drugs for the treatment of metastatic breast cancer, and, as a consequence, they &quot;| __truncated__ ...
+##  $ trial   : int  1 0 1 1 1 0 1 0 0 0 ...
+</code></pre>
+
+<pre><code class="r">summary(trials)
+</code></pre>
+
+<pre><code>##     title             abstract             trial      
+##  Length:1860        Length:1860        Min.   :0.000  
+##  Class :character   Class :character   1st Qu.:0.000  
+##  Mode  :character   Mode  :character   Median :0.000  
+##                                        Mean   :0.439  
+##                                        3rd Qu.:1.000  
+##                                        Max.   :1.000
+</code></pre>
+
+<p>We can use R&#39;s string functions to learn more about the titles and abstracts of the located papers. The nchar() function counts the number of characters in a piece of text. Using the nchar() function on the variables in the data frame, answer the following questions:</p>
+
+<p>How many characters are there in the longest abstract?</p>
+
+<pre><code class="r">which.max(nchar(trials$abstract))
+</code></pre>
+
+<pre><code>## Error: ???ֽ??ַ???23?д?
+</code></pre>
+
+<pre><code class="r">nchar(trials$abstract[664])
+</code></pre>
+
+<pre><code>## [1] 3708
+</code></pre>
+
+<p>###PROBLEM 1.2 - LOADING THE DATA  (1 point possible)
+How many search results provided no abstract? (HINT: A search result provided no abstract if the number of characters in the abstract field is zero.)</p>
+
+<pre><code class="r">sum((nchar(trials$abstract) == 0))
+</code></pre>
+
+<pre><code>## Error: ???ֽ??ַ???23?д?
+</code></pre>
+
+<p>###PROBLEM 1.3 - LOADING THE DATA  (1 point possible)
+What is the shortest title of any article? Include capitalization and punctuation in your response, but don&#39;t include the quotes.</p>
+
+<pre><code class="r">which.min(nchar(trials$title))
+</code></pre>
+
+<pre><code>## Error: ???ֽ??ַ???156?д?
+</code></pre>
+
+<pre><code class="r">trials$title[1258]
+</code></pre>
+
+<pre><code>## [1] &quot;A decade of letrozole: FACE.&quot;
+</code></pre>
+
+<p>###PROBLEM 2.1 - PREPARING THE CORPUS  (2 points possible)
+Because we have both title and abstract information for trials, we need to build two corpera instead of one. Name them corpusTitle and corpusAbstract.</p>
+
+<p>Following the commands from lecture, perform the following tasks. Make sure to perform them in this order.</p>
+
+<p>1) Convert the title variable to corpusTitle and the abstract variable to corpusAbstract.</p>
+
+<pre><code class="r">library(tm)
+</code></pre>
+
+<pre><code>## Warning: package &#39;tm&#39; was built under R version 3.0.3
+</code></pre>
+
+<pre><code class="r">library(SnowballC)
+corpusTitle &lt;- Corpus(VectorSource(trials$title))
+corpusAbstract &lt;- Corpus(VectorSource(trials$abstract))
+corpusTitle[[2]]
+</code></pre>
+
+<pre><code>## Cell mediated immune status in malignancy--pretherapy and post-therapy assessment.
+</code></pre>
+
+<pre><code class="r">strwrap(corpusAbstract[[2]])
+</code></pre>
+
+<pre><code>##  [1] &quot;Twenty-eight cases of malignancies of different kinds were studied&quot;
+##  [2] &quot;to assess T-cell activity and population before and after&quot;         
+##  [3] &quot;institution of therapy. Fifteen cases were diagnosed as&quot;           
+##  [4] &quot;non-metastasising squamous cell carcinoma of larynx, pharynx,&quot;     
+##  [5] &quot;laryngopharynx, hypopharynx and tonsils. Seven cases were&quot;         
+##  [6] &quot;non-metastasising infiltrating duct carcinoma of breast and 6&quot;     
+##  [7] &quot;cases were non-Hodgkin&#39;s lymphoma (NHL). It was observed that 3&quot;   
+##  [8] &quot;out of 15 cases (20%) of squamous cell carcinoma cases were&quot;       
+##  [9] &quot;Mantoux test (MT) negative with a T-cell population of less than&quot;  
+## [10] &quot;40%, 2 out of 7 cases (28.6%) of infiltrating duct carcinoma of&quot;   
+## [11] &quot;breast were MT negative with a T-cell population of less than 40%&quot; 
+## [12] &quot;and 3 out of 6 cases (50%) of NHL were MT negative with a T-cell&quot;  
+## [13] &quot;population of less than 40%. The normal controls, consisting of&quot;   
+## [14] &quot;apparently normal healthy adults, had a T-cell population of more&quot; 
+## [15] &quot;than 40% and were all MT positive. The patients who showed a&quot;      
+## [16] &quot;negative skin test and a T-cell population less than 40% were&quot;     
+## [17] &quot;further subjected to assessment of T-cell population and activity&quot; 
+## [18] &quot;after appropriate therapy, and clinical cure of the disease. It&quot;   
+## [19] &quot;was observed that 2 out of 3 cases (66.66%) of squamous cell&quot;      
+## [20] &quot;carcinomas, 2 out of 2 cases (100%) of adenocarcinomas and one out&quot;
+## [21] &quot;of 3 cases (33.33%) of NHL showed positive conversion with a&quot;      
+## [22] &quot;T-cell population of more than 40%.&quot;
+</code></pre>
+
+<p>2) Convert corpusTitle and corpusAbstract to lowercase.</p>
+
+<pre><code class="r">corpusTitle = tm_map(corpusTitle, tolower)
+</code></pre>
+
+<pre><code>## Error: ???ֽ??ַ???1?д?
+</code></pre>
+
+<pre><code class="r">corpusAbstract = tm_map(corpusAbstract, tolower)
+</code></pre>
+
+<pre><code>## Error: ???ֽ??ַ???1?д?
+</code></pre>
+
+<pre><code class="r">corpusTitle[[2]]
+</code></pre>
+
+<pre><code>## Cell mediated immune status in malignancy--pretherapy and post-therapy assessment.
+</code></pre>
+
+<pre><code class="r">strwrap(corpusAbstract[[2]])
+</code></pre>
+
+<pre><code>##  [1] &quot;Twenty-eight cases of malignancies of different kinds were studied&quot;
+##  [2] &quot;to assess T-cell activity and population before and after&quot;         
+##  [3] &quot;institution of therapy. Fifteen cases were diagnosed as&quot;           
+##  [4] &quot;non-metastasising squamous cell carcinoma of larynx, pharynx,&quot;     
+##  [5] &quot;laryngopharynx, hypopharynx and tonsils. Seven cases were&quot;         
+##  [6] &quot;non-metastasising infiltrating duct carcinoma of breast and 6&quot;     
+##  [7] &quot;cases were non-Hodgkin&#39;s lymphoma (NHL). It was observed that 3&quot;   
+##  [8] &quot;out of 15 cases (20%) of squamous cell carcinoma cases were&quot;       
+##  [9] &quot;Mantoux test (MT) negative with a T-cell population of less than&quot;  
+## [10] &quot;40%, 2 out of 7 cases (28.6%) of infiltrating duct carcinoma of&quot;   
+## [11] &quot;breast were MT negative with a T-cell population of less than 40%&quot; 
+## [12] &quot;and 3 out of 6 cases (50%) of NHL were MT negative with a T-cell&quot;  
+## [13] &quot;population of less than 40%. The normal controls, consisting of&quot;   
+## [14] &quot;apparently normal healthy adults, had a T-cell population of more&quot; 
+## [15] &quot;than 40% and were all MT positive. The patients who showed a&quot;      
+## [16] &quot;negative skin test and a T-cell population less than 40% were&quot;     
+## [17] &quot;further subjected to assessment of T-cell population and activity&quot; 
+## [18] &quot;after appropriate therapy, and clinical cure of the disease. It&quot;   
+## [19] &quot;was observed that 2 out of 3 cases (66.66%) of squamous cell&quot;      
+## [20] &quot;carcinomas, 2 out of 2 cases (100%) of adenocarcinomas and one out&quot;
+## [21] &quot;of 3 cases (33.33%) of NHL showed positive conversion with a&quot;      
+## [22] &quot;T-cell population of more than 40%.&quot;
+</code></pre>
+
+<p>3) Remove the punctuation in corpusTitle and corpusAbstract.</p>
+
+<pre><code class="r">corpusTitle = tm_map(corpusTitle, removePunctuation)
+corpusAbstract = tm_map(corpusAbstract, removePunctuation)
+corpusTitle[[2]]
+</code></pre>
+
+<pre><code>## Cell mediated immune status in malignancypretherapy and posttherapy assessment
+</code></pre>
+
+<pre><code class="r">strwrap(corpusAbstract[[2]])
+</code></pre>
+
+<pre><code>##  [1] &quot;Twentyeight cases of malignancies of different kinds were studied&quot; 
+##  [2] &quot;to assess Tcell activity and population before and after&quot;          
+##  [3] &quot;institution of therapy Fifteen cases were diagnosed as&quot;            
+##  [4] &quot;nonmetastasising squamous cell carcinoma of larynx pharynx&quot;        
+##  [5] &quot;laryngopharynx hypopharynx and tonsils Seven cases were&quot;           
+##  [6] &quot;nonmetastasising infiltrating duct carcinoma of breast and 6 cases&quot;
+##  [7] &quot;were nonHodgkins lymphoma NHL It was observed that 3 out of 15&quot;    
+##  [8] &quot;cases 20 of squamous cell carcinoma cases were Mantoux test MT&quot;    
+##  [9] &quot;negative with a Tcell population of less than 40 2 out of 7 cases&quot; 
+## [10] &quot;286 of infiltrating duct carcinoma of breast were MT negative with&quot;
+## [11] &quot;a Tcell population of less than 40 and 3 out of 6 cases 50 of NHL&quot; 
+## [12] &quot;were MT negative with a Tcell population of less than 40 The&quot;      
+## [13] &quot;normal controls consisting of apparently normal healthy adults had&quot;
+## [14] &quot;a Tcell population of more than 40 and were all MT positive The&quot;   
+## [15] &quot;patients who showed a negative skin test and a Tcell population&quot;   
+## [16] &quot;less than 40 were further subjected to assessment of Tcell&quot;        
+## [17] &quot;population and activity after appropriate therapy and clinical&quot;    
+## [18] &quot;cure of the disease It was observed that 2 out of 3 cases 6666 of&quot; 
+## [19] &quot;squamous cell carcinomas 2 out of 2 cases 100 of adenocarcinomas&quot;  
+## [20] &quot;and one out of 3 cases 3333 of NHL showed positive conversion with&quot;
+## [21] &quot;a Tcell population of more than 40&quot;
+</code></pre>
+
+<p>4) Remove the English language stop words from corpusTitle and corpusAbstract.</p>
+
+<pre><code class="r">corpusTitle = tm_map(corpusTitle, removeWords, stopwords(&quot;english&quot;))
+corpusAbstract = tm_map(corpusAbstract, removeWords, stopwords(&quot;english&quot;))
+corpusTitle[[2]]
+</code></pre>
+
+<pre><code>## Cell mediated immune status  malignancypretherapy  posttherapy assessment
+</code></pre>
+
+<pre><code class="r">strwrap(corpusAbstract[[2]])
+</code></pre>
+
+<pre><code>##  [1] &quot;Twentyeight cases malignancies different kinds studied assess&quot;     
+##  [2] &quot;Tcell activity population institution therapy Fifteen cases&quot;       
+##  [3] &quot;diagnosed nonmetastasising squamous cell carcinoma larynx pharynx&quot; 
+##  [4] &quot;laryngopharynx hypopharynx tonsils Seven cases nonmetastasising&quot;   
+##  [5] &quot;infiltrating duct carcinoma breast 6 cases nonHodgkins lymphoma&quot;   
+##  [6] &quot;NHL It observed 3 15 cases 20 squamous cell carcinoma cases&quot;       
+##  [7] &quot;Mantoux test MT negative Tcell population less 40 2 7 cases 286&quot;   
+##  [8] &quot;infiltrating duct carcinoma breast MT negative Tcell population&quot;   
+##  [9] &quot;less 40 3 6 cases 50 NHL MT negative Tcell population less 40 The&quot; 
+## [10] &quot;normal controls consisting apparently normal healthy adults Tcell&quot; 
+## [11] &quot;population 40 MT positive The patients showed negative skin test&quot;  
+## [12] &quot;Tcell population less 40 subjected assessment Tcell population&quot;    
+## [13] &quot;activity appropriate therapy clinical cure disease It observed 2 3&quot;
+## [14] &quot;cases 6666 squamous cell carcinomas 2 2 cases 100 adenocarcinomas&quot; 
+## [15] &quot;one 3 cases 3333 NHL showed positive conversion Tcell population&quot;  
+## [16] &quot;40&quot;
+</code></pre>
+
+<p>5) Stem the words in corpusTitle and corpusAbstract (each stemming might take a few minutes).</p>
+
+<pre><code class="r">corpusTitle = tm_map(corpusTitle, stemDocument)
+corpusAbstract = tm_map(corpusAbstract, stemDocument)
+corpusTitle[[2]]
+</code></pre>
+
+<pre><code>## Cell mediat immun status  malignancypretherapi  posttherapi assess
+</code></pre>
+
+<pre><code class="r">strwrap(corpusAbstract[[2]])
+</code></pre>
+
+<pre><code>##  [1] &quot;Twentyeight case malign differ kind studi assess Tcell activ popul&quot;
+##  [2] &quot;institut therapi Fifteen case diagnos nonmetastasis squamous cell&quot; 
+##  [3] &quot;carcinoma larynx pharynx laryngopharynx hypopharynx tonsil Seven&quot;  
+##  [4] &quot;case nonmetastasis infiltr duct carcinoma breast 6 case nonHodgkin&quot;
+##  [5] &quot;lymphoma NHL It observ 3 15 case 20 squamous cell carcinoma case&quot;  
+##  [6] &quot;Mantoux test MT negat Tcell popul less 40 2 7 case 286 infiltr&quot;    
+##  [7] &quot;duct carcinoma breast MT negat Tcell popul less 40 3 6 case 50 NHL&quot;
+##  [8] &quot;MT negat Tcell popul less 40 The normal control consist appar&quot;     
+##  [9] &quot;normal healthi adult Tcell popul 40 MT posit The patient show&quot;     
+## [10] &quot;negat skin test Tcell popul less 40 subject assess Tcell popul&quot;    
+## [11] &quot;activ appropri therapi clinic cure diseas It observ 2 3 case 6666&quot; 
+## [12] &quot;squamous cell carcinoma 2 2 case 100 adenocarcinoma one 3 case&quot;    
+## [13] &quot;3333 NHL show posit convers Tcell popul 40&quot;
+</code></pre>
+
+<p>6) Build a document term matrix called dtmTitle from corpusTitle and dtmAbstract from corpusAbstract.</p>
+
+<pre><code class="r">frequenciesTitle = DocumentTermMatrix(corpusTitle)
+frequenciesAbstract = DocumentTermMatrix(corpusAbstract)
+</code></pre>
+
+<p>7) Limit dtmTitle and dtmAbstract to terms with sparseness of at most 95% (aka terms that appear in at least 5% of documents).</p>
+
+<pre><code class="r">sparseTitle = removeSparseTerms(frequenciesTitle, 0.95)
+sparseAbstract = removeSparseTerms(frequenciesAbstract, 0.95)
+</code></pre>
+
+<p>8) Convert dtmTitle and dtmAbstract to data frames.</p>
+
+<pre><code class="r">title = as.data.frame(as.matrix(sparseTitle))
+abstract = as.data.frame(as.matrix(sparseAbstract))
+</code></pre>
+
+<p>How many terms remain in dtmTitle after removing sparse terms (aka how many columns does it have)?</p>
+
+<pre><code class="r">ncol(sparseTitle)
+</code></pre>
+
+<pre><code>## [1] 33
+</code></pre>
+
+<pre><code class="r">ncol(sparseAbstract)
+</code></pre>
+
+<pre><code>## [1] 347
+</code></pre>
+
+<p>###PROBLEM 2.2 - PREPARING THE CORPUS  (1 point possible)
+What is the most likely reason why dtmAbstract has so many more terms than dtmTitle?</p>
+
+<p>Abstracts tend to have many more words than titles</p>
+
+<p>###PROBLEM 2.3 - PREPARING THE CORPUS  (1 point possible)
+What is the most frequent word stem across all the abstracts? Hint: you can use colSums() to compute the frequency of a word across all the abstracts.</p>
+
+<pre><code class="r">which.max(colSums(abstract))
+</code></pre>
+
+<pre><code>## patient 
+##     218
+</code></pre>
+
+<p>###PROBLEM 3.1 - BUILDING A MODEL  (1 point possible)
+We want to combine dtmTitle and dtmAbstract into a single data frame to make predictions. However, some of the variables in these data frames have the same names. To fix this issue, run the following commands:</p>
+
+<pre><code class="r">colnames(title) = paste0(&quot;T&quot;, colnames(title))
+colnames(abstract) = paste0(&quot;A&quot;, colnames(abstract))
+</code></pre>
+
+<p>What was the effect of these functions?</p>
+
+<p>Adding the letter T in front of all the title variable names and adding the letter A in front of all the abstract variable names. </p>
+
+<p>###PROBLEM 3.2 - BUILDING A MODEL  (1 point possible)
+Using cbind(), combine dtmTitle and dtmAbstract into a single data frame called dtm. As we did in class, add the dependent variable &ldquo;trial&rdquo; to dtm, copying it from the original data frame called trials. How many columns are in this combined data frame?</p>
+
+<pre><code class="r">dtm &lt;- cbind(title, abstract)
+dtm$trial = trials$trial
+ncol(dtm)
+</code></pre>
+
+<pre><code>## [1] 381
+</code></pre>
+
+<p>###PROBLEM 3.3 - BUILDING A MODEL  (1 point possible)
+Now that we have prepared our data frame, it&#39;s time to split it into a training and testing set and to build regression models. Set the random seed to 144 and use the sample.split function from the caTools package to split dtm into data frames named &ldquo;train&rdquo; and &ldquo;test&rdquo;, putting 70% of the data in the training set.</p>
+
+<pre><code class="r">library(caTools)
+</code></pre>
+
+<pre><code>## Warning: package &#39;caTools&#39; was built under R version 3.0.3
+</code></pre>
+
+<pre><code class="r">set.seed(144)
+split &lt;- sample.split(dtm$trial, SplitRatio = 0.7)
+train &lt;- subset(dtm, split == T)
+test &lt;- subset(dtm, split == F)
+</code></pre>
+
+<p>What is the accuracy of the baseline model on the training set? (Remember that the baseline model predicts the most frequent outcome in the training set for all observations.)</p>
+
+<pre><code class="r">table(train$trial)
+</code></pre>
+
+<pre><code>## 
+##   0   1 
+## 730 572
+</code></pre>
+
+<pre><code class="r">730/(730 + 572)
+</code></pre>
+
+<pre><code>## [1] 0.5607
+</code></pre>
+
+<p>###PROBLEM 3.4 - BUILDING A MODEL  (1 point possible)
+Build a CART model called trialCART, using all the independent variables in the training set to train the model, and then plot the CART model. Just use the default parameters to build the model (don&#39;t add a minbucket or cp value). Remember to add the method=&ldquo;class&rdquo; argument, since this is a classification problem.</p>
+
+<pre><code class="r">library(rpart)
+</code></pre>
+
+<pre><code>## Warning: package &#39;rpart&#39; was built under R version 3.0.3
+</code></pre>
+
+<pre><code class="r">library(rpart.plot)
+</code></pre>
+
+<pre><code>## Warning: package &#39;rpart.plot&#39; was built under R version 3.0.3
+</code></pre>
+
+<pre><code class="r">trialCART &lt;- rpart(trial ~ ., data = train, method = &quot;class&quot;)
+</code></pre>
+
+<p>What is the name of the first variable the model split on?</p>
+
+<pre><code class="r">prp(trialCART)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-20"/> </p>
+
+<p>###PROBLEM 3.5 - BUILDING A MODEL  (1 point possible)
+Obtain the training set predictions for the model (do not yet predict on the test set). Extract the predicted probability of a result being a trial (recall that this involves not setting a type argument, and keeping only the second column of the predict output). What is the maximum predicted probability for any result?</p>
+
+<pre><code class="r">predictTrainCART = predict(trialCART, newdata = train)
+predictTrainCART = predictTrainCART[2:ncol(predictTrainCART)]
+which.max(predictTrainCART)
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">predictTrainCART[1]
+</code></pre>
+
+<pre><code>## [1] 0.8636
+</code></pre>
+
+<p>###PROBLEM 3.6 - BUILDING A MODEL  (1 point possible)
+Without running the analysis, how do you expect the maximum predicted probability to differ in the testing set?</p>
+
+<p>The maximum predicted probability will likely be exactly the same in the testing set. </p>
+
+<p>###PROBLEM 3.7 - BUILDING A MODEL  (3 points possible)
+For these questions, use a threshold probability of 0.5 to predict that an observation is a clinical trial.</p>
+
+<pre><code class="r">predictTrainCART = predict(trialCART, newdata = train, type = &quot;class&quot;)
+table(train$trial, predictTrainCART)
+</code></pre>
+
+<pre><code>##    predictTrainCART
+##       0   1
+##   0 635  95
+##   1 127 445
+</code></pre>
+
+<p>What is the training set accuracy of the CART model?</p>
+
+<pre><code class="r">(631 + 441)/(631 + 441 + 99 + 131)
+</code></pre>
+
+<pre><code>## [1] 0.8233
+</code></pre>
+
+<p>What is the training set sensitivity of the CART model?</p>
+
+<pre><code class="r">441/(441 + 131)
+</code></pre>
+
+<pre><code>## [1] 0.771
+</code></pre>
+
+<p>What is the training set specificity of the CART model?</p>
+
+<pre><code class="r">631/(631 + 99)
+</code></pre>
+
+<pre><code>## [1] 0.8644
+</code></pre>
+
+<p>###PROBLEM 4.1 - EVALUATING THE MODEL ON THE TESTING SET  (1 point possible)
+Evaluate the CART model on the testing set using the predict function and creating a vector of predicted probabilities predTest.</p>
+
+<p>What is the testing set accuracy, assuming a probability threshold of 0.5 for predicting that a result is a clinical trial?</p>
+
+<pre><code class="r">predictTestCART = predict(trialCART, newdata = test)
+predProb = predictTestCART[, 2]
+table(test$trial, predProb &gt;= 0.5)
+</code></pre>
+
+<pre><code>##    
+##     FALSE TRUE
+##   0   260   53
+##   1    81  164
+</code></pre>
+
+<pre><code class="r">(261 + 162)/(261 + 52 + 83 + 162)
+</code></pre>
+
+<pre><code>## [1] 0.7581
+</code></pre>
+
+<p>###PROBLEM 4.2 - EVALUATING THE MODEL ON THE TESTING SET  (1 point possible)
+Using the ROCR package, what is the testing set AUC of the prediction model?</p>
+
+<pre><code class="r">library(ROCR)
+</code></pre>
+
+<pre><code>## Warning: package &#39;ROCR&#39; was built under R version 3.0.3
+</code></pre>
+
+<pre><code>## Loading required package: gplots
+</code></pre>
+
+<pre><code>## Warning: package &#39;gplots&#39; was built under R version 3.0.3
+</code></pre>
+
+<pre><code>## KernSmooth 2.23 loaded
+## Copyright M. P. Wand 1997-2009
+## 
+## Attaching package: &#39;gplots&#39;
+## 
+## ???ж??????��???from &#39;package:stats&#39;:
+## 
+##     lowess
+</code></pre>
+
+<pre><code class="r">predROCR &lt;- prediction(predProb, test$trial)
+perfROCR &lt;- performance(predROCR, &quot;tpr&quot;, &quot;fpr&quot;)
+plot(perfROCR, colorize = T)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-27"/> </p>
+
+<pre><code class="r">performance(predROCR, &quot;auc&quot;)@y.values
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] 0.8374
+</code></pre>
+
+<p>PART 5: DECISION-MAKER TRADEOFFS</p>
+
+<p>The decision maker for this problem, a researcher performing a review of the medical literature, would use a model (like the CART one we built here) in the following workflow:</p>
+
+<p>1) For all of the papers retreived in the PubMed Search, predict which papers are clinical trials using the model. This yields some initial Set A of papers predicted to be trials, and some Set B of papers predicted not to be trials. (See the figure below.)</p>
+
+<p>2) Then, the decision maker manually reviews all papers in Set A, verifying that each paper meets the study&#39;s detailed inclusion criteria (for the purposes of this analysis, we assume this manual review is 100% accurate at identifying whether a paper in Set A is relevant to the study). This yields a more limited set of papers to be included in the study, which would ideally be all papers in the medical literature meeting the detailed inclusion criteria for the study.</p>
+
+<p>3) Perform the study-specific analysis, using data extracted from the limited set of papers identified in step 2.</p>
+
+<p>This process is shown in the figure below.</p>
+
+<p><img src="https://courses.edx.org/c4x/MITx/15.071x/asset/InfoRetrievalFigure2.png" alt="image"/></p>
+
+<p>###PROBLEM 5.1 - DECISION-MAKER TRADEOFFS  (1 point possible)
+What is the cost associated with the model in Step 1 making a false negative prediction?</p>
+
+<p>A paper that should have been included in Set A will be missed, affecting the quality of the results of Step 3. </p>
+
+<p>###PROBLEM 5.2 - DECISION-MAKER TRADEOFFS  (1 point possible)
+What is the cost associated with the model in Step 1 making a false positive prediction?</p>
+
+<p>A paper will be mistakenly added to Set A, yielding additional work in Step 2 of the process but not affecting the quality of the results of Step 3. </p>
+
+<p>###PROBLEM 5.3 - DECISION-MAKER TRADEOFFS  (1 point possible)
+Given the costs associated with false positives and false negatives, which of the following is most accurate?</p>
+
+<p>A false negative is more costly than a false positive; the decision maker should use a probability threshold less than 0.5 for the machine learning model. </p>
+
+</body>
+
+</html>
+

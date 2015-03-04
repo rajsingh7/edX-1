@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Problem Set 6-2</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>Problem Set 6-2</h1>
+
+<p>MARKET SEGMENTATION FOR AIRLINES</p>
+
+<p>Market segmentation is a strategy that divides a broad target market of customers into smaller, more similar groups, and then designs a marketing strategy specifically for each group. Clustering is a common technique for market segmentation since it automatically finds similar groups given a data set. </p>
+
+<p>In this problem, we&#39;ll see how clustering can be used to find similar groups of customers who belong to an airline&#39;s frequent flyer program. The airline is trying to learn more about its customers so that it can target different customer segments with different types of mileage offers. </p>
+
+<p>The file AirlinesCluster.csv contains information on 3,999 members of the frequent flyer program. This data comes from the textbook &ldquo;Data Mining for Business Intelligence,&rdquo; by Galit Shmueli, Nitin R. Patel, and Peter C. Bruce. For more information, see the website for the book.</p>
+
+<p>There are seven different variables in the dataset, described below:</p>
+
+<p>Balance = number of miles eligible for award travel
+QualMiles = number of miles qualifying for TopFlight status
+BonusMiles = number of miles earned from non-flight bonus transactions in the past 12 months
+BonusTrans = number of non-flight bonus transactions in the past 12 months
+FlightMiles = number of flight miles in the past 12 months
+FlightTrans = number of flight transactions in the past 12 months
+DaysSinceEnroll = number of days since enrolled in the frequent flyer program</p>
+
+<p>####PROBLEM 1.1 - NORMALIZING THE DATA  (2 points possible)
+Read the dataset AirlinesCluster.csv into R and call it &ldquo;airlines&rdquo;.</p>
+
+<pre><code class="r">airlines &lt;- read.csv(&quot;AirlinesCluster.csv&quot;)
+</code></pre>
+
+<p>Looking at the summary of airlines, which two variables have (on average) the smallest values?</p>
+
+<pre><code class="r">summary(airlines)
+</code></pre>
+
+<pre><code>##     Balance          QualMiles       BonusMiles       BonusTrans  
+##  Min.   :      0   Min.   :    0   Min.   :     0   Min.   : 0.0  
+##  1st Qu.:  18528   1st Qu.:    0   1st Qu.:  1250   1st Qu.: 3.0  
+##  Median :  43097   Median :    0   Median :  7171   Median :12.0  
+##  Mean   :  73601   Mean   :  144   Mean   : 17145   Mean   :11.6  
+##  3rd Qu.:  92404   3rd Qu.:    0   3rd Qu.: 23800   3rd Qu.:17.0  
+##  Max.   :1704838   Max.   :11148   Max.   :263685   Max.   :86.0  
+##   FlightMiles     FlightTrans    DaysSinceEnroll
+##  Min.   :    0   Min.   : 0.00   Min.   :   2   
+##  1st Qu.:    0   1st Qu.: 0.00   1st Qu.:2330   
+##  Median :    0   Median : 0.00   Median :4096   
+##  Mean   :  460   Mean   : 1.37   Mean   :4119   
+##  3rd Qu.:  311   3rd Qu.: 1.00   3rd Qu.:5790   
+##  Max.   :30817   Max.   :53.00   Max.   :8296
+</code></pre>
+
+<p>####PROBLEM 1.2 - NORMALIZING THE DATA  (1 point possible)
+In this problem, we will normalize our data before we run the clustering algorithms. Why is it important to normalize the data before clustering?</p>
+
+<p>If we don&#39;t normalize the data, the clustering will be dominated by the variables that are on a larger scale. </p>
+
+<p>####PROBLEM 1.3 - NORMALIZING THE DATA  (2 points possible)
+Let&#39;s go ahead and normalize our data. You can normalize the variables in a data frame by using the preProcess function in the &ldquo;caret&rdquo; package. You should already have this package installed from Week 4, but if not, go ahead and install it with install.packages(&ldquo;caret&rdquo;). Then load the package with library(caret).</p>
+
+<pre><code class="r">library(caret)
+</code></pre>
+
+<pre><code>## Loading required package: lattice
+## Loading required package: ggplot2
+</code></pre>
+
+<p>Now, create a normalized data frame called &ldquo;airlinesNorm&rdquo; by running the following commands:</p>
+
+<pre><code class="r">preproc = preProcess(airlines)
+airlinesNorm = predict(preproc, airlines)
+</code></pre>
+
+<p>The first command pre-processes the data, and the second command performs the normalization. If you look at the summary of airlinesNorm, you should see that all of the variables now have mean zero. You can also see that each of the variables has standard deviation 1 by using the sd() function.</p>
+
+<pre><code class="r">summary(airlinesNorm)
+</code></pre>
+
+<pre><code>##     Balance         QualMiles        BonusMiles       BonusTrans    
+##  Min.   :-0.730   Min.   :-0.186   Min.   :-0.710   Min.   :-1.208  
+##  1st Qu.:-0.546   1st Qu.:-0.186   1st Qu.:-0.658   1st Qu.:-0.896  
+##  Median :-0.303   Median :-0.186   Median :-0.413   Median : 0.041  
+##  Mean   : 0.000   Mean   : 0.000   Mean   : 0.000   Mean   : 0.000  
+##  3rd Qu.: 0.187   3rd Qu.:-0.186   3rd Qu.: 0.276   3rd Qu.: 0.562  
+##  Max.   :16.187   Max.   :14.223   Max.   :10.208   Max.   : 7.747  
+##   FlightMiles      FlightTrans     DaysSinceEnroll  
+##  Min.   :-0.329   Min.   :-0.362   Min.   :-1.9934  
+##  1st Qu.:-0.329   1st Qu.:-0.362   1st Qu.:-0.8661  
+##  Median :-0.329   Median :-0.362   Median :-0.0109  
+##  Mean   : 0.000   Mean   : 0.000   Mean   : 0.0000  
+##  3rd Qu.:-0.106   3rd Qu.:-0.098   3rd Qu.: 0.8096  
+##  Max.   :21.680   Max.   :13.610   Max.   : 2.0228
+</code></pre>
+
+<p>In the normalized data, which variable has the largest maximum value?</p>
+
+<p>In the normalized data, which variable has the smallest minimum value?</p>
+
+<p>####PROBLEM 2.1 - HIERARCHICAL CLUSTERING  (1 point possible)
+Compute the distances between data points (using euclidean distance) and then run the Hierarchical clustering algorithm (using method=&ldquo;ward&rdquo;) on the normalized data. It may take a few minutes for the commands to finish since the dataset has a large number of observations for hierarchical clustering.</p>
+
+<pre><code class="r">airdist &lt;- dist(airlinesNorm, method = &quot;euclidean&quot;)
+airClust = hclust(airdist, method = &quot;ward&quot;)
+</code></pre>
+
+<p>Then, plot the dendrogram of the hierarchical clustering process. Suppose the airline is looking for somewhere between 2 and 10 clusters. According to the dendrogram, which of the following is NOT a good choice for the number of clusters?</p>
+
+<pre><code class="r">plot(airClust)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAACB1BMVEX9/v0AAAAAAAEAAAIAAAMAAAUAAAYAAAcAAAkAAAoAAA4AABkAABwAACMAACoAADgAAFQAAQAAAwAACGYAEHoAKioAKlQAKn8AVX8AVakBAAABAAEBAAMBAAkBAQABBQABBgABEA4CAAACAgACAwACCAACFQADAAADAAIEAAAFABwGAAAGAAYGAAkHAAAHAAcHABwHQDsHQHoIAEYIZv0JAAAJAAELBAALBwAOAAMOFQAPkzIQAAAQev0RABwRADgRAFQTAAATABwU/v0VBQAVFQAZAFQbSQ0cAAAcAAEcAAQcABAcACoccWYccbAdAQAgAFQgAQAh/v0mqXEnAFQqAAAqABMqACoqAFQqHAAqKlQqKn8qVakqf38qf40qf7Aqf9My/v04ACU4AFQ51P1ABwBAsRZAsTJL1H9L/v1O/v1UAABUAAJUAAZUAAlUABNUABlUABxUACpUADhUAFRUKgBUVQBUVSpUVVRUf39UqalUqbBUqdNUqf1VKgBVRwBV1P1e/v1i/v1x/v11/v1/IwB/KgB/Kip/KlR/f1R/f6l/1Kl/1P2pVQCpVSqpVVSpqVSp1H+p/qmp/v3TfyrT1H/T/qnT/tPT/v39egX9ehD9kyD9qVT9sRP9sUD91FX91H/9/g/9/hb9/kH9/kP9/lH9/nH9/nr9/pP9/qn9/rD9/tP9/v0WG6WyAAAArXRSTlP/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AP1FBPAAAAAJcEhZcwAACxIAAAsSAdLdfvwAABNBSURBVHic7Z2JnyNFFcfpWWFlxXE9YMwoHuuBeOCJeOAtivc5sorIKK7XiOi6eKDjhQaRRGU3i6tGGK/FkPyRdvWV7k6/5KXTXVWv3+8Ln5lJdx0v/e2qrupOaq+YAZVc4ToA4AaIVwrEKwXilQLxSoF4pUC8UiBeKRCvFIhX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" alt="plot of chunk unnamed-chunk-7"/> </p>
+
+<p>6</p>
+
+<p>####PROBLEM 2.2 - HIERARCHICAL CLUSTERING  (1 point possible)
+Suppose that after looking at the dendrogram and discussing with the marketing department, the airline decides to proceed with 5 clusters. Divide the data points into 5 clusters by using the cutree function. How many data points are in Cluster 1?</p>
+
+<pre><code class="r">hierGroups = cutree(airClust, k = 5)
+table(hierGroups)
+</code></pre>
+
+<pre><code>## hierGroups
+##    1    2    3    4    5 
+##  776  519  494  868 1342
+</code></pre>
+
+<p>####PROBLEM 2.3 - HIERARCHICAL CLUSTERING  (2 points possible)
+Now, use tapply to compare the average values in each of the variables for the 5 clusters (the centroids of the clusters). You may want to compute the average values of the unnormalized data so that it is easier to interpret. You can do this for the variable &ldquo;Balance&rdquo; with the following command:</p>
+
+<pre><code class="r">tapply(airlines$Balance, hierGroups, mean)
+</code></pre>
+
+<pre><code>##      1      2      3      4      5 
+##  57867 110669 198192  52336  36256
+</code></pre>
+
+<pre><code class="r">tapply(airlines$QualMiles, hierGroups, mean)
+</code></pre>
+
+<pre><code>##         1         2         3         4         5 
+##    0.6443 1065.9827   30.3462    4.8479    2.5112
+</code></pre>
+
+<pre><code class="r">tapply(airlines$BonusMiles, hierGroups, mean)
+</code></pre>
+
+<pre><code>##     1     2     3     4     5 
+## 10360 22882 55796 20789  2265
+</code></pre>
+
+<pre><code class="r">tapply(airlines$BonusTrans, hierGroups, mean)
+</code></pre>
+
+<pre><code>##      1      2      3      4      5 
+## 10.823 18.229 19.664 17.088  2.973
+</code></pre>
+
+<pre><code class="r">tapply(airlines$FlightMiles, hierGroups, mean)
+</code></pre>
+
+<pre><code>##       1       2       3       4       5 
+##   83.18 2613.42  327.68  111.57  119.32
+</code></pre>
+
+<pre><code class="r">tapply(airlines$FlightTrans, hierGroups, mean)
+</code></pre>
+
+<pre><code>##      1      2      3      4      5 
+## 0.3028 7.4027 1.0688 0.3445 0.4389
+</code></pre>
+
+<pre><code class="r">tapply(airlines$DaysSinceEnroll, hierGroups, mean)
+</code></pre>
+
+<pre><code>##    1    2    3    4    5 
+## 6235 4402 5616 2841 3060
+</code></pre>
+
+<p>Compared to the other clusters, Cluster 1 has the largest average values in which variables (if any)?</p>
+
+<p>DaysSinceEnroll</p>
+
+<p>How would you describe the customers in Cluster 1?</p>
+
+<p>Infrequent but loyal customers.</p>
+
+<p>####PROBLEM 2.4 - HIERARCHICAL CLUSTERING  (2 points possible)
+Compared to the other clusters, Cluster 2 has the largest average values in which variables (if any)?</p>
+
+<p>QualMiles 
+FlightMiles 
+FlightTrans </p>
+
+<p>How would you describe the customers in Cluster 2?</p>
+
+<p>Customers who have accumulated a large amount of miles, and the ones with the largest number of flight transactions. </p>
+
+<p>####PROBLEM 2.5 - HIERARCHICAL CLUSTERING  (2 points possible)
+Compared to the other clusters, Cluster 3 has the largest average values in which variables (if any)?</p>
+
+<p>Balance 
+BonusMiles 
+BonusTrans </p>
+
+<p>How would you describe the customers in Cluster 3?</p>
+
+<p>Customers who have accumulated a large amount of miles, mostly through non-flight transactions. </p>
+
+<p>####PROBLEM 2.6 - HIERARCHICAL CLUSTERING  (2 points possible)
+Compared to the other clusters, Cluster 4 has the largest average values in which variables (if any)?</p>
+
+<p>None</p>
+
+<p>How would you describe the customers in Cluster 4?</p>
+
+<p>Relatively new customers who seem to be accumulating miles, mostly through non-flight transactions.</p>
+
+<p>####PROBLEM 2.7 - HIERARCHICAL CLUSTERING  (2 points possible)
+Compared to the other clusters, Cluster 5 has the largest average values in which variables (if any)?</p>
+
+<p>None</p>
+
+<p>How would you describe the customers in Cluster 5?</p>
+
+<p>Relatively new customers who don&#39;t use the airline very often. </p>
+
+<p>####PROBLEM 3.1 - K-MEANS CLUSTERING  (1 point possible)
+Now run the k-means clustering algorithm on the normalized data, again creating 5 clusters. Set the seed to 88 right before running the clustering algorithm, and set the argument iter.max to 1000.</p>
+
+<pre><code class="r">k = 5
+set.seed(88)
+airKMClust = kmeans(airlinesNorm, centers = k, iter.max = 1000)
+</code></pre>
+
+<p>How many clusters have more than 1,000 observations?</p>
+
+<pre><code class="r">table(airKMClust$cluster)
+</code></pre>
+
+<pre><code>## 
+##    1    2    3    4    5 
+##  408  141  993 1182 1275
+</code></pre>
+
+<p>PROBLEM 3.2 - K-MEANS CLUSTERING  (1 point possible)
+Now, compare the cluster centroids to each other either by dividing the data points into groups and then using tapply, or by looking at the output of kmeansClust$centers, where &ldquo;kmeansClust&rdquo; is the name of the output of the kmeans function. (Note that the output of kmeansClust$centers will be for the normalized data. If you want to look at the average values for the unnormalized data, you need to use tapply like we did for hierarchical clustering.)</p>
+
+<p>Do you expect Cluster 1 of the K-Means clustering output to necessarily be similar to Cluster 1 of the Hierarchical clustering output?</p>
+
+<pre><code class="r">tapply(airlines$Balance, airKMClust$cluster, mean)
+</code></pre>
+
+<pre><code>##      1      2      3      4      5 
+## 219161 174432  67977  60166  32707
+</code></pre>
+
+<p>No, because cluster ordering is not meaningful in either k-means clustering or hierarchical clustering. </p>
+
+</body>
+
+</html>
+

@@ -77,7 +77,7 @@ Or equvalently
 
 
 There is no simple way to output a detailed summary of the model in scikit-learn
-like `summary(model)` in R
+like `summary(model)` in R    
 You can get the intercept and coefficients of the fitted model like this:
 
 

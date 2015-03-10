@@ -47,7 +47,7 @@
     
 
 ## Linear Regression (one variable)
-I will try to use scikit-learn to do modeling in Python    
+I will try to use scikit-learn to do modeling in Python
 Notice the scikit learn expect X to be a 2-D matrix rather than an 1-D array
 when fitting the model
 So simply using `clf.fit(wine['AGST'], wine['Price'])` won't work
@@ -77,7 +77,7 @@ Or equvalently
 
 
 There is no simple way to output a detailed summary of the model in scikit-learn
-like `summary(model)` in R    
+like `summary(model)` in R
 You can get the intercept and coefficients of the fitted model like this:
 
 

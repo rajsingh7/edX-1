@@ -47,7 +47,7 @@
     
 
 ## Linear Regression (one variable)
-I will try to use scikit-learn to do modeling in Python
+I will try to use scikit-learn to do modeling in Python    
 Notice the scikit learn expect X to be a 2-D matrix rather than an 1-D array
 when fitting the model
 So simply using `clf.fit(wine['AGST'], wine['Price'])` won't work

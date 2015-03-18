@@ -15,7 +15,7 @@
     def dfStr(df):
         print "The dataframe contains {0} rows and {1} columns".format(df.shape[0], df.shape[1])
         print "The data types of columns are: \n"
-        print quality.dtypes
+        print df.dtypes
     
     dfStr(quality)
 
@@ -71,12 +71,16 @@ I will be using `train_test_split` from scikit-learn to split the dataset into
 training and testing sets
 The data types returned by `train_test_split` in default is `object`, thus you
 need to convert them back when creating dataframes using `pandas`
+Also simply using `train_test_split` on the entire dataframe will not enforce
+the ration of 1 and 0 in the dependent variable in the splitted sets. So it
+should be done separately.
 
 
     from sklearn.cross_validation import train_test_split
-    train, test = train_test_split(quality, train_size=0.75, random_state=88)
-    qualityTrain = pd.DataFrame(train, columns=quality.columns).convert_objects(convert_numeric=True)
-    qualityTest = pd.DataFrame(test, columns=quality.columns).convert_objects(convert_numeric=True)
+    train0, test0 = train_test_split(quality.loc[quality['PoorCare']==0,:], train_size=0.75, random_state=88)
+    train1, test1 = train_test_split(quality.loc[quality['PoorCare']==1,:], train_size=0.75, random_state=88)
+    qualityTrain = pd.DataFrame(np.vstack((train0,train1)), columns=quality.columns).convert_objects(convert_numeric=True)
+    qualityTest = pd.DataFrame(np.vstack((test0,test1)), columns=quality.columns).convert_objects(convert_numeric=True)
 
 ## Logistic Regression Model Using `statsmodels`
 Need to create a dummy variable for intercept
@@ -88,23 +92,23 @@ Need to create a dummy variable for intercept
     print QualityLog.summary()
 
     Optimization terminated successfully.
-             Current function value: 0.444149
-             Iterations 6
+             Current function value: 0.389286
+             Iterations 7
                                Logit Regression Results                           
     ==============================================================================
-    Dep. Variable:               PoorCare   No. Observations:                   98
-    Model:                          Logit   Df Residuals:                       95
+    Dep. Variable:               PoorCare   No. Observations:                   97
+    Model:                          Logit   Df Residuals:                       94
     Method:                           MLE   Df Model:                            2
-    Date:                Tue, 17 Mar 2015   Pseudo R-squ.:                  0.2021
-    Time:                        20:20:54   Log-Likelihood:                -43.527
-    converged:                       True   LL-Null:                       -54.553
-                                            LLR p-value:                 1.627e-05
+    Date:                Wed, 18 Mar 2015   Pseudo R-squ.:                  0.3042
+    Time:                        09:55:21   Log-Likelihood:                -37.761
+    converged:                       True   LL-Null:                       -54.270
+                                            LLR p-value:                 6.762e-08
     ================================================================================
                        coef    std err          z      P>|z|      [95.0% Conf. Int.]
     --------------------------------------------------------------------------------
-    OfficeVisits     0.0662      0.029      2.284      0.022         0.009     0.123
-    Narcotics        0.0914      0.034      2.728      0.006         0.026     0.157
-    Intercept       -2.5916      0.536     -4.831      0.000        -3.643    -1.540
+    OfficeVisits     0.0715      0.031      2.341      0.019         0.012     0.131
+    Narcotics        0.1774      0.064      2.764      0.006         0.052     0.303
+    Intercept       -2.8730      0.574     -5.003      0.000        -3.998    -1.748
     ================================================================================
     
 
@@ -114,23 +118,23 @@ Need to create a dummy variable for intercept
     predictTrain =  QualityLog.predict()
     print predictTrain
 
-    [ 0.44804085  0.21694573  0.29511069  0.10638046  0.12063874  0.17171362
-      0.15044291  0.10638046  0.95186367  0.18749341  0.22398514  0.89762931
-      0.10025035  0.1421777   0.08250811  0.96558687  0.15909948  0.35013628
-      0.16815557  0.07876858  0.61136782  0.21963118  0.11283841  0.16815557
-      0.59936938  0.12231827  0.17533109  0.1421777   0.51004889  0.22126155
-      0.65030407  0.10025035  0.09883971  0.08061857  0.12678436  0.12783842
-      0.28153139  0.10638046  0.11538835  0.73326513  0.16815557  0.10638046
-      0.17670707  0.42244942  0.12960342  0.21269111  0.18133288  0.10025035
-      0.1196359   0.26220461  0.15044291  0.82127603  0.1196359   0.32337278
-      0.99057612  0.11798824  0.43400898  0.14026906  0.11127253  0.22181975
-      0.25616129  0.11283841  0.2084977   0.12960342  0.14026906  0.29708806
-      0.1196359   0.14646413  0.17171362  0.11283841  0.16815557  0.10880236
-      0.11798824  0.10638046  0.27020582  0.34227949  0.14646413  0.2525626
-      0.15909948  0.11283841  0.11283841  0.06968276  0.27084455  0.21269111
-      0.2573541   0.13540162  0.12063874  0.65382403  0.07876858  0.11538835
-      0.1421777   0.2345752   0.24315831  0.14528208  0.23569935  0.14528208
-      0.7091744   0.10025035]
+    [ 0.21409682  0.20792723  0.15513627  0.15513627  0.16952904  0.09102833
+      0.11761437  0.09102833  0.12095314  0.10356925  0.0612244   0.57347677
+      0.12123395  0.09711829  0.11382242  0.13328096  0.09711829  0.0612244
+      0.08528419  0.14175685  0.1366838   0.09102833  0.16005598  0.13699543
+      0.11013747  0.29329533  0.2938425   0.11382242  0.1964003   0.12876152
+      0.29493862  0.31685708  0.07987066  0.14175685  0.07987066  0.12095314
+      0.11013747  0.06997534  0.10017872  0.08528419  0.07987066  0.5850803
+      0.21994553  0.20705952  0.20792723  0.36253852  0.18022127  0.11761437
+      0.10680892  0.28513498  0.19102437  0.2867511   0.08528419  0.09391682
+      0.1290578   0.09102833  0.16473785  0.07718914  0.43083676  0.16990082
+      0.07459035  0.11382242  0.27235695  0.12095314  0.12523791  0.25237953
+      0.05350486  0.07477268  0.08528419  0.07224887  0.1290578   0.05350486
+      0.09711829  0.99921197  0.95532822  0.98353566  0.602321    0.266104
+      0.14175685  0.99815848  0.42370491  0.11013747  0.4688101   0.99993188
+      0.21994553  0.15513627  0.10332455  0.92141417  0.12523791  0.11355656
+      0.09081026  0.19061698  0.95532822  0.57347677  0.96700293  0.13297648
+      0.93300705]
     
 
 ## Analyze predictions
@@ -141,14 +145,14 @@ I am taking advantage of the `describe()` and `groupby()` functions of
     print pd.DataFrame(predictTrain).describe()
 
                    0
-    count  98.000000
-    mean    0.244898
-    std     0.214547
-    min     0.069683
-    25%     0.117988
-    50%     0.159099
-    75%     0.257056
-    max     0.990576
+    count  97.000000
+    mean    0.247423
+    std     0.260452
+    min     0.053505
+    25%     0.097118
+    50%     0.133281
+    75%     0.266104
+    max     0.999932
     
 
 
@@ -159,8 +163,8 @@ I am taking advantage of the `describe()` and `groupby()` functions of
 
 
     PoorCare
-    0           0.183462
-    1           0.434325
+    0           0.158482
+    1           0.517951
     Name: predictTrain, dtype: float64
 
 
@@ -175,7 +179,42 @@ A little bit trickier to do the table
 
     PoorCare  boolean
     0         False      71
-              True        3
+              True        2
+    1         False      13
+              True       11
+    dtype: int64
+    
+
+## Sensitivity and specificity
+
+
+    11/24.0
+
+
+
+
+    0.4583333333333333
+
+
+
+
+    71/73.0
+
+
+
+
+    0.9726027397260274
+
+
+
+## Confusion matrix for threshold of 0.7
+
+
+    df['boolean'] = df['predictTrain'] >= 0.7
+    print df.groupby(['PoorCare','boolean']).size()
+
+    PoorCare  boolean
+    0         False      73
     1         False      15
               True        9
     dtype: int64
@@ -194,48 +233,12 @@ A little bit trickier to do the table
 
 
 
-    71/74.0
+    73/73.0
 
 
 
 
-    0.9594594594594594
-
-
-
-## Confusion matrix for threshold of 0.7
-
-
-    df['boolean'] = df['predictTrain'] >= 0.7
-    print df.groupby(['PoorCare','boolean']).size()
-
-    PoorCare  boolean
-    0         False      73
-              True        1
-    1         False      18
-              True        6
-    dtype: int64
-    
-
-## Sensitivity and specificity
-
-
-    6/24.0
-
-
-
-
-    0.25
-
-
-
-
-    73/74.0
-
-
-
-
-    0.9864864864864865
+    1.0
 
 
 
@@ -247,7 +250,7 @@ This time using `confusion_matrix` from `scikit-learn`
     df['boolean'] = df['predictTrain'] >= 0.2
     print confusion_matrix(df['PoorCare'] == 1, df['boolean'])
 
-    [[51 23]
+    [[56 17]
      [ 9 15]]
     
 
@@ -264,12 +267,12 @@ This time using `confusion_matrix` from `scikit-learn`
 
 
 
-    51.0/74
+    56.0/73
 
 
 
 
-    0.6891891891891891
+    0.7671232876712328
 
 
 
@@ -305,6 +308,3 @@ R's ROCR package.
 
 ![png](modelingexpert_files/modelingexpert_35_0.png)
 
-
-
-    

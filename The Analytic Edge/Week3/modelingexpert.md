@@ -298,10 +298,13 @@ R's ROCR package.
     plt.ylim([0.0, 1.05])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
-    plt.title('Receiver operating characteristic example')
+    plt.title('Receiver operating characteristic Plot')
     plt.legend(loc="lower right")
     plt.show()
 
 
 ![png](modelingexpert_files/modelingexpert_35_0.png)
 
+
+
+    

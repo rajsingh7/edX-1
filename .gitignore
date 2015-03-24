@@ -43,3 +43,5 @@ Temporary Items
 .apdisk
 *.csv
 *.Rhistory
+the analytic edge/*.R
+the analytic edge/*.Rmd

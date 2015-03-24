@@ -286,25 +286,10 @@ Look at the tree
 
 
 ## ROC curve
-We need real valued prediction output to get ROC curve, I guess we should refit
-a `Decision Tree Regressor` for this part.
+We need real valued prediction output to get ROC curve.
 
 
-    StevensTreeReg = tree.DecisionTreeRegressor(min_samples_leaf = 25)
-    StevensTreeReg.fit(X,y)
-
-
-
-
-    DecisionTreeRegressor(compute_importances=None, criterion='mse',
-               max_depth=None, max_features=None, max_leaf_nodes=None,
-               min_density=None, min_samples_leaf=25, min_samples_split=2,
-               random_state=None, splitter='best')
-
-
-
-
-    PredictCARTR = StevensTreeReg.predict(XTest)
+    PredictCARTR = StevensTree.predict_proba(XTest)[:,1]
     from sklearn.metrics import roc_curve, auc
     fpr, tpr, thresholds = roc_curve(yTest, PredictCARTR)
     roc_auc = auc(fpr, tpr)
@@ -324,10 +309,8 @@ a `Decision Tree Regressor` for this part.
     plt.show()
 
 
-![png](SupremeCourt_files/SupremeCourt_25_0.png)
+![png](SupremeCourt_files/SupremeCourt_24_0.png)
 
-
-## VIDEO 5 - Random Forests
 
 
     from sklearn.ensemble import RandomForestClassifier

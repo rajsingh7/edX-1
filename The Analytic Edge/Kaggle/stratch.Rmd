@@ -310,3 +310,48 @@ MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tpred[,1]
 write.csv(MySubmission, "rfwith11textFeatures.csv", row.names = F)
 ```
 
+#Why not a neural net?
+#ÊÔÊÔÉñ¾­ÍøÂç
+```{r}
+library(neuralnet)
+traindata <- tatrain
+traindata$Popular <- as.numeric(as.character(Y))
+
+nn <- neuralnet(Popular~isWeekend+compani+day+new+presid+report+said+say+time+will+year+york,data = traindata, hidden=2, err.fct="ce", linear.output=FALSE)
+plot(nn)
+pnn <- compute(nn, traindata[,c(10:21)])
+summary(tpnn$net.result)
+nnpredict <- as.vector(pnn$net.result)
+prediction <- prediction(nnpredict, Y)
+perf <- performance(prediction, "tpr", "fpr")
+plot(perf, colorize = T, lwd = 2)
+auc <- performance(prediction, "auc")
+auc@y.values
+```
+
+
+```{r}
+taAll <- rbind(tatrain,tatest)
+c1 <- as.data.frame(model.matrix(~taAll$NewsDesk))
+c2 <- as.data.frame(model.matrix(~taAll$SectionName))
+c3 <- as.data.frame(model.matrix(~taAll$SubsectionName))
+c4 <- as.data.frame(model.matrix(~taAll$Hour))
+c5 <- as.data.frame(model.matrix(~taAll$Wday))
+c6 <- as.data.frame(model.matrix(~taAll$Mday))
+d <- cbind(c1,c2,c3,c4,c5,c6,taAll[,c(4:6,10:21)])
+d$"(Intercept)" <- NULL
+d$"(Intercept)" <- NULL
+d$"(Intercept)" <- NULL
+d$"(Intercept)" <- NULL
+d$"(Intercept)" <- NULL
+d$"(Intercept)" <- NULL
+names(d) <- make.names(names(d))
+traind <- d[1:ntrain,]
+traind$Popular <- as.numeric(as.character(Y))
+testd <- d[(ntrain+1:nrow(d)),]
+n <- names(d)
+f <- as.formula(paste("Popular ~", paste(n[!n %in% "Popular"], collapse = " + ")))
+f
+nn <- neuralnet(f,data = traind, hidden=10, err.fct="ce", linear.output=FALSE)
+```
+

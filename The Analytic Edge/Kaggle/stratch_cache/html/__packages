@@ -1,0 +1,14 @@
+base
+caTools
+e1071
+gplots
+MASS
+Matrix
+neuralnet
+NLP
+plyr
+randomForest
+ROCR
+RTextTools
+SparseM
+tm

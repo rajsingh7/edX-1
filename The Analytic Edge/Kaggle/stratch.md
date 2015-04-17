@@ -1,78 +1,128 @@
----
-title: "Analytic Edge Kaggle NYT classifiction"
-author: "Ryan Zhang"
-date: "Thursday, April 16, 2015"
-output:
-  html_document:
-    highlight: pygments
-    keep_md: yes
-    theme: flatly
----
+# Analytic Edge Kaggle NYT classifiction
+Ryan Zhang  
+Thursday, April 16, 2015  
 
 # 0 Environment
-# »·¾³Éè¶¨
+# çŽ¯å¢ƒè®¾å®š
 ## Set working directory
-## Éè¶¨¹¤×÷»·¾³
-```{r}
+## è®¾å®šå·¥ä½œçŽ¯å¢ƒ
+
+```r
 setwd("~/GitHub/edX/The Analytic Edge/Kaggle")
 ```
 
 ## Load Libraries
-## º¯Êý°ü
-```{r warning=FALSE}
+## å‡½æ•°åŒ…
+
+```r
 library(RTextTools)
+```
+
+```
+## Loading required package: SparseM
+## 
+## Attaching package: 'SparseM'
+## 
+## The following object is masked from 'package:base':
+## 
+##     backsolve
+```
+
+```r
 library(plyr)
 library(Matrix)
 library(tm)
+```
+
+```
+## Loading required package: NLP
+```
+
+```r
 library(e1071)
 library(caTools)
 library(randomForest)
+```
+
+```
+## randomForest 4.6-10
+## Type rfNews() to see new features/changes/bug fixes.
+```
+
+```r
 library(ROCR)
 ```
 
+```
+## Loading required package: gplots
+## 
+## Attaching package: 'gplots'
+## 
+## The following object is masked from 'package:stats':
+## 
+##     lowess
+```
+
 ## Function Definition
-## ×Ô¶¨Òåº¯Êý
-```{r}
+## è‡ªå®šä¹‰å‡½æ•°
+
+```r
 tCor <- function(t)round(t[,2]/rowSums(t),2)*100 
 ```
 
 # 1 Data Preparing
-# 1 Êý¾Ý×¼±¸¹¤×÷
+# 1 æ•°æ®å‡†å¤‡å·¥ä½œ
 ## 1.1 Data Loading
-## 1.1 ×°ÔØÊý¾Ý
-```{r}
+## 1.1 è£…è½½æ•°æ®
+
+```r
 NewsTrain <- read.csv("NYTimesBlogTrain.csv", stringsAsFactors = F)
 NewsTest <- read.csv("NYTimesBlogTest.csv", stringsAsFactors = F)
 ```
 
 ## 1.2 First Iteration in processing
-## 1.2 µÚÒ»ÂÖÊý¾Ý´¦Àí
+## 1.2 ç¬¬ä¸€è½®æ•°æ®å¤„ç†
 "Popular"" is the dependant variable, store it in a separate vector "Y", and delete the colomn from the 
 dataframe "NewsTrain". 
-ÒªÔ¤²âµÄÒò±äÁ¿ÊÇ¡°Popular¡±£¬½«Æä´æÔÚÒ»¸öµ¥¶ÀµÄ"Y"ÏòÁ¿ÖÐ,²¢´ÓÑµÁ·Êý¾Ý¿òÖÐÉ¾³ý¸ÃÁÐ¡£
-```{r}
+è¦é¢„æµ‹çš„å› å˜é‡æ˜¯â€œPopularâ€ï¼Œå°†å…¶å­˜åœ¨ä¸€ä¸ªå•ç‹¬çš„"Y"å‘é‡ä¸­,å¹¶ä»Žè®­ç»ƒæ•°æ®æ¡†ä¸­åˆ é™¤è¯¥åˆ—ã€‚
+
+```r
 Y <- as.factor(NewsTrain$Popular)
 NewsTrain$Popular <- NULL
 ```
 
 Store the number of training data points and the number of testing data points.
-¼ÇÂ¼Ò»ÏÂÑµÁ·Êý¾ÝºÍ²âÊÔÊý¾ÝµÄÊýÁ¿¡£
-```{r}
+è®°å½•ä¸€ä¸‹è®­ç»ƒæ•°æ®å’Œæµ‹è¯•æ•°æ®çš„æ•°é‡ã€‚
+
+```r
 ntrain <- nrow(NewsTrain)
 ntest <- nrow(NewsTest)
 ntrain
+```
+
+```
+## [1] 6532
+```
+
+```r
 ntest
 ```
 
+```
+## [1] 1870
+```
+
 Combine "NewsTrain" and "NewsTest" into a single dataframe for the purpose of data preparing
-½«ÑµÁ·Êý¾ÝºÍ²âÊÔÊý¾ÝºÏ²¢ÎªÒ»¸öµ¥Ò»µÄÊý¾Ý¿ò£¬ÒÔ±ã¼¯ÖÐ´¦Àí£¨ÕâÊÇ·ñÓÐÎÊÌâ£¿£©
-```{r}
+å°†è®­ç»ƒæ•°æ®å’Œæµ‹è¯•æ•°æ®åˆå¹¶ä¸ºä¸€ä¸ªå•ä¸€çš„æ•°æ®æ¡†ï¼Œä»¥ä¾¿é›†ä¸­å¤„ç†ï¼ˆè¿™æ˜¯å¦æœ‰é—®é¢˜ï¼Ÿï¼‰
+
+```r
 OriginalDF <- rbind(NewsTrain, NewsTest)
 ```
 
 Filling empty entries for the first three columns with name "Other"
-½«Ç°ÈýÁÐÀïÃæµÄ¡°¡±ÓÃ¡°Other¡±Ìæ´ú
-```{r}
+å°†å‰ä¸‰åˆ—é‡Œé¢çš„â€œâ€ç”¨â€œOtherâ€æ›¿ä»£
+
+```r
 for (i in 1:nrow(OriginalDF)){
   for (j in 1:3){
     if (OriginalDF[i,j] == ""){
@@ -83,23 +133,26 @@ for (i in 1:nrow(OriginalDF)){
 ```
 
 Change the first three columns to be factors
-½«Ç°Èý¸ö±äÁ¿¸Ä³ÉfactorÀàÐÍ
-```{r}
+å°†å‰ä¸‰ä¸ªå˜é‡æ”¹æˆfactorç±»åž‹
+
+```r
 OriginalDF$NewsDesk <- as.factor(OriginalDF$NewsDesk)
 OriginalDF$SectionName <- as.factor(OriginalDF$SectionName)
 OriginalDF$SubsectionName <- as.factor(OriginalDF$SubsectionName)
 ```
 
 Transfer "WordCount" into Z-score
-½«WordCount×ª»»Îª±ê×¼Öµ
-```{r}
+å°†WordCountè½¬æ¢ä¸ºæ ‡å‡†å€¼
+
+```r
 OriginalDF$ZWordCount <- with(OriginalDF, (WordCount - mean(WordCount))/sd(WordCount))
 OriginalDF$NWordCount <- log(OriginalDF$WordCount + 1)
 ```
 
 Conver the PubDate and time variable to be more R friendly and extract the hour of day, the day on month and the day of week to be seperate variables. Finally delete the PubDate column.
-½«PubDate¸Ä³ÉRµÄÈÕÆÚ-Ê±¼ä¸ñÊ½£¬²¢½«ÖÜ¼¸¡¢Ã¿ÔÂ¼¸ºÅÒÔ¼°Ã¿Ìì¼¸µãÕâÐ©ÐÅÏ¢µ¥¶À³éÈ¡³öÀ´£¬É¾³ýÔ­±¾µÄPubDate
-```{r}
+å°†PubDateæ”¹æˆRçš„æ—¥æœŸ-æ—¶é—´æ ¼å¼ï¼Œå¹¶å°†å‘¨å‡ ã€æ¯æœˆå‡ å·ä»¥åŠæ¯å¤©å‡ ç‚¹è¿™äº›ä¿¡æ¯å•ç‹¬æŠ½å–å‡ºæ¥ï¼Œåˆ é™¤åŽŸæœ¬çš„PubDate
+
+```r
 OriginalDF$PubDate <- strptime(OriginalDF$PubDate, "%Y-%m-%d %H:%M:%S")
 OriginalDF$Hour <- as.factor(OriginalDF$PubDate$h)
 OriginalDF$Wday <- as.factor(OriginalDF$PubDate$wday)
@@ -109,110 +162,334 @@ OriginalDF$PubDate <- NULL
 ```
 
 Generate training and testing set
-Éú³ÉÑµÁ·ºÍ²âÊÔÊý¾Ý
-```{r}
+ç”Ÿæˆè®­ç»ƒå’Œæµ‹è¯•æ•°æ®
+
+```r
 train <- OriginalDF[1:ntrain, c(1:3,7,9:14)]
 test <- OriginalDF[(ntrain+1):nrow(OriginalDF),c(1:3,7,9:14)]
 ```
 
 ## 1.3 Exploratory Data Analysis
-## 1.3 Ì½Ë÷Ê½Êý¾Ý·ÖÎö
+## 1.3 æŽ¢ç´¢å¼æ•°æ®åˆ†æž
 First Explore the few factor variable and their relationship to the depandent variable.
-ÏÈ¿´¿´Ç°Èý¸öfactorÐÍÊý¾ÝÓëÒªÔ¤²âµÄPopularÖ®¼äµÄ¹ØÏµ¡£
-```{r}
+å…ˆçœ‹çœ‹å‰ä¸‰ä¸ªfactoråž‹æ•°æ®ä¸Žè¦é¢„æµ‹çš„Popularä¹‹é—´çš„å…³ç³»ã€‚
+
+```r
 tNewsDesk <- table(OriginalDF$NewsDesk[1:ntrain], Y)
 tNewsDesk
-tCor(tNewsDesk)
-plot(tCor(tNewsDesk))
+```
 
+```
+##           Y
+##               0    1
+##   Business 1301  247
+##   Culture   626   50
+##   Foreign   372    3
+##   Magazine   31    0
+##   Metro     181   17
+##   National    4    0
+##   OpEd      113  408
+##   Other    1710  136
+##   Science    73  121
+##   Sports      2    0
+##   Styles    196  101
+##   Travel    115    1
+##   TStyle    715    9
+```
+
+```r
+tCor(tNewsDesk)
+```
+
+```
+## Business  Culture  Foreign Magazine    Metro National     OpEd    Other 
+##       16        7        1        0        9        0       78        7 
+##  Science   Sports   Styles   Travel   TStyle 
+##       62        0       34        1        1
+```
+
+```r
+plot(tCor(tNewsDesk))
+```
+
+![](stratch_files/figure-html/unnamed-chunk-13-1.png) 
+
+```r
 tSectionName <- table(OriginalDF$SectionName[1:ntrain], Y)
 tSectionName
-tCor(tSectionName)
-plot(tCor(tSectionName))
+```
 
+```
+##                   Y
+##                       0    1
+##   Arts              625   50
+##   Business Day      999   93
+##   Crosswords/Games   20  103
+##   Health             74  120
+##   Magazine           31    0
+##   Multimedia        139    2
+##   N.Y. / Region     181   17
+##   Open                4    0
+##   Opinion           182  425
+##   Other            2171  129
+##   Sports              1    0
+##   Style               2    0
+##   Technology        280   50
+##   Travel            116    1
+##   U.S.              405  100
+##   World             209    3
+```
+
+```r
+tCor(tSectionName)
+```
+
+```
+##             Arts     Business Day Crosswords/Games           Health 
+##                7                9               84               62 
+##         Magazine       Multimedia    N.Y. / Region             Open 
+##                0                1                9                0 
+##          Opinion            Other           Sports            Style 
+##               70                6                0                0 
+##       Technology           Travel             U.S.            World 
+##               15                1               20                1
+```
+
+```r
+plot(tCor(tSectionName))
+```
+
+![](stratch_files/figure-html/unnamed-chunk-13-2.png) 
+
+```r
 tSubsectionName <- table(OriginalDF$SubsectionName[1:ntrain], Y)
 tSubsectionName
+```
+
+```
+##                    Y
+##                        0    1
+##   Asia Pacific       200    3
+##   Dealbook           864   88
+##   Education          325    0
+##   Fashion & Style      2    0
+##   Other             3846  980
+##   Politics             2    0
+##   Room For Debate     61    1
+##   Small Business     135    5
+##   The Public Editor    4   16
+```
+
+```r
 tCor(tSubsectionName)
+```
+
+```
+##      Asia Pacific          Dealbook         Education   Fashion & Style 
+##                 1                 9                 0                 0 
+##             Other          Politics   Room For Debate    Small Business 
+##                20                 0                 2                 4 
+## The Public Editor 
+##                80
+```
+
+```r
 plot(tCor(tSubsectionName))
 ```
 
+![](stratch_files/figure-html/unnamed-chunk-13-3.png) 
+
 Looking at the text contents
-¿´¿´ÎÄ±¾ÐÅÏ¢
+çœ‹çœ‹æ–‡æœ¬ä¿¡æ¯
 It seems that the "Snippet" is almost redudent with "Abstract", in since 98% cases they are the same. And "Abstract" contains a little bit more infomation than "Snippet"
-SnippetÓ¦¸ÃºÍAbstractµÄÖØºÏÄÚÈÝ·Ç³£¶à£¬Ç°ÕßÃ²TËÆ¶¼ÊôÓÚºóÕß£¬Òò¶ø¹À¼ÆÖ»ÓÃºóÕß¾ÍºÃÁË¡£
-```{r}
+Snippetåº”è¯¥å’ŒAbstractçš„é‡åˆå†…å®¹éžå¸¸å¤šï¼Œå‰è€…è²ŒTä¼¼éƒ½å±žäºŽåŽè€…ï¼Œå› è€Œä¼°è®¡åªç”¨åŽè€…å°±å¥½äº†ã€‚
+
+```r
 sum(OriginalDF$Snippet == OriginalDF$Abstract)/nrow(OriginalDF)
+```
+
+```
+## [1] 0.9846465
+```
+
+```r
 which(OriginalDF$Snippet != OriginalDF$Abstract)[1]
+```
+
+```
+## [1] 22
+```
+
+```r
 OriginalDF[22,5]
+```
+
+```
+## [1] "In an open letter, Su Yutong, a Chinese journalist who was fired from a German public broadcaster last month after a debate over the Tiananmen Square massacre, called on the broadcasters director general to speak out for press freedom while in..."
+```
+
+```r
 OriginalDF[22,6]
 ```
 
+```
+## [1] "In an open letter, Su Yutong, a Chinese journalist who was fired from a German public broadcaster last month after a debate over the Tiananmen Square massacre, called on the broadcasters director general to speak out for press freedom while in China."
+```
+
 Looking at WordCount
-¿´¿´×ÖÊý
+çœ‹çœ‹å­—æ•°
 The distribution of WordCount seems to be a longtail / power-law distribution.
-×ÖÊýµÄ·Ö²¼ËÆºõÊÇÃÝÂÉ·Ö²¼µÄ
-```{r}
+å­—æ•°çš„åˆ†å¸ƒä¼¼ä¹Žæ˜¯å¹‚å¾‹åˆ†å¸ƒçš„
+
+```r
 summary(OriginalDF$WordCount)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0   188.0   377.0   528.8   735.0 10910.0
+```
+
+```r
 hist(OriginalDF$WordCount, breaks = 70)
+```
+
+![](stratch_files/figure-html/unnamed-chunk-15-1.png) 
+
+```r
 hist(OriginalDF$NWordCount)
 ```
 
+![](stratch_files/figure-html/unnamed-chunk-15-2.png) 
+
 
 Looking at publication day/weekday/hour related to Popular
-```{r}
+
+```r
 tHour <- table(OriginalDF$Hour[1:ntrain] , Y)
 tCor(tHour)
-plot(tCor(tHour))
+```
 
+```
+##  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 
+## 18 11 12  5  1  4 14  6 12 16 18 18 18 13 17 21 16 13 18 27 28 31 60 31
+```
+
+```r
+plot(tCor(tHour))
+```
+
+![](stratch_files/figure-html/unnamed-chunk-16-1.png) 
+
+```r
 tWday <- table(OriginalDF$Wday[1:ntrain], Y)
 tCor(tWday)
-plot(tCor(tWday))
+```
 
+```
+##  0  1  2  3  4  5  6 
+## 32 17 15 16 16 14 27
+```
+
+```r
+plot(tCor(tWday))
+```
+
+![](stratch_files/figure-html/unnamed-chunk-16-2.png) 
+
+```r
 tMday <- table(OriginalDF$Mday[1:ntrain], Y)
 tCor(tMday)
-plot(tCor(tMday))
+```
 
+```
+##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
+## 18 20 17 13 20 15 18 17 18 16 17 21 20 13 20 16 15 17 16 18 15 16 12 14 19 
+## 26 27 28 29 30 31 
+## 18 18 20 15 18 13
+```
+
+```r
+plot(tCor(tMday))
+```
+
+![](stratch_files/figure-html/unnamed-chunk-16-3.png) 
+
+```r
 tWeekend <- table(OriginalDF$isWeekend[1:ntrain], Y)
 tCor(tWeekend)
+```
+
+```
+##  0  1 
+## 16 30
+```
+
+```r
 plot(tCor(tWeekend))
 ```
 
+![](stratch_files/figure-html/unnamed-chunk-16-4.png) 
+
 #2 Model fitting
-#2 Ä£ÐÍÄâºÏ
+#2 æ¨¡åž‹æ‹Ÿåˆ
 
 randomForest model
-Ëæ»úÉ­ÁÖÄ£ÐÍ
-```{r cache=TRUE}
+éšæœºæ£®æž—æ¨¡åž‹
+
+```r
 set.seed(123)
 rfModel <- randomForest(x = train, y = Y, ntree = 500)
 ```
 
 Make prediction on the training set
-ÓÃÄ£ÐÍ¶ÔÑµÁ·Êý¾Ý½øÐÐÔ¤²â
-```{r}
+ç”¨æ¨¡åž‹å¯¹è®­ç»ƒæ•°æ®è¿›è¡Œé¢„æµ‹
+
+```r
 rfPred <- predict(rfModel, train, type = "prob")
 table(rfPred[,2] > 0.5,Y)
+```
 
+```
+##        Y
+##            0    1
+##   FALSE 5439    0
+##   TRUE     0 1093
+```
+
+```r
 prediction <- prediction(rfPred[,2], Y)
 perf <- performance(prediction, "tpr", "fpr")
 plot(perf, colorize = T, lwd = 2)
+```
+
+![](stratch_files/figure-html/unnamed-chunk-18-1.png) 
+
+```r
 auc <- performance(prediction, "auc")
 auc@y.values
 ```
 
+```
+## [[1]]
+## [1] 1
+```
+
 Make prediction with randomForest model
-ÓÃËæ»úÉ­ÁÖÄ£ÐÍ×öÔ¤²â
-```{r}
+ç”¨éšæœºæ£®æž—æ¨¡åž‹åšé¢„æµ‹
+
+```r
 tpred <- predict(rfModel, test, type = "prob")
 MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tpred[,1])
 write.csv(MySubmission, "rfOnRegularFeatures.csv", row.names = F)
 ```
 
 #3 Try feature engineering with text content
-#3 ³¢ÊÔÍ¨¹ýÎÄ±¾Êý¾Ý×öÌØÕ÷¹¤³Ì
+#3 å°è¯•é€šè¿‡æ–‡æœ¬æ•°æ®åšç‰¹å¾å·¥ç¨‹
 Extract all headline and abstract to form a corpus
-³éÈ¡ÌâÃûºÍÕªÒªÎÄ±¾¹¹½¨Ò»¸öÓïÁÏ¿â
-```{r cache=TRUE}
+æŠ½å–é¢˜åå’Œæ‘˜è¦æ–‡æœ¬æž„å»ºä¸€ä¸ªè¯­æ–™åº“
+
+```r
 text <- vector()
 for (i in 1:nrow(OriginalDF)) {
   text <- rbind(text, paste(OriginalDF$Headline[i], " ", OriginalDF$Abstract[i]))
@@ -222,8 +499,9 @@ Corpus <- Corpus(VectorSource(text))
 ```
 
 Standard Corpus processing
-±ê×¼»¯µÄÓïÁÏ¿â´¦Àí
-```{r cache=TRUE}
+æ ‡å‡†åŒ–çš„è¯­æ–™åº“å¤„ç†
+
+```r
 Corpus <- tm_map(Corpus, tolower)
 Corpus <- tm_map(Corpus, PlainTextDocument)
 Corpus <- tm_map(Corpus, removePunctuation)
@@ -232,36 +510,48 @@ Corpus <- tm_map(Corpus, stemDocument)
 ```
 
 Document ~ TF-IDF matrix
-¹¹½¨ÎÄµµ~TFIDF¾ØÕó
-```{r cache=TRUE}
+æž„å»ºæ–‡æ¡£~TFIDFçŸ©é˜µ
+
+```r
 dtm <- DocumentTermMatrix(Corpus, control = list(weighting = weightTfIdf))
 ```
 
 Get the terms
-»ñÈ¡ÊõÓïÁÐ±í
-```{r}
+èŽ·å–æœ¯è¯­åˆ—è¡¨
+
+```r
 terms <- dtm$dimnames$Terms
 terms[5101:5110]
 ```
 
+```
+##  [1] "envi"             "enviabl"          "environ"         
+##  [4] "environment"      "environmentalist" "environmentmind" 
+##  [7] "envoy"            "enzym"            "eon"             
+## [10] "eotvo"
+```
+
 Get the matrix for training and testing set
-·Ö±ð»ñµÃÑµÁ·ºÍ²âÊÔÊý¾ÝµÄDocument~TF-IDF¾ØÕó
-```{r}
+åˆ†åˆ«èŽ·å¾—è®­ç»ƒå’Œæµ‹è¯•æ•°æ®çš„Document~TF-IDFçŸ©é˜µ
+
+```r
 dtmTrain <- dtm[1:ntrain,]
 dtmTest <- dtm[(1+ntrain):dtm$nrow,]
 ```
 
 Get frequent terms matrix for testing set
-»ñµÃ²âÊÔ¼¯µÄÆµ·±ÊõÓï
-```{r cache=TRUE}
+èŽ·å¾—æµ‹è¯•é›†çš„é¢‘ç¹æœ¯è¯­
+
+```r
 sparseTest <- removeSparseTerms(dtmTest, 0.95)
 wordsTest <- as.data.frame(as.matrix(sparseTest))
 termsTest <- names(wordsTest)
 ```
 
 Filter the dtm based on frequent terms in testing set
-¸ù¾Ý²âÊÔ¼¯µÄÆµ·±ÊõÓï£¬¶ÔÔ­±¾µÄ¾ØÕó½øÐÐÉ¸Ñ¡
-```{r cache=TRUE}
+æ ¹æ®æµ‹è¯•é›†çš„é¢‘ç¹æœ¯è¯­ï¼Œå¯¹åŽŸæœ¬çš„çŸ©é˜µè¿›è¡Œç­›é€‰
+
+```r
 cols <- vector()
 for (i in 1:length(termsTest)){
   cols = c(cols, which((terms == termsTest[i]) == T))
@@ -270,54 +560,98 @@ dtmFiltered <- dtm[,cols]
 ```
 
 Text Feature
-ÎÄ±¾ÌØÕ÷
-```{r}
+æ–‡æœ¬ç‰¹å¾
+
+```r
 termFeatures <- as.data.frame(as.matrix(dtmFiltered))
 row.names(termFeatures) <- c(1:nrow(OriginalDF))
 ```
 
 Append text features to the dataframe
-```{r}
+
+```r
 TextADDDF <- as.data.frame(cbind(OriginalDF,termFeatures))
 ```
 
-```{r}
+
+```r
 tatrain <- TextADDDF[1:ntrain, c(1:3,7,9:25)]
 tatest <- TextADDDF[(ntrain+1):nrow(TextADDDF),c(1:3,7,9:25)]
 ```
 
 randomForest model with text features added
-¼ÓÁËÎÄ±¾ÌØÕ÷µÄËæ»úÉ­ÁÖÄ£ÐÍ
-```{r cache=TRUE}
+åŠ äº†æ–‡æœ¬ç‰¹å¾çš„éšæœºæ£®æž—æ¨¡åž‹
+
+```r
 set.seed(123)
 tarfModel <- randomForest(x = tatrain, y = Y, ntree = 500)
 ```
 
 Make prediction on the training set
-ÓÃ¼ÓÁËÎÄ±¾ÌØÕ÷µÄËæ»úÉ­ÁÖÄ£ÐÍ¶ÔÑµÁ·Êý¾Ý½øÐÐÔ¤²â
-```{r}
+ç”¨åŠ äº†æ–‡æœ¬ç‰¹å¾çš„éšæœºæ£®æž—æ¨¡åž‹å¯¹è®­ç»ƒæ•°æ®è¿›è¡Œé¢„æµ‹
+
+```r
 tarfPred <- predict(tarfModel, tatrain, type = "prob")
 table(tarfPred[,2] > 0.5,Y)
+```
 
+```
+##        Y
+##            0    1
+##   FALSE 5435    0
+##   TRUE     4 1093
+```
+
+```r
 prediction <- prediction(tarfPred[,2], Y)
 perf <- performance(prediction, "tpr", "fpr")
 plot(perf, colorize = T, lwd = 2)
+```
+
+![](stratch_files/figure-html/unnamed-chunk-31-1.png) 
+
+```r
 auc <- performance(prediction, "auc")
 auc@y.values
 ```
 
+```
+## [[1]]
+## [1] 0.9999958
+```
+
 Make prediction with randomForest model
-¼ÓÁËÎÄ±¾ÌØÕ÷µÄËæ»úÉ­ÁÖÄ£ÐÍ×öÔ¤²â
-```{r}
+åŠ äº†æ–‡æœ¬ç‰¹å¾çš„éšæœºæ£®æž—æ¨¡åž‹åšé¢„æµ‹
+
+```r
 tatpred <- predict(tarfModel, tatest, type = "prob")
 MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tpred[,1])
 write.csv(MySubmission, "rfwith11textFeatures.csv", row.names = F)
 ```
 
 #Why not a neural net?
-#ÊÔÊÔÉñ¾­ÍøÂç
-```{r cache=TRUE}
+#è¯•è¯•ç¥žç»ç½‘ç»œ
+
+```r
 library(neuralnet)
+```
+
+```
+## Warning: package 'neuralnet' was built under R version 3.1.3
+```
+
+```
+## Loading required package: grid
+## Loading required package: MASS
+## 
+## Attaching package: 'neuralnet'
+## 
+## The following object is masked from 'package:ROCR':
+## 
+##     prediction
+```
+
+```r
 traindata <- tatrain
 traindata$Popular <- as.numeric(as.character(Y))
 
@@ -325,6 +659,19 @@ nn <- neuralnet(Popular~isWeekend+compani+day+new+presid+report+said+say+time+wi
 plot(nn)
 pnn <- compute(nn, traindata[,c(10:21)])
 summary(pnn$net.result)
+```
+
+```
+##        V1              
+##  Min.   :0.0000002906  
+##  1st Qu.:0.0995058251  
+##  Median :0.2045664855  
+##  Mean   :0.1673285763  
+##  3rd Qu.:0.2045664855  
+##  Max.   :0.9933724050
+```
+
+```r
 nnpredict <- as.vector(pnn$net.result)
 prediction <- ROCR::prediction(nnpredict, Y)
 perf <- performance(prediction, "tpr", "fpr")
@@ -333,8 +680,14 @@ auc <- performance(prediction, "auc")
 auc@y.values
 ```
 
+```
+## [[1]]
+## [1] 0.6927866025
+```
 
-```{r, cache=TRUE}
+
+
+```r
 taAll <- rbind(tatrain,tatest)
 c1 <- as.data.frame(model.matrix(~taAll$NewsDesk))
 c2 <- as.data.frame(model.matrix(~taAll$SectionName))
@@ -368,34 +721,41 @@ testd <- d[(ntrain+1):nrow(d),]
 
 
 # Care to do another randaomForest?
-```{r, cache=TRUE}
+
+```r
 set.seed(123)
 drfModel <- randomForest(x = traind[,1:108], y = Y, ntree = 500)
 drfPred <- predict(drfModel, traind, type = "prob")
 table(drfPred[,2] > 0.5,Y)
+```
 
+```
+##        Y
+##            0    1
+##   FALSE 5401   62
+##   TRUE    38 1031
+```
+
+```r
 prediction <- ROCR::prediction(drfPred[,2], Y)
 perf <- performance(prediction, "tpr", "fpr")
 plot(perf, colorize = T, lwd = 2)
+```
+
+![](stratch_files/figure-html/unnamed-chunk-35-1.png) 
+
+```r
 auc <- performance(prediction, "auc")
 auc@y.values
+```
 
+```
+## [[1]]
+## [1] 0.9989466
+```
 
+```r
 dtpred <- predict(drfModel, testd, type = "prob")
 MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tpred[,1])
 write.csv(MySubmission, "drf.csv", row.names = F)
 ```
-
-# knn classification
-```{r cache=TRUE}
-library(class)
-t <- traind[,c(1:94,96,98:109)]
-tt <- testd[,c(1:94,96,98:109)]
-cl <- traind$Popular
-knnpred <- knn(t,t, cl, k = 10, prob = TRUE)
-knnpredt <- knn(t,tt, cl, k = 10, prob = TRUE)
-predt <- attributes(.Last.value)$prob
-MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = predt)
-write.csv(MySubmission, "knn.csv", row.names = F)
-```
-

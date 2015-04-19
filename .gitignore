@@ -46,3 +46,4 @@ Temporary Items
 the analytic edge/*.R
 the analytic edge/*.Rmd
 the analytic edge/*.html
+*.RData

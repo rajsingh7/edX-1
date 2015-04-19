@@ -3,6 +3,7 @@ caTools
 class
 e1071
 gplots
+lattice
 MASS
 Matrix
 modeltools
@@ -12,6 +13,7 @@ NLP
 party
 plyr
 randomForest
+rCUR
 ROCR
 RTextTools
 sandwich

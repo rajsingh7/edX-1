@@ -13,55 +13,12 @@ setwd("~/GitHub/edX/The Analytic Edge/Kaggle")
 
 ```r
 library(tm)
-```
-
-```
-## Loading required package: NLP
-```
-
-```r
 library(e1071)
+library(neuralnet)
 library(randomForest)
-```
-
-```
-## randomForest 4.6-10
-## Type rfNews() to see new features/changes/bug fixes.
-```
-
-```r
 library(ROCR)
-```
-
-```
-## Loading required package: gplots
-## 
-## Attaching package: 'gplots'
-## 
-## The following object is masked from 'package:stats':
-## 
-##     lowess
-```
-
-```r
 library(party)
-```
-
-```
-## Loading required package: grid
-## Loading required package: mvtnorm
-## Loading required package: modeltools
-## Loading required package: stats4
-## Loading required package: strucchange
-## Loading required package: zoo
-## 
-## Attaching package: 'zoo'
-## 
-## The following objects are masked from 'package:base':
-## 
-##     as.Date, as.Date.numeric
-## 
-## Loading required package: sandwich
+library(rCUR)
 ```
 
 ##0-3 Function Definition  自定义函数  
@@ -170,25 +127,18 @@ First Explore the few factor variable and their relationship to the depandent va
 
 ```r
 tNewsDesk <- table(OriginalDF$NewsDesk[1:ntrain], Y)
-tNewsDesk
+t(tNewsDesk)
 ```
 
 ```
-##           Y
-##               0    1
-##   Business 1301  247
-##   Culture   626   50
-##   Foreign   372    3
-##   Magazine   31    0
-##   Metro     181   17
-##   National    4    0
-##   OpEd      113  408
-##   Other    1710  136
-##   Science    73  121
-##   Sports      2    0
-##   Styles    196  101
-##   Travel    115    1
-##   TStyle    715    9
+##    
+## Y   Business Culture Foreign Magazine Metro National OpEd Other Science
+##   0     1301     626     372       31   181        4  113  1710      73
+##   1      247      50       3        0    17        0  408   136     121
+##    
+## Y   Sports Styles Travel TStyle
+##   0      2    196    115    715
+##   1      0    101      1      9
 ```
 
 ```r
@@ -210,28 +160,22 @@ plot(tCor(tNewsDesk))
 
 ```r
 tSectionName <- table(OriginalDF$SectionName[1:ntrain], Y)
-tSectionName
+t(tSectionName)
 ```
 
 ```
-##                   Y
-##                       0    1
-##   Arts              625   50
-##   Business Day      999   93
-##   Crosswords/Games   20  103
-##   Health             74  120
-##   Magazine           31    0
-##   Multimedia        139    2
-##   N.Y. / Region     181   17
-##   Open                4    0
-##   Opinion           182  425
-##   Other            2171  129
-##   Sports              1    0
-##   Style               2    0
-##   Technology        280   50
-##   Travel            116    1
-##   U.S.              405  100
-##   World             209    3
+##    
+## Y   Arts Business Day Crosswords/Games Health Magazine Multimedia
+##   0  625          999               20     74       31        139
+##   1   50           93              103    120        0          2
+##    
+## Y   N.Y. / Region Open Opinion Other Sports Style Technology Travel U.S.
+##   0           181    4     182  2171      1     2        280    116  405
+##   1            17    0     425   129      0     0         50      1  100
+##    
+## Y   World
+##   0   209
+##   1     3
 ```
 
 ```r
@@ -257,21 +201,18 @@ plot(tCor(tSectionName))
 
 ```r
 tSubsectionName <- table(OriginalDF$SubsectionName[1:ntrain], Y)
-tSubsectionName
+t(tSubsectionName)
 ```
 
 ```
-##                    Y
-##                        0    1
-##   Asia Pacific       200    3
-##   Dealbook           864   88
-##   Education          325    0
-##   Fashion & Style      2    0
-##   Other             3846  980
-##   Politics             2    0
-##   Room For Debate     61    1
-##   Small Business     135    5
-##   The Public Editor    4   16
+##    
+## Y   Asia Pacific Dealbook Education Fashion & Style Other Politics
+##   0          200      864       325               2  3846        2
+##   1            3       88         0               0   980        0
+##    
+## Y   Room For Debate Small Business The Public Editor
+##   0              61            135                 4
+##   1               1              5                16
 ```
 
 ```r
@@ -292,6 +233,7 @@ plot(tCor(tSubsectionName))
 ```
 
 ![](stratch_files/figure-html/unnamed-chunk-13-3.png) 
+    
 SectionName, SubsectionName,NewsDesk应该都是有预测能力的变量，应该保留   
 
 Looking at the text contents    
@@ -362,12 +304,12 @@ Looking at publication day/weekday/hour related to Popular
 
 ```r
 tHour <- table(OriginalDF$Hour[1:ntrain] , Y)
-tCor(tHour)
+t(tCor(tHour))
 ```
 
 ```
-##  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 
-## 18 11 12  5  1  4 14  6 12 16 18 18 18 13 17 21 16 13 18 27 28 31 60 31
+##       0  1  2 3 4 5  6 7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+## [1,] 18 11 12 5 1 4 14 6 12 16 18 18 18 13 17 21 16 13 18 27 28 31 60 31
 ```
 
 ```r
@@ -378,12 +320,12 @@ plot(tCor(tHour))
 
 ```r
 tWday <- table(OriginalDF$Wday[1:ntrain], Y)
-tCor(tWday)
+t(tCor(tWday))
 ```
 
 ```
-##  0  1  2  3  4  5  6 
-## 32 17 15 16 16 14 27
+##       0  1  2  3  4  5  6
+## [1,] 32 17 15 16 16 14 27
 ```
 
 ```r
@@ -394,14 +336,14 @@ plot(tCor(tWday))
 
 ```r
 tMday <- table(OriginalDF$Mday[1:ntrain], Y)
-tCor(tMday)
+t(tCor(tMday))
 ```
 
 ```
-##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 
-## 18 20 17 13 20 15 18 17 18 16 17 21 20 13 20 16 15 17 16 18 15 16 12 14 19 
-## 26 27 28 29 30 31 
-## 18 18 20 15 18 13
+##       1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+## [1,] 18 20 17 13 20 15 18 17 18 16 17 21 20 13 20 16 15 17 16 18 15 16 12
+##      24 25 26 27 28 29 30 31
+## [1,] 14 19 18 18 20 15 18 13
 ```
 
 ```r
@@ -475,42 +417,7 @@ MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tpred[,1]
 write.csv(MySubmission, "rfRegularFeatures.csv", row.names = F)
 ```
 
-##3-2 cforest
-
-```r
-ctrain <- cbind(train,Y)
-set.seed(12345)
-crfModel <- cforest(Y~., data = ctrain)
-crfPred <- predict(crfModel, newdata = ctrain, type = "prob")
-crftpred <- vector()
-for (i in 1:ntrain){
-  crftpred <- c(crftpred, crfPred[[i]][2])
-  
-}
-table(crftpred > 0.5,Y)
-```
-
-```
-##        Y
-##            0    1
-##   FALSE 5307  280
-##   TRUE   132  813
-```
-
-```r
-crfPred <- predict(crfModel, newdata =test, type = "prob")
-crftpred <- vector()
-for (i in 1:ntest){
-  crftpred <- c(crftpred, crfPred[[i]][2])
-  
-}
-
-MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = crftpred)
-write.csv(MySubmission, "crfRegularFeatures.csv", row.names = F)
-```
-
 #4 Try feature engineering with text content 尝试通过文本数据做特征工程     
-
 ##4-1 TFIDF   术语频次·逆文档频次  
 Extract all headline and abstract to form a corpus    
 抽取题名和摘要文本构建一个语料库    
@@ -580,8 +487,7 @@ Filter the dtm based on frequent terms in testing set
 ```r
 cols <- vector()
 for (i in 1:length(termsTest)){
-  cols = c(cols, which((terms == termsTest[i]) == T))
-}
+  cols = c(cols, which((terms == termsTest[i]) == T))}
 dtmFiltered <- dtm[,cols]
 ```
 
@@ -621,65 +527,20 @@ Look at the importance of features via training randomForest
 看看文本特征的重要性    
 
 ```r
-tarfModel$importance
+t(tarfModel$importance[,4])
 ```
 
 ```
-##                            0             1 MeanDecreaseAccuracy
-## NewsDesk        6.741356e-02  1.092329e-01         7.438759e-02
-## SectionName     9.389658e-02  1.261535e-01         9.928177e-02
-## SubsectionName  4.074622e-02  2.942022e-02         3.885447e-02
-## NWordCount      2.948279e-02  8.854739e-02         3.935081e-02
-## Hour            1.345084e-02  2.809807e-02         1.590120e-02
-## Wday            6.637948e-03  5.883856e-03         6.507296e-03
-## Mday            3.721095e-03 -6.914420e-03         1.942193e-03
-## busi            1.680327e-04  9.294941e-04         2.954295e-04
-## can             1.020851e-03 -1.123474e-03         6.625746e-04
-## compani         7.723760e-05  2.242224e-03         4.386851e-04
-## day             6.986680e-04  1.994922e-03         9.148566e-04
-## get             1.192409e-04 -1.145431e-04         8.038500e-05
-## holiday         1.826994e-05  4.060872e-05         2.211479e-05
-## new             1.753845e-03  3.851044e-03         2.105095e-03
-## obama           1.318826e-04  8.952406e-05         1.246532e-04
-## one             1.329320e-04 -2.444800e-04         7.034757e-05
-## presid          2.055510e-04 -2.482352e-04         1.304924e-04
-## report          1.148631e-03  1.139174e-03         1.147981e-03
-## said            1.363014e-05  5.151324e-04         9.596379e-05
-## say            -1.145332e-05 -4.104990e-06        -9.280974e-06
-## state           2.067014e-04 -7.110133e-05         1.608185e-04
-## time            6.530400e-04  9.742312e-04         7.065211e-04
-## today           2.104928e-03  7.039273e-04         1.870567e-03
-## will            4.387393e-04  1.230304e-03         5.707581e-04
-## year            1.269276e-04  1.064227e-03         2.849845e-04
-## york            2.045278e-03  7.493456e-04         1.828384e-03
-##                MeanDecreaseGini
-## NewsDesk             299.485265
-## SectionName          407.426762
-## SubsectionName        49.077368
-## NWordCount           221.942783
-## Hour                 188.681089
-## Wday                  61.348279
-## Mday                 192.468174
-## busi                   4.862253
-## can                   14.061753
-## compani                9.666681
-## day                    7.926857
-## get                    8.634849
-## holiday                1.928577
-## new                   21.874343
-## obama                  4.140176
-## one                   14.222004
-## presid                 6.456700
-## report                 7.393292
-## said                  10.749057
-## say                   10.922739
-## state                  7.056526
-## time                  10.749815
-## today                  6.192084
-## will                  16.211561
-## year                  10.714690
-## york                   7.046009
+##      NewsDesk SectionName SubsectionName NWordCount     Hour     Wday
+## [1,] 299.4853    407.4268       49.07737   221.9428 188.6811 61.34828
+##          Mday     busi      can  compani      day      get  holiday
+## [1,] 192.4682 4.862253 14.06175 9.666681 7.926857 8.634849 1.928577
+##           new    obama    one presid   report     said      say    state
+## [1,] 21.87434 4.140176 14.222 6.4567 7.393292 10.74906 10.92274 7.056526
+##          time    today     will     year     york
+## [1,] 10.74981 6.192084 16.21156 10.71469 7.046009
 ```
+  
 貌似都挺低的。。。    
 
 Make prediction on the training set
@@ -703,7 +564,7 @@ perf <- performance(prediction, "tpr", "fpr")
 plot(perf, colorize = T, lwd = 2)
 ```
 
-![](stratch_files/figure-html/unnamed-chunk-33-1.png) 
+![](stratch_files/figure-html/unnamed-chunk-32-1.png) 
 
 ```r
 auc <- performance(prediction, "auc")
@@ -729,7 +590,6 @@ Neural net based on numerical features.
 基于数值特征的神经网络（没有GPU 炒鸡慢）       
 
 ```r
-library(neuralnet)
 nntrain <- tatrain[,c(4,8:26)]
 nntest <- tatest[,c(4,8:26)]
 nntrain$Popular <- as.numeric(as.character(Y))
@@ -779,10 +639,10 @@ proc.time() - ptm
 
 ```
 ##    user  system elapsed 
-##  308.58    0.01  309.46
+##  312.19    0.10  313.14
 ```
 
-#5 做个聚类看看 Clustering on TFIDF matrix
+#5 Clustering on TFIDF matrix 做个聚类看看
 
 ```r
 cTest <- removeSparseTerms(dtmTest, 0.98)
@@ -805,77 +665,33 @@ tactest <- cbind(tatest, kmclusters$cluster[(1+ntrain):nrow(OriginalDF)])
 names(tactest) <- c(names(tactest)[1:26],"cluster")
 ```
 
-##5-1 Another randomForest with cluster labels    
-加上聚类标签后再来一个随机森林    
+##5-1 Another randomForest with cluster labels added 加上聚类标签后再来一个随机森林    
 
 ```r
 set.seed(1126)
 tacrfModel <- randomForest(x = tactrain,
                         y = Y,
                         ntree = 1000,
+                        mtry = 6,
                         nodesize = 4,
                         importance = T,
                         proximity = F)
-tacrfModel$importance
+t(tacrfModel$importance[,4])
 ```
 
 ```
-##                                 0                  1 MeanDecreaseAccuracy
-## NewsDesk        0.064440842052554  0.112557385041662    0.072478785890433
-## SectionName     0.092266010479351  0.124741331561146    0.097688734720652
-## SubsectionName  0.043727953324982  0.033032507064183    0.041934413509678
-## NWordCount      0.029244304360978  0.088022131524731    0.039075112464806
-## Hour            0.012761502225103  0.029004265821257    0.015472070024610
-## Wday            0.006857137224175  0.007669153438586    0.006990799915467
-## Mday            0.003189772878526 -0.008507347488640    0.001232016771412
-## busi            0.000244940826857  0.001112555742747    0.000390179597804
-## can             0.001261139124872 -0.001011922471392    0.000878090010187
-## compani         0.000035852235649  0.002623652712256    0.000471105406584
-## day             0.000833359847324  0.002748037905825    0.001154730684509
-## get             0.000142896921861  0.000092549980857    0.000134135829552
-## holiday         0.000028887029172 -0.000003013133774    0.000023624637511
-## new             0.002026132632755  0.004193659644276    0.002387117549858
-## obama           0.000209171082249  0.000085115794274    0.000189404575340
-## one             0.000155194248768 -0.000133117013097    0.000106374737713
-## presid          0.000213941952248 -0.000341242879833    0.000120948232777
-## report          0.001266496601207  0.001192482567627    0.001253925448199
-## said           -0.000006493612102  0.000478235792260    0.000073399240133
-## say            -0.000013912145609  0.000095293020544    0.000005100706707
-## state           0.000171967557417 -0.000145969275241    0.000118437792381
-## time            0.000718678296095  0.001032203375862    0.000769567578423
-## today           0.002137941318733  0.000547888359566    0.001872497319653
-## will            0.000465365688903  0.001081672909667    0.000568250082291
-## year            0.000110218949897  0.001408966248372    0.000327599948374
-## york            0.002059300464941  0.000581817532856    0.001811723467328
-## cluster         0.001460456407490  0.000856633648507    0.001360483314837
-##                MeanDecreaseGini
-## NewsDesk          303.972981740
-## SectionName       399.218918891
-## SubsectionName     49.245442095
-## NWordCount        220.843727011
-## Hour              186.202891050
-## Wday               60.101284886
-## Mday              188.743295341
-## busi                4.859654238
-## can                14.760669856
-## compani             9.139214080
-## day                 7.999595138
-## get                 8.419714954
-## holiday             2.015642040
-## new                21.526058501
-## obama               3.756493292
-## one                13.707604428
-## presid              6.116362993
-## report              7.124132835
-## said               10.627462805
-## say                10.825350900
-## state               6.927241480
-## time               10.458574606
-## today               6.027968421
-## will               16.007573628
-## year               10.463039944
-## york                7.101026444
-## cluster            19.063941729
+##         NewsDesk SectionName SubsectionName  NWordCount        Hour
+## [1,] 299.0544463 423.0762937    47.99701456 223.0434275 191.3016237
+##            Wday        Mday        busi         can     compani
+## [1,] 62.4468584 201.8998751 4.482393384 13.89929788 9.178436072
+##              day         get     holiday         new       obama
+## [1,] 7.173729963 8.305665716 1.955248364 21.05488939 3.835041404
+##              one      presid      report        said         say
+## [1,] 14.04894231 5.907144806 6.876778644 10.07392383 10.60427921
+##            state        time       today        will        year
+## [1,] 6.853963756 10.23570453 5.571214176 15.79899998 10.20833421
+##            york     cluster
+## [1,] 6.84914554 18.57675336
 ```
 
 ```r
@@ -886,8 +702,8 @@ table(tacrfPred[,2] > 0.5,Y)
 ```
 ##        Y
 ##            0    1
-##   FALSE 5404   58
-##   TRUE    35 1035
+##   FALSE 5415   48
+##   TRUE    24 1045
 ```
 
 ```r
@@ -896,7 +712,7 @@ perf <- performance(prediction, "tpr", "fpr")
 plot(perf, colorize = T, lwd = 2)
 ```
 
-![](stratch_files/figure-html/unnamed-chunk-37-1.png) 
+![](stratch_files/figure-html/unnamed-chunk-36-1.png) 
 
 ```r
 auc <- performance(prediction, "auc")
@@ -905,7 +721,7 @@ auc@y.values
 
 ```
 ## [[1]]
-## [1] 0.9988373085
+## [1] 0.9993146983
 ```
 
 ```r
@@ -914,10 +730,114 @@ MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tacrfPred
 write.csv(MySubmission, "rfTextCluster.csv", row.names = F)
 ```
 
-#6 Matrix Factorization   矩阵分解  
+#6 Matrix Factorization 矩阵分解  
+##6-1 SVD 奇异值分解
 
 ```r
 s <- svd(cMatrix)
 Sig <- diag(s$d)
+plot(s$d)
+```
+
+![](stratch_files/figure-html/unnamed-chunk-37-1.png) 
+
+```r
+totaleng <- sum(Sig^2)
+engsum <- 0
+for (i in 1:nrow(Sig)){
+  engsum <- engsum + Sig[i,i]^2
+  if (engsum/totaleng > 0.8){
+    print(i)
+    break}}
+```
+
+```
+## [1] 60
+```
+需要60个术语才能保留原TF-IDF矩阵80%的能量   
+
+##6-2 CUR Matrix Decomposition CUR矩阵分解
+
+```r
+res <- CUR(cMatrix, c = 10, r = 84, k = 60)
+```
+
+将投影加到训练、测试数据
+
+```r
+ncolC <- ncol(getC(res))
+Ak <- getC(res) %*% getU(res)[,1:ncolC]
+AkDF <- as.data.frame(Ak)
+tacftrain <- cbind(tactrain, AkDF[1:ntrain,])
+tacftest <- cbind(tactest, AkDF[((1+ntrain):nrow(AkDF)),])
+```
+
+##6-3 randomForest with pc added 加上主要成分投影后的随机森林
+
+```r
+set.seed(1126)
+tacfrfModel <- randomForest(x = tacftrain,
+                        y = Y,
+                        ntree = 1000,
+                        mtry = 8,
+                        nodesize = 4,
+                        importance = T,
+                        proximity = F)
+t(tacfrfModel$importance[,4])
+```
+
+```
+##         NewsDesk SectionName SubsectionName NWordCount        Hour
+## [1,] 296.1647727 416.8602008    46.17696257 209.629217 180.3657326
+##            Wday        Mday        busi         can     compani
+## [1,] 56.0213111 198.3138407 3.530958719 11.69218083 2.489689048
+##              day         get     holiday         new       obama
+## [1,] 6.089543246 6.916761759 1.441500569 17.79834648 3.406518929
+##              one      presid      report        said         say
+## [1,] 11.81683348 5.308037771 1.162159266 8.852112112 9.649025758
+##            state        time       today        will        year
+## [1,] 5.903478123 8.506709247 3.492480738 13.24773191 8.320353492
+##             york     cluster          V1          V2          V3
+## [1,] 5.656499352 12.74414672 11.19786488 12.41113415 13.89364272
+##               V4          V5         V6          V7          V8
+## [1,] 10.80160976 13.24732552 13.3084316 13.76270635 12.25466804
+##               V9
+## [1,] 11.24266285
+```
+
+```r
+tacfrfPred <- predict(tacfrfModel, tacftrain, type = "prob")
+table(tacfrfPred[,2] > 0.5,Y)
+```
+
+```
+##        Y
+##            0    1
+##   FALSE 5419   44
+##   TRUE    20 1049
+```
+
+```r
+prediction <- ROCR::prediction(tacfrfPred[,2], Y)
+perf <- performance(prediction, "tpr", "fpr")
+plot(perf, colorize = T, lwd = 2)
+```
+
+![](stratch_files/figure-html/unnamed-chunk-40-1.png) 
+
+```r
+auc <- performance(prediction, "auc")
+auc@y.values
+```
+
+```
+## [[1]]
+## [1] 0.999598895
+```
+
+```r
+tacfrfPred <- predict(tacfrfModel, newdata = tacftest, type = "prob")
+MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tacfrfPred[,2])
+write.csv(MySubmission, "rfTextClusterFactorization.csv", row.names = F)
 ```
 

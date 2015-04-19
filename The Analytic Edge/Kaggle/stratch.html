@@ -79,59 +79,40 @@ img {
 
 <div id="TOC">
 <ul>
-<li><a href="#environment">0 Environment</a></li>
-<li><a>环境设定</a><ul>
-<li><a href="#set-working-directory">Set working directory</a></li>
-<li><a>设定工作环境</a></li>
-<li><a href="#load-libraries">Load Libraries</a></li>
-<li><a>函数包</a></li>
-<li><a href="#function-definition">Function Definition</a></li>
-<li><a>自定义函数</a></li>
+<li><a href="#environment-">0 Environment 环境设定</a><ul>
+<li><a href="#set-working-directory-">0-1 Set working directory 设定工作环境</a></li>
+<li><a href="#load-libraries-">0-2 Load Libraries 函数包</a></li>
+<li><a href="#function-definition-">0-3 Function Definition 自定义函数</a></li>
 </ul></li>
-<li><a href="#data-preparing">1 Data Preparing</a></li>
-<li><a>1 数据准备工作</a><ul>
-<li><a href="#data-loading">1.1 Data Loading</a></li>
-<li><a>1.1 装载数据</a></li>
-<li><a href="#first-iteration-in-processing">1.2 First Iteration in processing</a></li>
-<li><a>1.2 第一轮数据处理</a></li>
-<li><a href="#exploratory-data-analysis">1.3 Exploratory Data Analysis</a></li>
-<li><a>1.3 探索式数据分析</a></li>
+<li><a href="#data-preparing-">1 Data Preparing 数据准备工作</a><ul>
+<li><a href="#loading-">1-1 Loading 装载</a></li>
+<li><a>1-2 预处理</a></li>
+<li><a href="#exploratory-data-analysis-">2 Exploratory Data Analysis 探索式数据分析</a></li>
 </ul></li>
-<li><a href="#model-fitting">2 Model fitting</a></li>
-<li><a>2 模型拟合</a></li>
-<li><a href="#try-feature-engineering-with-text-content">3 Try feature engineering with text content</a></li>
-<li><a>3 尝试通过文本数据做特征工程</a><ul>
-<li><a href="#tfidf">TFIDF</a></li>
-<li><a>术语频次·逆文档频次</a></li>
-<li><a href="#randomforest-model-with-text-features-added">randomForest model with text features added</a></li>
-<li><a>加了文本特征的随机森林模型</a></li>
-<li><a href="#why-not-a-neural-net">Why not a neural net?</a></li>
-<li><a>试试神经网络</a></li>
-<li><a>做个聚类看看</a></li>
-<li><a href="#clustering-on-tfidf-matrix">Clustering on TFIDF matrix</a></li>
-<li><a href="#matrix-factorization">Matrix Factorization</a></li>
-<li><a>矩阵分解</a></li>
+<li><a href="#model-fitting-">3 Model fitting 模型拟合</a><ul>
+<li><a href="#randomforest-on-non-text-features-">3-1 randomForest on Non-Text Features 用不含文本提取的特征做随机森林</a></li>
+<li><a href="#cforest">3-2 cforest</a></li>
 </ul></li>
+<li><a href="#try-feature-engineering-with-text-content-">4 Try feature engineering with text content 尝试通过文本数据做特征工程</a><ul>
+<li><a href="#tfidf-">4-1 TFIDF 术语频次·逆文档频次</a></li>
+<li><a href="#randomforest-model-with-text-features-added-">4-2 randomForest model with text features added 加了文本特征的随机森林模型</a></li>
+<li><a href="#why-not-a-neural-net-">4-3 Why not a neural net? 试试神经网络</a></li>
+</ul></li>
+<li><a href="#-clustering-on-tfidf-matrix">5 做个聚类看看 Clustering on TFIDF matrix</a><ul>
+<li><a href="#another-randomforest-with-cluster-labels">5-1 Another randomForest with cluster labels</a></li>
+</ul></li>
+<li><a href="#matrix-factorization-">6 Matrix Factorization 矩阵分解</a></li>
 </ul>
 </div>
 
-<div id="environment" class="section level1">
-<h1>0 Environment</h1>
-</div>
-<div class="section level1">
-<h1>环境设定</h1>
-<div id="set-working-directory" class="section level2">
-<h2>Set working directory</h2>
-</div>
-<div class="section level2">
-<h2>设定工作环境</h2>
+<div id="environment-" class="section level1">
+<h1>0 Environment 环境设定</h1>
+<div id="set-working-directory-" class="section level2">
+<h2>0-1 Set working directory 设定工作环境</h2>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;~/GitHub/edX/The Analytic Edge/Kaggle&quot;</span>)</code></pre>
 </div>
-<div id="load-libraries" class="section level2">
-<h2>Load Libraries</h2>
-</div>
-<div class="section level2">
-<h2>函数包</h2>
+<div id="load-libraries-" class="section level2">
+<h2>0-2 Load Libraries 函数包</h2>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tm)</code></pre>
 <pre><code>## Loading required package: NLP</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(e1071)
@@ -162,36 +143,21 @@ img {
 ## 
 ## Loading required package: sandwich</code></pre>
 </div>
-<div id="function-definition" class="section level2">
-<h2>Function Definition</h2>
-</div>
-<div class="section level2">
-<h2>自定义函数</h2>
+<div id="function-definition-" class="section level2">
+<h2>0-3 Function Definition 自定义函数</h2>
 <p>用于帮助求table后正类百分比的小函数</p>
 <pre class="sourceCode r"><code class="sourceCode r">tCor &lt;-<span class="st"> </span>function(t)<span class="kw">round</span>(t[,<span class="dv">2</span>]/<span class="kw">rowSums</span>(t),<span class="dv">2</span>)*<span class="dv">100</span> </code></pre>
 </div>
 </div>
-<div id="data-preparing" class="section level1">
-<h1>1 Data Preparing</h1>
-</div>
-<div class="section level1">
-<h1>1 数据准备工作</h1>
-<div id="data-loading" class="section level2">
-<h2>1.1 Data Loading</h2>
-</div>
-<div class="section level2">
-<h2>1.1 装载数据</h2>
+<div id="data-preparing-" class="section level1">
+<h1>1 Data Preparing 数据准备工作</h1>
+<div id="loading-" class="section level2">
+<h2>1-1 Loading 装载</h2>
 <pre class="sourceCode r"><code class="sourceCode r">NewsTrain &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;NYTimesBlogTrain.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> F)
 NewsTest &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;NYTimesBlogTest.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> F)</code></pre>
 </div>
-<div id="first-iteration-in-processing" class="section level2">
-<h2>1.2 First Iteration in processing</h2>
-</div>
 <div class="section level2">
-<h2>1.2 第一轮数据处理</h2>
-<p>“Popular”&quot; is the dependant variable, store it in a separate vector “Y”, and delete the colomn from the dataframe “NewsTrain”.<br />要预测的因变量是“Popular”，将其存在一个单独的“Y”向量中,并从训练数据框中删除该列。</p>
-<pre class="sourceCode r"><code class="sourceCode r">Y &lt;-<span class="st"> </span><span class="kw">as.factor</span>(NewsTrain$Popular)
-NewsTrain$Popular &lt;-<span class="st"> </span><span class="ot">NULL</span></code></pre>
+<h2>1-2 预处理</h2>
 <p>Store the number of training data points and the number of testing data points.<br />记录一下训练数据和测试数据的数量。</p>
 <pre class="sourceCode r"><code class="sourceCode r">ntrain &lt;-<span class="st"> </span><span class="kw">nrow</span>(NewsTrain)
 ntest &lt;-<span class="st"> </span><span class="kw">nrow</span>(NewsTest)
@@ -199,6 +165,9 @@ ntrain</code></pre>
 <pre><code>## [1] 6532</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">ntest</code></pre>
 <pre><code>## [1] 1870</code></pre>
+<p>“Popular”&quot; is the dependant variable, store it in a separate vector “Y”, and delete the colomn from the dataframe “NewsTrain”.<br />要预测的因变量是“Popular”，将其存在一个单独的“Y”向量中,并从训练数据框中删除该列。</p>
+<pre class="sourceCode r"><code class="sourceCode r">Y &lt;-<span class="st"> </span><span class="kw">as.factor</span>(NewsTrain$Popular)
+NewsTrain$Popular &lt;-<span class="st"> </span><span class="ot">NULL</span></code></pre>
 <p>Combine “NewsTrain” and “NewsTest” into a single dataframe for the purpose of data preparing<br />将训练数据和测试数据合并为一个单一的数据框，以便集中处理（这是否有问题？）<br /><strong>只要是非监督的变换应该都不算作弊</strong></p>
 <pre class="sourceCode r"><code class="sourceCode r">OriginalDF &lt;-<span class="st"> </span><span class="kw">rbind</span>(NewsTrain, NewsTest)</code></pre>
 <p>Filling empty entries for the first three columns with name “Other”<br />将前三列里面的“”用“Other”替代</p>
@@ -224,11 +193,8 @@ OriginalDF$PubDate &lt;-<span class="st"> </span><span class="ot">NULL</span></c
 <pre class="sourceCode r"><code class="sourceCode r">train &lt;-<span class="st"> </span>OriginalDF[<span class="dv">1</span>:ntrain, <span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>,<span class="dv">9</span>:<span class="dv">12</span>)]
 test &lt;-<span class="st"> </span>OriginalDF[(ntrain<span class="dv">+1</span>):<span class="kw">nrow</span>(OriginalDF),<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>,<span class="dv">9</span>:<span class="dv">12</span>)]</code></pre>
 </div>
-<div id="exploratory-data-analysis" class="section level2">
-<h2>1.3 Exploratory Data Analysis</h2>
-</div>
-<div class="section level2">
-<h2>1.3 探索式数据分析</h2>
+<div id="exploratory-data-analysis-" class="section level2">
+<h2>2 Exploratory Data Analysis 探索式数据分析</h2>
 <p>First Explore the few factor variable and their relationship to the depandent variable.<br />先看看前三个factor型数据与要预测的Popular之间的关系。</p>
 <pre class="sourceCode r"><code class="sourceCode r">tNewsDesk &lt;-<span class="st"> </span><span class="kw">table</span>(OriginalDF$NewsDesk[<span class="dv">1</span>:ntrain], Y)
 tNewsDesk</code></pre>
@@ -351,11 +317,10 @@ tSubsectionName</code></pre>
 <p>每月几号看上去没啥用</p>
 </div>
 </div>
-<div id="model-fitting" class="section level1">
-<h1>2 Model fitting</h1>
-</div>
-<div class="section level1">
-<h1>2 模型拟合</h1>
+<div id="model-fitting-" class="section level1">
+<h1>3 Model fitting 模型拟合</h1>
+<div id="randomforest-on-non-text-features-" class="section level2">
+<h2>3-1 randomForest on Non-Text Features 用不含文本提取的特征做随机森林</h2>
 <p>randomForest model<br />随机森林模型</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">880306</span>)
 rfModel &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">x =</span> train,
@@ -365,7 +330,7 @@ rfModel &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span
                         <span class="dt">nodesize =</span> <span class="dv">4</span>,
                         <span class="dt">importance =</span> F,
                         <span class="dt">proximity =</span> F)</code></pre>
-<p>Make prediction on the training set 用模型对训练数据进行预测</p>
+<p>Evaluate on Training set 根据测试集评价模型</p>
 <pre class="sourceCode r"><code class="sourceCode r">rfPred &lt;-<span class="st"> </span><span class="kw">predict</span>(rfModel, train, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)
 <span class="kw">table</span>(rfPred[,<span class="dv">2</span>] &gt;<span class="st"> </span><span class="fl">0.5</span>,Y)</code></pre>
 <pre><code>##        Y
@@ -384,7 +349,9 @@ auc@y.values</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">tpred &lt;-<span class="st"> </span><span class="kw">predict</span>(rfModel, test, <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)
 MySubmission =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">UniqueID =</span> NewsTest$UniqueID, <span class="dt">Probability1 =</span> tpred[,<span class="dv">1</span>])
 <span class="kw">write.csv</span>(MySubmission, <span class="st">&quot;rfRegularFeatures.csv&quot;</span>, <span class="dt">row.names =</span> F)</code></pre>
-<p>cforest</p>
+</div>
+<div id="cforest" class="section level2">
+<h2>3-2 cforest</h2>
 <pre class="sourceCode r"><code class="sourceCode r">ctrain &lt;-<span class="st"> </span><span class="kw">cbind</span>(train,Y)
 <span class="kw">set.seed</span>(<span class="dv">12345</span>)
 crfModel &lt;-<span class="st"> </span><span class="kw">cforest</span>(Y~., <span class="dt">data =</span> ctrain)
@@ -409,16 +376,11 @@ for (i in <span class="dv">1</span>:ntest){
 MySubmission =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">UniqueID =</span> NewsTest$UniqueID, <span class="dt">Probability1 =</span> crftpred)
 <span class="kw">write.csv</span>(MySubmission, <span class="st">&quot;crfRegularFeatures.csv&quot;</span>, <span class="dt">row.names =</span> F)</code></pre>
 </div>
-<div id="try-feature-engineering-with-text-content" class="section level1">
-<h1>3 Try feature engineering with text content</h1>
 </div>
-<div class="section level1">
-<h1>3 尝试通过文本数据做特征工程</h1>
-<div id="tfidf" class="section level2">
-<h2>TFIDF</h2>
-</div>
-<div class="section level2">
-<h2>术语频次·逆文档频次</h2>
+<div id="try-feature-engineering-with-text-content-" class="section level1">
+<h1>4 Try feature engineering with text content 尝试通过文本数据做特征工程</h1>
+<div id="tfidf-" class="section level2">
+<h2>4-1 TFIDF 术语频次·逆文档频次</h2>
 <p>Extract all headline and abstract to form a corpus<br />抽取题名和摘要文本构建一个语料库</p>
 <pre class="sourceCode r"><code class="sourceCode r">text &lt;-<span class="st"> </span><span class="kw">vector</span>()
 for (i in <span class="dv">1</span>:<span class="kw">nrow</span>(OriginalDF)) {
@@ -462,11 +424,8 @@ dtmFiltered &lt;-<span class="st"> </span>dtm[,cols]</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">tatrain &lt;-<span class="st"> </span><span class="kw">cbind</span>(train, TextADDDF[<span class="dv">1</span>:ntrain,])
 tatest &lt;-<span class="st"> </span><span class="kw">cbind</span>(test, TextADDDF[(ntrain<span class="dv">+1</span>):<span class="kw">nrow</span>(TextADDDF),])</code></pre>
 </div>
-<div id="randomforest-model-with-text-features-added" class="section level2">
-<h2>randomForest model with text features added</h2>
-</div>
-<div class="section level2">
-<h2>加了文本特征的随机森林模型</h2>
+<div id="randomforest-model-with-text-features-added-" class="section level2">
+<h2>4-2 randomForest model with text features added 加了文本特征的随机森林模型</h2>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">880306</span>)
 tarfModel &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">x =</span> tatrain,
                         <span class="dt">y =</span> Y,
@@ -551,11 +510,8 @@ auc@y.values</code></pre>
 MySubmission =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">UniqueID =</span> NewsTest$UniqueID, <span class="dt">Probability1 =</span> tpred[,<span class="dv">1</span>])
 <span class="kw">write.csv</span>(MySubmission, <span class="st">&quot;rfText.csv&quot;</span>, <span class="dt">row.names =</span> F)</code></pre>
 </div>
-<div id="why-not-a-neural-net" class="section level2">
-<h2>Why not a neural net?</h2>
-</div>
-<div class="section level2">
-<h2>试试神经网络</h2>
+<div id="why-not-a-neural-net-" class="section level2">
+<h2>4-3 Why not a neural net? 试试神经网络</h2>
 <p>Neural net based on numerical features.<br />基于数值特征的神经网络（没有GPU 炒鸡慢）</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(neuralnet)
 nntrain &lt;-<span class="st"> </span>tatrain[,<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">8</span>:<span class="dv">26</span>)]
@@ -594,11 +550,9 @@ auc@y.values</code></pre>
 <pre><code>##    user  system elapsed 
 ##  308.58    0.01  309.46</code></pre>
 </div>
-<div class="section level2">
-<h2>做个聚类看看</h2>
 </div>
-<div id="clustering-on-tfidf-matrix" class="section level2">
-<h2>Clustering on TFIDF matrix</h2>
+<div id="-clustering-on-tfidf-matrix" class="section level1">
+<h1>5 做个聚类看看 Clustering on TFIDF matrix</h1>
 <pre class="sourceCode r"><code class="sourceCode r">cTest &lt;-<span class="st"> </span><span class="kw">removeSparseTerms</span>(dtmTest, <span class="fl">0.98</span>)
 cWords &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">as.matrix</span>(cTest))
 cTerms &lt;-<span class="st"> </span><span class="kw">names</span>(cWords)
@@ -617,7 +571,9 @@ tactrain &lt;-<span class="st"> </span><span class="kw">cbind</span>(tatrain, km
 <span class="kw">names</span>(tactrain) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">names</span>(tactrain)[<span class="dv">1</span>:<span class="dv">26</span>],<span class="st">&quot;cluster&quot;</span>)
 tactest &lt;-<span class="st"> </span><span class="kw">cbind</span>(tatest, kmclusters$cluster[(<span class="dv">1</span>+ntrain):<span class="kw">nrow</span>(OriginalDF)])
 <span class="kw">names</span>(tactest) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">names</span>(tactest)[<span class="dv">1</span>:<span class="dv">26</span>],<span class="st">&quot;cluster&quot;</span>)</code></pre>
-<p>Another randomForest with cluster labels<br />加上聚类标签后再来一个随机森林</p>
+<div id="another-randomforest-with-cluster-labels" class="section level2">
+<h2>5-1 Another randomForest with cluster labels</h2>
+<p>加上聚类标签后再来一个随机森林</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1126</span>)
 tacrfModel &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">x =</span> tactrain,
                         <span class="dt">y =</span> Y,
@@ -700,14 +656,11 @@ auc@y.values</code></pre>
 MySubmission =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">UniqueID =</span> NewsTest$UniqueID, <span class="dt">Probability1 =</span> tacrfPred[,<span class="dv">2</span>])
 <span class="kw">write.csv</span>(MySubmission, <span class="st">&quot;rfTextCluster.csv&quot;</span>, <span class="dt">row.names =</span> F)</code></pre>
 </div>
-<div id="matrix-factorization" class="section level2">
-<h2>Matrix Factorization</h2>
 </div>
-<div class="section level2">
-<h2>矩阵分解</h2>
+<div id="matrix-factorization-" class="section level1">
+<h1>6 Matrix Factorization 矩阵分解</h1>
 <pre class="sourceCode r"><code class="sourceCode r">s &lt;-<span class="st"> </span><span class="kw">svd</span>(cMatrix)
 Sig &lt;-<span class="st"> </span><span class="kw">diag</span>(s$d)</code></pre>
-</div>
 </div>
 
 

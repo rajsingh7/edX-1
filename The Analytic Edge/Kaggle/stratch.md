@@ -2,17 +2,14 @@
 Ryan Zhang  
 Thursday, April 16, 2015  
 
-# 0 Environment  
-# 环境设定  
-## Set working directory   
-## 设定工作环境  
+#0 Environment  环境设定  
+##0-1 Set working directory  设定工作环境  
 
 ```r
 setwd("~/GitHub/edX/The Analytic Edge/Kaggle")
 ```
 
-## Load Libraries  
-## 函数包  
+##0-2 Load Libraries  函数包  
 
 ```r
 library(tm)
@@ -67,35 +64,22 @@ library(party)
 ## Loading required package: sandwich
 ```
 
-## Function Definition  
-## 自定义函数  
+##0-3 Function Definition  自定义函数  
 用于帮助求table后正类百分比的小函数    
 
 ```r
 tCor <- function(t)round(t[,2]/rowSums(t),2)*100 
 ```
 
-# 1 Data Preparing
-# 1 数据准备工作
-## 1.1 Data Loading
-## 1.1 装载数据
+#1 Data Preparing 数据准备工作
+##1-1 Loading 装载
 
 ```r
 NewsTrain <- read.csv("NYTimesBlogTrain.csv", stringsAsFactors = F)
 NewsTest <- read.csv("NYTimesBlogTest.csv", stringsAsFactors = F)
 ```
 
-## 1.2 First Iteration in processing    
-## 1.2 第一轮数据处理   
-"Popular"" is the dependant variable, store it in a separate vector "Y", and delete the colomn from the 
-dataframe "NewsTrain".      
-要预测的因变量是“Popular”，将其存在一个单独的"Y"向量中,并从训练数据框中删除该列。
-
-```r
-Y <- as.factor(NewsTrain$Popular)
-NewsTrain$Popular <- NULL
-```
-
+##1-2 预处理
 Store the number of training data points and the number of testing data points.        
 记录一下训练数据和测试数据的数量。
 
@@ -115,6 +99,14 @@ ntest
 
 ```
 ## [1] 1870
+```
+
+"Popular"" is the dependant variable, store it in a separate vector "Y", and delete the colomn from the dataframe "NewsTrain".      
+要预测的因变量是“Popular”，将其存在一个单独的"Y"向量中,并从训练数据框中删除该列。
+
+```r
+Y <- as.factor(NewsTrain$Popular)
+NewsTrain$Popular <- NULL
 ```
 
 Combine "NewsTrain" and "NewsTest" into a single dataframe for the purpose of data preparing      
@@ -172,8 +164,7 @@ train <- OriginalDF[1:ntrain, c(1:3,9:12)]
 test <- OriginalDF[(ntrain+1):nrow(OriginalDF),c(1:3,9:12)]
 ```
 
-## 1.3 Exploratory Data Analysis    
-## 1.3 探索式数据分析    
+##2 Exploratory Data Analysis  探索式数据分析    
 First Explore the few factor variable and their relationship to the depandent variable.    
 先看看前三个factor型数据与要预测的Popular之间的关系。    
 
@@ -426,8 +417,8 @@ plot(tCor(tMday))
 ```
 每月几号看上去没啥用   
 
-#2 Model fitting    
-#2 模型拟合    
+#3 Model fitting  模型拟合  
+##3-1 randomForest on Non-Text Features 用不含文本提取的特征做随机森林
 randomForest model    
 随机森林模型    
 
@@ -442,8 +433,8 @@ rfModel <- randomForest(x = train,
                         proximity = F)
 ```
 
-Make prediction on the training set
-用模型对训练数据进行预测
+Evaluate on Training set 
+根据测试集评价模型
 
 ```r
 rfPred <- predict(rfModel, train, type = "prob")
@@ -484,7 +475,7 @@ MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tpred[,1]
 write.csv(MySubmission, "rfRegularFeatures.csv", row.names = F)
 ```
 
-cforest
+##3-2 cforest
 
 ```r
 ctrain <- cbind(train,Y)
@@ -518,11 +509,9 @@ MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = crftpred)
 write.csv(MySubmission, "crfRegularFeatures.csv", row.names = F)
 ```
 
-#3 Try feature engineering with text content    
-#3 尝试通过文本数据做特征工程     
+#4 Try feature engineering with text content 尝试通过文本数据做特征工程     
 
-## TFIDF   
-## 术语频次·逆文档频次  
+##4-1 TFIDF   术语频次·逆文档频次  
 Extract all headline and abstract to form a corpus    
 抽取题名和摘要文本构建一个语料库    
 
@@ -616,8 +605,7 @@ tatrain <- cbind(train, TextADDDF[1:ntrain,])
 tatest <- cbind(test, TextADDDF[(ntrain+1):nrow(TextADDDF),])
 ```
 
-## randomForest model with text features added    
-## 加了文本特征的随机森林模型    
+##4-2 randomForest model with text features added  加了文本特征的随机森林模型    
 
 ```r
 set.seed(880306)
@@ -736,8 +724,7 @@ MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tpred[,1]
 write.csv(MySubmission, "rfText.csv", row.names = F)
 ```
 
-## Why not a neural net?      
-## 试试神经网络      
+##4-3 Why not a neural net?  试试神经网络      
 Neural net based on numerical features.    
 基于数值特征的神经网络（没有GPU 炒鸡慢）       
 
@@ -795,8 +782,7 @@ proc.time() - ptm
 ##  308.58    0.01  309.46
 ```
 
-## 做个聚类看看
-## Clustering on TFIDF matrix
+#5 做个聚类看看 Clustering on TFIDF matrix
 
 ```r
 cTest <- removeSparseTerms(dtmTest, 0.98)
@@ -819,7 +805,7 @@ tactest <- cbind(tatest, kmclusters$cluster[(1+ntrain):nrow(OriginalDF)])
 names(tactest) <- c(names(tactest)[1:26],"cluster")
 ```
 
-Another randomForest with cluster labels    
+##5-1 Another randomForest with cluster labels    
 加上聚类标签后再来一个随机森林    
 
 ```r
@@ -928,8 +914,7 @@ MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tacrfPred
 write.csv(MySubmission, "rfTextCluster.csv", row.names = F)
 ```
 
-## Matrix Factorization   
-##矩阵分解  
+#6 Matrix Factorization   矩阵分解  
 
 ```r
 s <- svd(cMatrix)

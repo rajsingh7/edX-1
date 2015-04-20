@@ -34,6 +34,13 @@ library(rCUR)
 ```{r}
 tCor <- function(t)round(t[,2]/rowSums(t),2)*100 
 ```
+用于生成dummy encoding的数据框
+```{r}
+dummyEncoding <- function(df, colname){
+  dDF <- as.data.frame(model.matrix(~df[,colname]))
+  names(dDF) <- paste(colname,as.character(levels(df[,colname])),sep="")
+  dDF}
+```
 
 #1 Data Preparing 数据准备工作
 ##1-1 Loading 装载
@@ -176,6 +183,7 @@ plot(tCor(tMday))
 ##3-1 randomForest on Non-Text Features 用不含文本提取的特征做随机森林
 randomForest model    
 随机森林模型    
+public board auc = 0.92699
 ```{r  cache=TRUE}
 set.seed(880306)
 rfModel <- randomForest(x = train,
@@ -285,7 +293,8 @@ tatrain <- cbind(train, TextADDDF[1:ntrain,])
 tatest <- cbind(test, TextADDDF[(ntrain+1):nrow(TextADDDF),])
 ```
 
-##4-2 randomForest model with text features added  加了文本特征的随机森林模型    
+##4-2 randomForest model with text features added  加了文本特征的随机森林模型  
+public board auc = 
 ```{r cache=TRUE}
 set.seed(880306)
 tarfModel <- randomForest(x = tatrain,
@@ -321,7 +330,7 @@ Make prediction with randomForest model
 加了文本特征的随机森林模型做预测
 ```{r}
 tatpred <- predict(tarfModel, tatest, type = "prob")
-MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tpred[,1])
+MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = tatpred[,1])
 write.csv(MySubmission, "rfText.csv", row.names = F)
 ```
 
@@ -355,6 +364,48 @@ auc@y.values
 proc.time() - ptm
 ```
 
+##4-4 Support Vector Machine 支持向量机
+先做下Dummy Encoding
+```{r cache=TRUE}
+taDF <- rbind(tatrain, tatest)
+names(taDF)
+tadDF <- taDF[,c(4,8:26)]
+toEnco <- c("NewsDesk","SectionName","SubsectionName","Hour","Wday","Mday")
+for (colname in toEnco){
+  tadDF <- cbind(tadDF, dummyEncoding(taDF, colname))
+}
+names(tadDF) <- make.names(tadDF)
+tadtrain <- tadDF[1:ntrain,]
+tadtest <- tadDF[((1+ntrain):nrow(tadDF)),]
+```
+
+SVM Model Fitting 支持向量机
+```{r cache=TRUE, Warning=FALSE}
+svmModel <- svm(x = tadtrain, 
+                y = Y,
+                cost = 100, gamma = 1, probability = T)
+svmpred <- predict(svmModel, tadtrain, decision.values = T, probability = T)
+svmpredp <- attr(svmpred, "probabilities")[,1]
+prediction <- ROCR::prediction(svmpredp, Y)
+perf <- performance(prediction, "tpr", "fpr")
+plot(perf, colorize = T, lwd = 2)
+auc <- performance(prediction, "auc")
+auc@y.values
+svmtpred <- predict(svmModel, tadtest, probability = T)
+svmtpredp <- attr(svmtpred, "probabilities")[,1]
+MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = svmtpredp)
+write.csv(MySubmission, "svmText.csv", row.names = F)
+```
+
+##4-5 Simple Ensemble 简单的组合模型
+public board auc 0.91463
+```{r cache=TRUE}
+enpred <- 0.5*svmtpredp+0.5*tatpred[,2]
+MySubmission = data.frame(UniqueID = NewsTest$UniqueID, Probability1 = enpred)
+write.csv(MySubmission, "svm_rf_ensemble.csv", row.names = F)
+```
+
+
 #5 Clustering on TFIDF matrix 做个聚类看看
 ```{r cache=TRUE}
 cTest <- removeSparseTerms(dtmTest, 0.98)
@@ -377,7 +428,8 @@ tactest <- cbind(tatest, kmclusters$cluster[(1+ntrain):nrow(OriginalDF)])
 names(tactest) <- c(names(tactest)[1:26],"cluster")
 ```
 
-##5-1 Another randomForest with cluster labels added 加上聚类标签后再来一个随机森林    
+##5-1 Another randomForest with cluster labels added 加上聚类标签后再来一个随机森林 
+public board auc = 0.92495
 ```{r cache=TRUE}
 set.seed(1126)
 tacrfModel <- randomForest(x = tactrain,
@@ -433,6 +485,7 @@ tacftest <- cbind(tactest, AkDF[((1+ntrain):nrow(AkDF)),])
 ```
 
 ##6-3 randomForest with pc added 加上主要成分投影后的随机森林
+public board auc = 0.92511
 ```{r cache=TRUE}
 set.seed(1126)
 tacfrfModel <- randomForest(x = tacftrain,

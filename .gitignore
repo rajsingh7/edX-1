@@ -49,3 +49,5 @@ the analytic edge/*.html
 *.RData
 *.RDataTmp
 stratch_cache/*.*
+*.rdb
+*.rdx

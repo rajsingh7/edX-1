@@ -1,6 +1,4 @@
 base
-caTools
-class
 e1071
 gplots
 lattice
@@ -11,13 +9,10 @@ mvtnorm
 neuralnet
 NLP
 party
-plyr
 randomForest
 rCUR
 ROCR
-RTextTools
 sandwich
-SparseM
 strucchange
 tm
 zoo

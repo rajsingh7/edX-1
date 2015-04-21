@@ -184,7 +184,7 @@ plot(tCor(tMday))
 ##3-1 randomForest on Non-Text Features 用不含文本提取的特征做随机森林
 randomForest model    
 随机森林模型    
-
+public 0.92420
 ```{r  cache=TRUE}
 set.seed(1126)
 rfModel <- randomForest(x = train,
@@ -307,7 +307,7 @@ tatest <- cbind(test, TextADDDF[(ntrain+1):nrow(TextADDDF),])
 ```
 
 ##4-2 randomForest model with text features added  加了文本特征的随机森林模型  
-
+public  0.92420
 ```{r cache=TRUE}
 set.seed(1126)
 tarfModel <- randomForest(x = tatrain,
@@ -391,6 +391,7 @@ tadtest <- tadDF[((1+ntrain):nrow(tadDF)),]
 ```
 
 SVM Model Fitting 支持向量机
+public  0.88249
 ```{r cache=TRUE,warning=FALSE}
 svmModel <- svm(x = tadtrain, 
                 y = Y,
@@ -521,6 +522,7 @@ write.csv(MySubmission, "rfTextClusterFactorization2.csv", row.names = F)
 ```
 
 #7 LDA?
+public 0.92507
 ```{r}
 lda <- LDA(tfdtm, 11)
 set.seed(1126)

@@ -28,6 +28,7 @@ library(ROCR)
 library(party)
 library(rCUR)
 library(topicmodels)
+library(xgboost)
 ```
 
 ##0-3 Function Definition  自定义函数  
@@ -35,6 +36,7 @@ library(topicmodels)
 ```{r}
 tCor <- function(t)round(t[,2]/rowSums(t),2)*100 
 ```
+
 用于生成dummy encoding的数据框
 ```{r}
 dummyEncoding <- function(df, colname){

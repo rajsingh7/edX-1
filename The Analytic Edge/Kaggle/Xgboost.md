@@ -1,4 +1,4 @@
-# SolutionRank292
+# SolutionRank244
 Ryan Zhang  
 Tuesday, May 05, 2015  
 

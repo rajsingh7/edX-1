@@ -1,5 +1,5 @@
 ---
-title: "SolutionRank292"
+title: "SolutionRank244"
 author: "Ryan Zhang"
 date: "Tuesday, May 05, 2015"
 output:

@@ -1,0 +1,243 @@
+---
+title: "Untitled"
+author: "Ryan"
+date: "August 21, 2015"
+output: html_document
+---
+
+PART III. EXTENDED PROBLEM  CHAUTAUQUA IRON WORKS
+
+You are managing the inbound supply and inventory for some key materials for Chautauqua Iron Works located in Western New York state.  Specifically, you have been asked to develop an inventory policy for a special plastic admixture that is delivered in bulk transportation.  It is a Class B item.  The relevant data is here:
+
+Unit Cost, c, = 3.34  $/lbs  (recall, lbs is the abbreviation for pounds)
+```{r}
+c = 3.34
+```
+Ordering cost, ct, = 1000  $/order to include all transportation costs
+```{r}
+ct = 1000
+```
+Annual Demand, D, = 400,000 lbs/year
+```{r}
+D = 400000
+```
+Forecast accuracy = 36,000 lbs/year (this is a RMSE)
+```{r}
+sigma_DL = 36000
+```
+Holding charge, h , = 0.15 $/$/year
+```{r}
+h=0.15
+ce = h*c
+```
+Level of Service - CSL=0.95
+```{r}
+CSL=0.95
+```
+Leadtime = 1 month
+```{r}
+L = 1/12
+```
+Inventory policy (s,Q)
+I recommend that you use a spreadsheet for this problem - it will save time in the long run. 
+
+IMPORTANT NOTE:  This is a multi-part problem.  While your answer for one part might be graded correctly, you should use the actual answer provided in the explanation for any further parts, where needed.  We always allow for some rounding error in grading, but we need to minimize the ripple effect after each part.  So, be sure to use the answer in the solution for all follow on questions - not the answer you provided. 
+
+## 1A  (本题共有1分)
+What is your EOQ? Show your answers in lbs and round it to the nearest 1000 lbs increment. Use the value provided in the explanation going forward as needed even if you entered a different value and got it correct! The same applies for all following questions
+```{r}
+EOQ <- round(sqrt(2*ct*D/ce)/1000,0)*1000
+EOQ
+```
+
+## 1B  (本题共有1分)
+How many replenishment cycles do you expect per year? Enter an integer value.
+```{r}
+N = D/EOQ
+N
+```
+
+## 1C  (本题共有2分)
+What is your re-order point, s, for this item for an (s,Q) replenishment policy? Round your answer to the nearest 100 lbs increment.
+```{r}
+k = qnorm(0.95)
+mu = D/12
+s = mu + k*sigma_DL/sqrt(12)
+round(s/100,0)*100
+```
+
+
+# PART 2
+
+Now let's find the annual costs of this inventory policy. 
+
+## 2A  (本题共有1分)
+Using the (s,Q) policy found in part 1, what is the expected annual ordering costs?
+```{r}
+ct*N
+```
+
+
+## 2B  (本题共有1分)
+Using the (s,Q) policy found in part 1, what is the expected annual cycle stock cost? Round your answer to the nearest dollar value.
+```{r}
+EOQ*ce/2
+```
+
+## 2C  (本题共有1分)
+Using the (s,Q) policy found in part 1, what is the expected annual safety stock cost? Round your answer to the nearest dollar value.
+```{r}
+round(ce*k*sigma_DL/sqrt(12),0)
+```
+
+## 2D  (本题共有1分)
+Using the (s,Q) policy found in part 1, what is the expected annual pipeline inventory cost? Round your answer to the nearest dollar value.
+```{r}
+ce*D*L
+```
+
+## 2E  (本题共有1分)
+What is the total (Ordering and Inventory) expected annual cost for the (s,Q) policy found in part 1? Round your answer to the nearest dollar value.
+```{r}
+ce*D*L+round(ce*k*sigma_DL/sqrt(12),0)+EOQ*ce/2+ct*N
+```
+
+# PART 3.
+
+A new transportation carrier has come to offer you faster transportation services.  He can reduce the lead time of an order from 1 month to half of a month (L = 0.5 months).  You now want to figure out that the impact of this potential new lead time on your total costs. 
+
+## 3A  (本题共有1分)
+What is your new EOQ? Show your answers in lbs and round it to the nearest 1000 lbs increment.
+```{r}
+EOQ
+```
+
+## 3B  (本题共有2分)
+What is your new re-order point, s, for this item for an (s,Q) replenishment policy? Round your answer to the nearest 100 lbs increment.
+```{r}
+k = qnorm(0.95)
+mu_new = D/24
+s_new = mu_new + k*sigma_DL/sqrt(24)
+round(s_new/100,0)*100
+```
+
+## 3C  (本题共有1分)
+Using the (s,Q) policy found in part 3, what is the expected annual ordering costs?
+```{r}
+ct*N
+```
+
+
+## 3D  (本题共有1分)
+Using the (s,Q) policy found in part 3, what is the expected annual cycle stock cost? Round your answer to the nearest dollar value.
+```{r}
+EOQ*ce/2
+```
+
+## 3E  (本题共有1分)
+Using the (s,Q) policy found in part 3, what is the expected annual safety stock cost? Round your answer to the nearest dollar value.
+```{r}
+round(ce*k*sigma_DL/sqrt(24),0)
+```
+
+## 3F  (本题共有1分)
+Using the (s,Q) policy found in part 3, what is the expected annual pipeline inventory cost? Round your answer to the nearest dollar value.
+```{r}
+ce*D*1/24
+```
+
+## 3G  (本题共有1分)
+What is the total (Ordering and Inventory) expected annual cost for the (s,Q) policy found in part 3? Round your answer to the nearest dollar value.
+```{r}
+ce*D*1/24 + round(ce*k*sigma_DL/sqrt(24),0) + EOQ*ce/2 + ct*N
+```
+
+
+## 3H  
+Based on your analysis, what course of actions do you recommend? You can pick more than one.
+
+1. Decline the new carrier's offer without any more analysis and stay with your current carrier  
+2. Consider the new carrier, but only if the order cost stays the same ($1000 per order)  
+3. Consider the new carrier, and perhaps consider paying more in ordering/transportation costs  
+4. Consider talking to your existing carrier to see how they could reduce their transit time.
+
+Pick 3 and 4
+
+# PART 4
+
+You could not come to terms with the new carrier (they wanted to double the rates!).  So, your lead time is still 1 month. 
+
+But, your forecasting team has come to you with a proposal to use a new Cloud-Based, Machine Learning forecasting technique that will reduce the forecast error by half.  That is, they claim that this new system will reduce the annual RMSE of the forecast from 36,000 lbs to 18,000 lbs. 
+
+You have your doubts about the forecasting system's capabilities, but you want to see what the impact would be.  Suppose that the system actually did reduce the Annual RMSE of the forecast to 18,000 lbs.  Find the expected annual costs. 
+
+## 4A  (本题共有1分)
+What is your new EOQ? Show your answers in lbs and round it to the nearest 1000 lbs increment.
+```{r}
+EOQ
+```
+
+
+## 4B  (本题共有2分)
+What is your new re-order point, s, for this item for an (s,Q) replenishment policy? Round your answer to the nearest 100 lbs increment.
+```{r}
+k = qnorm(0.95)
+mu = D/12
+s_low_RMSE = mu + k*18000/sqrt(12)
+round(s_low_RMSE/100,0)*100
+```
+
+## 4C  (本题共有1分)
+Using the (s,Q) policy found in part 4, what is the expected annual order costs?
+```{r}
+ct*N
+```
+
+
+## 4D  (本题共有1分)
+Using the (s,Q) policy found in part 4, what is the expected annual cycle stock cost? Round your answer to the nearest dollar value.
+```{r}
+EOQ*ce/2
+```
+
+## 4E  (本题共有1分)
+Using the (s,Q) policy found in part 4, what is the expected annual safety stock cost? Round your answer to the nearest dollar value.
+```{r}
+round(ce*k*18000/sqrt(12),0)
+```
+
+## 4F  (本题共有1分)
+Using the (s,Q) policy found in part 4, what is the expected annual pipeline inventory cost? Round your answer to the nearest dollar value.
+```{r}
+ce*D*1/12
+```
+
+##4G  (本题共有1分)
+What is the total (Ordering and Inventory) expected annual cost for the (s,Q) policy found in part 4? Round your answer to the nearest dollar value.
+```{r}
+ce*D*1/12 + round(ce*k*18000/sqrt(12),0) + EOQ*ce/2 + ct*N
+```
+
+## 4H  
+Based on your analysis, what course of action do you recommend?
+
+1. Authorize the new forecasting tool since it saved money  
+2. Fire the entire forecasting team  
+3. Try to understand what the tool does and what the benefit might be to other products
+
+Pick 3
+
+5  (本题共有1分)
+This solution will not be made available until after the exam due date!
+
+You are interested in understanding the relative benefits of reducing lead time and improving forecast error. Using the data from part 1, what would your lead time need to be in order to match the savings provided by the new forecasting system where annual RMSE is cut in half? Enter your answer in months rounding to two decimal places.
+
+```{r}
+ce*D*1/12 + round(ce*k*18000/sqrt(12),0) + EOQ*ce/2 + ct*N
+
+    
+ce*D*1/15+round(ce*k*sigma_DL/sqrt(15),0)+EOQ*ce/2+ct*N
+
+12/15
+```
+

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="Lab3_files/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Lab3_files/bootstrap-3.3.1/css/bootstrap.min.css" rel="stylesheet" />
+<script src="Lab3_files/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="Lab3_files/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="Lab3_files/bootstrap-3.3.1/shim/respond.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="Lab3_files/highlight/default.css"
+      type="text/css" />
+<script src="Lab3_files/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+
+
+<div id="lab-3-for-intorduction-to-computational-finance" class="section level1">
+<h1>Lab 3 for Intorduction to computational finance</h1>
+</div>
+<div id="task-1-covariance-matrix" class="section level1">
+<h1>task 1 Covariance matrix</h1>
+<ul>
+<li>Compute the covariance between X and Y and assign it to sig_xy.</li>
+<li>Construct the covariance matrix and assign it to Sigma_xy.</li>
+</ul>
+<pre class="r"><code># Standard deviations and correlation
+sig_x &lt;- 0.10
+sig_y &lt;- 0.05
+rho_xy &lt;- 0.9
+# Covariance between X and Y
+sig_xy &lt;- rho_xy*sig_x*sig_y
+# Covariance matrix
+Sigma_xy &lt;- matrix(c(sig_x^2, sig_xy, sig_xy, sig_y^2), nrow = 2)</code></pre>
+</div>
+<div id="task-2-simulate-data" class="section level1">
+<h1>task 2 Simulate data</h1>
+<ul>
+<li>Simulate 100 observations from the bivariate normal distributed random variables X and Y. Use the covariance matrix Sigma_xy from the previous exercise and suppose that the means are ??X=0.05 and ??Y=0.025. Assign the result to xy_vals.</li>
+<li>Have a look at the first few observations with the head() function.</li>
+</ul>
+<pre class="r"><code>#install.packages(&quot;mvtnorm&quot;)
+library(mvtnorm)
+# The covariance matrix (Sigma_xy) is still in your workspace
+# Means
+mu_x &lt;- 0.05
+mu_y &lt;- 0.025
+# Simulate 100 observations
+set.seed(123)  # for reproducibility
+xy_vals &lt;- rmvnorm(100, mean = c(mu_x, mu_y), sigma = Sigma_xy)
+# Have a look at the first observations
+head(xy_vals)</code></pre>
+<pre><code>##             [,1]         [,2]
+## [1,] -0.01055124 -0.002720223
+## [2,]  0.19865393  0.081562113
+## [3,]  0.12156743  0.091291081
+## [4,]  0.04939103 -0.004618093
+## [5,] -0.02987387 -0.014866126
+## [6,]  0.17729184  0.080391233</code></pre>
+</div>
+<div id="task-3-plot-the-simulated-data" class="section level1">
+<h1>task 3 Plot the simulated data</h1>
+<ul>
+<li>Create a scatterplot of the simulated observations</li>
+<li>Customize the plot in the following way: specify the plot symbol with pch = 16, set the symbol size to 2, set the color to “blue”, use the title “Bivariate normal: rho=0.9”, and use the axis labels “x” and “y”.</li>
+</ul>
+<pre class="r"><code># Create scatterplot
+plot(xy_vals[,1], xy_vals[,2], pch = 16, cex = 2, col = &quot;blue&quot;, main = &quot;Bivariate normal: rho=0.9&quot;, ylab = &quot;y&quot;, xlab = &quot;x&quot;)</code></pre>
+<p><img src="Lab3_files/figure-html/unnamed-chunk-3-1.png" /></p>
+</div>
+<div id="task-4-add-lines-to-the-plot" class="section level1">
+<h1>task 4 Add lines to the plot</h1>
+<ul>
+<li>Add a vertical line that indicates the mean of X and a horizontal line that indicates the mean of Y.</li>
+</ul>
+<pre class="r"><code>plot(xy_vals[,1], xy_vals[,2], pch = 16, cex = 2, col = &quot;blue&quot;, main = &quot;Bivariate normal: rho=0.9&quot;, ylab = &quot;y&quot;, xlab = &quot;x&quot;)
+abline(h = mu_y)
+abline(v = mu_x)</code></pre>
+<p><img src="Lab3_files/figure-html/unnamed-chunk-4-1.png" /></p>
+</div>
+<div id="task-5-compute-a-joint-probability" class="section level1">
+<h1>task 5 Compute a joint probability</h1>
+<ul>
+<li>Compute the joint probability Pr(X???0,Y???0).</li>
+</ul>
+<pre class="r"><code>plot(xy_vals[,1], xy_vals[,2], pch = 16, cex = 2, col = &quot;blue&quot;, main = &quot;Bivariate normal: rho=0.9&quot;, ylab = &quot;y&quot;, xlab = &quot;x&quot;)
+# Add lines
+abline(h = mu_y, v = mu_x)
+# Add line segments
+segments(x0 = 0, y0 = -1e10, x1 = 0, y1 = 0, col=&quot;red&quot;)
+segments(x0 = -1e10, y0 = 0, x1 = 0, y1 = 0, col=&quot;red&quot;)</code></pre>
+<p><img src="Lab3_files/figure-html/unnamed-chunk-5-1.png" /></p>
+<pre class="r"><code># Compute joint probability
+pmvnorm(lower = -Inf, upper = 0, mean = c(mu_x, mu_y), sigma = Sigma_xy)</code></pre>
+<pre><code>## [1] 0.2453259
+## attr(,&quot;error&quot;)
+## [1] 1e-15
+## attr(,&quot;msg&quot;)
+## [1] &quot;Normal Completion&quot;</code></pre>
+</div>
+<div id="task-6-negatively-correlated-random-variables" class="section level1">
+<h1>task 6 Negatively correlated random variables</h1>
+<ul>
+<li>Change the code to perform the same analysis with negative correlation ??XY=???0.9 instead of ??XY=0.9.</li>
+</ul>
+<pre class="r"><code># Standard deviations and correlation
+sig_x &lt;- 0.10
+sig_y &lt;- 0.05
+rho_xy &lt;- -0.9
+# Covariance between X and Y
+sig_xy &lt;- rho_xy * sig_x * sig_y
+# Covariance matrix
+Sigma_xy &lt;- matrix(c(sig_x^2, sig_xy, sig_xy, sig_y^2), nrow = 2, ncol = 2)
+
+# Means
+mu_x &lt;- 0.05
+mu_y &lt;- 0.025
+# Simulate 100 observations
+set.seed(123)  # for reproducibility
+xy_vals &lt;- rmvnorm(100, mean=c(mu_x, mu_y), sigma = Sigma_xy)
+head(xy_vals)</code></pre>
+<pre><code>##             [,1]         [,2]
+## [1,] 0.005403536  0.036129207
+## [2,] 0.193766631 -0.026479922
+## [3,] 0.002687517  0.082329487
+## [4,] 0.137078885 -0.036566550
+## [5,] 0.001017241  0.032743153
+## [6,] 0.152351306 -0.004456129</code></pre>
+<pre class="r"><code># Create scatterplot
+plot(xy_vals[, 1], xy_vals[, 2], pch = 16, cex = 2, col = &quot;blue&quot;, 
+     main = &quot;Bivariate normal: rho=-0.9&quot;, xlab = &quot;x&quot;, ylab = &quot;y&quot;)
+# Add lines
+abline(h = mu_y, v = mu_x)
+# Add line segments
+segments(x0 = 0, y0 = -1e10, x1 = 0, y1 = 0, col=&quot;red&quot;)
+segments(x0 = -1e10, y0 = 0, x1 = 0, y1 = 0, col=&quot;red&quot;)</code></pre>
+<p><img src="Lab3_files/figure-html/unnamed-chunk-6-1.png" /></p>
+<pre class="r"><code># Compute joint probability
+pmvnorm(lower = c(-Inf, -Inf), upper = c(0, 0), 
+        mean = c(mu_x, mu_y), sigma = Sigma_xy)</code></pre>
+<pre><code>## [1] 0.0008028802
+## attr(,&quot;error&quot;)
+## [1] 1e-15
+## attr(,&quot;msg&quot;)
+## [1] &quot;Normal Completion&quot;</code></pre>
+</div>
+<div id="task-7-uncorrelated-random-variables" class="section level1">
+<h1>task 7 Uncorrelated random variables</h1>
+<ul>
+<li>Change the code to perform the same analysis with correlation ??XY=0 instead of ??XY=???0.9.</li>
+</ul>
+<pre class="r"><code># Standard deviations and correlation
+sig_x &lt;- 0.10
+sig_y &lt;- 0.05
+rho_xy &lt;- 0
+# Covariance between X and Y
+sig_xy &lt;- rho_xy * sig_x * sig_y
+# Covariance matrix
+Sigma_xy &lt;- matrix(c(sig_x^2, sig_xy, sig_xy, sig_y^2), nrow = 2, ncol = 2)
+
+# Means
+mu_x &lt;- 0.05
+mu_y &lt;- 0.025
+# Simulate 100 observations
+set.seed(123)  # for reproducibility
+xy_vals &lt;- rmvnorm(100, mean=c(mu_x, mu_y), sigma = Sigma_xy)
+head(xy_vals)</code></pre>
+<pre><code>##              [,1]         [,2]
+## [1,] -0.006047565  0.013491126
+## [2,]  0.205870831  0.028525420
+## [3,]  0.062928774  0.110753249
+## [4,]  0.096091621 -0.038253062
+## [5,] -0.018685285  0.002716901
+## [6,]  0.172408180  0.042990691</code></pre>
+<pre class="r"><code># Create scatterplot
+plot(xy_vals[, 1], xy_vals[, 2], pch = 16, cex = 2, col = &quot;blue&quot;, 
+     main = &quot;Bivariate normal: rho=0&quot;, xlab = &quot;x&quot;, ylab = &quot;y&quot;)
+# Add lines
+abline(h = mu_y, v = mu_x)
+# Add line segments
+segments(x0 = 0, y0 = -1e10, x1 = 0, y1 = 0, col=&quot;red&quot;)
+segments(x0 = -1e10, y0 = 0, x1 = 0, y1 = 0, col=&quot;red&quot;)</code></pre>
+<p><img src="Lab3_files/figure-html/unnamed-chunk-7-1.png" /></p>
+<pre class="r"><code># Compute joint probability
+pmvnorm(lower = c(-Inf, -Inf), upper = c(0, 0), 
+        mean = c(mu_x, mu_y), sigma = Sigma_xy)</code></pre>
+<pre><code>## [1] 0.09519541
+## attr(,&quot;error&quot;)
+## [1] 1e-15
+## attr(,&quot;msg&quot;)
+## [1] &quot;Normal Completion&quot;</code></pre>
+</div>
+<div id="for-quiz-3-computation-part" class="section level1">
+<h1>for quiz 3 computation part</h1>
+<pre class="r"><code>m &lt;- matrix(c(0.1,0.1,0,0.2,0,0.1,0,0.2,0.3), nrow = 3, dimnames = list(c(1,2,3),c(1,2,3)))
+X &lt;- c(1,2,3)
+Y &lt;- c(1,2,3)
+p_Y = colSums(m)
+p_X = rowSums(m)
+mu_Y = p_Y%*%Y
+mu_X = p_X%*%X
+var_X = (X-mu_X)^2 %*% p_X
+var_Y = (Y-mu_Y)^2 %*% p_Y
+sd_X = sqrt(var_X)
+sd_Y = sqrt(var_Y)
+Cov_XY &lt;- 0 
+for (row in 1:nrow(m)){
+  for (col in 1:ncol(m)){
+    Cov_XY &lt;- Cov_XY + (X[row]-mu_X)*(Y[col]-mu_Y)*m[row,col]
+  }
+}
+Cor_XY &lt;- Cov_XY/sd_X/sd_Y
+
+(exp(12*0.04+sqrt(12)*0.09*qnorm(0.05))-1)*100000</code></pre>
+<pre><code>## [1] -3228.205</code></pre>
+<pre class="r"><code>(exp(12*0.04+sqrt(12)*0.09*qnorm(0.01))-1)*100000</code></pre>
+<pre><code>## [1] -21751.73</code></pre>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

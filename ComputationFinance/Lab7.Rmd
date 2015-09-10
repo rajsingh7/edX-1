@@ -1,0 +1,259 @@
+Lab 7 Introduction to Computational Finance
+=======================================
+# task 1 Loading in your data set
++ Load the data with the help of the load function.
++ Use head and tail to explore the returns_df data set.
+
+```{r}
+# Load relevant packages
+library("PerformanceAnalytics")
+library("zoo")
+
+# Load the data
+load(url("http://s3.amazonaws.com/assets.datacamp.com/course/compfin/lab8.RData"))
+
+# Explore the data set
+head(returns_df)
+tail(returns_df)
+```
+
+# task 2 The CER model
++ Assign to sigma2_annual the estimates of $σ^2_i$ for both assets (i.e. i= Boeing and Microsoft respectively). Calculate the corresponding $\hat{σ}i$ as well and assign it to sigma_annual.
++ The annual CER model parameters for Boeing are provided. Calculate those for Microsoft as well.
++ Estimate the correlations $\rho ij$ between both stocks and assign the result to rho_boeing_msft.
+```{r}
+# The returns_df data is preloaded in your workspace
+
+# Estimate the parameters: multivariate
+mu_hat_annual <- apply(returns_df,2,mean)*12   
+sigma2_annual <- apply(returns_df,2,var)*12
+sigma_annual <- sqrt(sigma2_annual)
+cov_mat_annual <- cov(returns_df)*12 
+cov_hat_annual <- cov(returns_df)[1,2]*12    
+rho_hat_annual <- cor(returns_df)[1,2]
+
+# The annual estimates of the CER model parameters for Boeing and Microsoft
+mu_boeing <- mu_hat_annual["rboeing"]
+mu_msft <- mu_hat_annual["rmsft"]
+sigma2_boeing <-  sigma2_annual["rboeing"]
+sigma2_msft <- sigma2_annual["rmsft"]
+sigma_boeing <- sigma_annual["rboeing"]
+sigma_msft <- sigma_annual['rmsft']
+sigma_boeing_msft <- cov_hat_annual
+rho_boeing_msft <- rho_hat_annual
+```
+
+# task 3 A portfolio of Boeing and Microsoft stock
++ The boeing_weights variable is given. Calculate the corresponding value of msft_weights and take into account that the sum of the portfolio weights should be one.
++ Assign to mu_portfolio the expected portfolio returns $\mu p$ for each set of portfolio weights.
++ Assign to sigma2_portfolio the portfolio variances $\sigma^2_p$ for each set of portfolio weights.
++ Have a look at the code to generate the plot on the right. Add the label "Boeing" and "Microsoft" on the right place in the risk-return plot. Are you not sure what is happening there? Have a look at the documentation of the text() function.
+```{r}
+# All data and CER parameters are preloaded in your workspace.
+# Type "ls()" in the console to see them.
+
+# The ratio Boeing stock vs Microsoft stock (adds up to 1)
+boeing_weights <- seq(from=-1, to=2, by=0.1)
+msft_weights <- 1 - boeing_weights
+
+# Portfolio parameters
+mu_portfolio <-  boeing_weights*mu_boeing + msft_weights*mu_msft
+sigma2_portfolio <-  boeing_weights^2 * sigma2_boeing + msft_weights^2 * sigma2_msft + 2*boeing_weights*msft_weights*sigma_boeing_msft
+sigma_portfolio <- sqrt(sigma2_portfolio)
+
+# Plotting the different portfolios
+plot(sigma_portfolio, mu_portfolio, type="b", pch=16, ylim=c(0, max(mu_portfolio)), xlim=c(0, max(sigma_portfolio)), xlab=expression(sigma[p]), ylab=expression(mu[p]),col=c(rep("green", 18), rep("red", 13)))
+text(x=sigma_boeing, y=mu_boeing, labels="Boeing", pos=4)
+text(x=sigma_msft, y=mu_msft, labels="Microsoft", pos=4)
+```
+
+# task 4 Adding T-bills to your portfolios
++ Assign to t_bill_rate the annual risk-free rate of 3%.
++ Calculate the expected portfolio return and portfolio variance for this set of portfolios.
++ Add these new portfolio combinations to the plot that you constructed in the previous exercise with the help of points. For the color code argument use col="blue", for the type use type="b".
+```{r}
+# All data and CER parameters are preloaded in your workspace.
+# Type "ls()" in the console to see them.
+
+# Annual risk-free rate of 3% per year for the T-bill
+t_bill_rate <- 0.03
+
+# Ratio Boeing stocks
+boeing_weights <- seq(from=-1, to=2, by=0.1)
+t_bill_weights <- 1 - boeing_weights
+
+# Portfolio parameters
+mu_portfolio_boeing_bill <- boeing_weights*mu_boeing + t_bill_weights *t_bill_rate
+
+sigma_portfolio_boeing_bill <- boeing_weights*sigma_boeing
+
+# Plot previous exercise
+plot(sigma_portfolio, mu_portfolio, type="b", pch=16, ylim=c(0, max(mu_portfolio)), xlim=c(0, max(sigma_portfolio)), xlab=expression(sigma[p]), ylab=expression(mu[p]),col=c(rep("green", 18), rep("red", 13)))
+text(x=sigma_boeing, y=mu_boeing, labels="Boeing", pos=4)
+text(x=sigma_msft, y=mu_msft, labels="MSFT", pos=4)
+
+# Portfolio Combination Boeing and T-bills
+points(sigma_portfolio_boeing_bill,mu_portfolio_boeing_bill,type = "b",pch = 16, col="blue" )
+```
+
+# task 5 The Sharpe Slope
++ Calculate the Sharpe slope for Boeing and assign your result to sharp_ratio_boeing.
+```{r}
+sharp_ratio_boeing <- (mu_boeing-t_bill_rate)/sigma_boeing
+sharp_ratio_msft <- (mu_msft-t_bill_rate)/sigma_msft
+```
+
+# task 6 Global Minimum Variance Portfolio
++ Assign the global minimum variance portfolio to global_min_var_portfolio and print the result to the console.
++ Apply the summary() function to global_min_var_portfolio. Set the risk.free argument to 3% to get the portfolio Sharpe ratio.
++ Make a plot with the plot() function that shows the weight of Boeing and Microsoft in global minimum variance portfolio.
+```{r}
+# All data and CER parameters are preloaded in your workspace.
+# Type "ls()" in the console to see them.
+source("portfolio.r")
+# The global minimum variance portfolio
+global_min_var_portfolio <- globalMin.portfolio(mu_hat_annual, cov_mat_annual)
+
+global_min_var_portfolio
+
+# Summary of global_min_var_portfolio that takes into account the annual risk-free rate of 3% per year
+summary(global_min_var_portfolio, risk.free = 0.03)
+
+# Portfolio weights Boeing and Microsoft
+plot(global_min_var_portfolio)
+
+# Plot previous exercises
+plot(sigma_portfolio, mu_portfolio, type="b", pch=16, ylim=c(0, max(mu_portfolio)), xlim=c(0, max(sigma_portfolio)), xlab=expression(sigma[p]), ylab=expression(mu[p]),col=c(rep("green", 18), rep("red", 13)))
+text(x=sigma_boeing, y=mu_boeing, labels="Boeing", pos=4)
+text(x=sigma_msft, y=mu_msft, labels="MSFT", pos=4)
+
+# Plot the position of the global minimum variance portfolio
+text(x=global_min_var_portfolio$sd, y=global_min_var_portfolio$er, labels="Global min", pos=2)
+```
+
+# task 7 Tangency Portfolio
++ Assign the tangency portfolio to tangency_portfolio and print the result.
++ Study the summary of tangency_portfolio. Take into account a risk-free rate of 3%.
++ Make a plot with the plot() function that shows the weight of Boeing and Microsoft in the tangency portfolio.
+```{r}
+# All data and CER parameters are preloaded in your workspace.
+# Type "ls()" in the console to see them.
+
+# The tangency portfolio
+tangency_portfolio <-  tangency.portfolio(er = mu_hat_annual, cov.mat = cov_mat_annual, risk.free = 0.03)
+
+tangency_portfolio
+
+# Summary of tangency_portfolio with annual risk free rate of 3%
+summary(tangency_portfolio, risk.free = 0.03)
+
+# Portfolio weights Boeing and Microsoft
+plot(tangency_portfolio)
+```
+
+# Task 8 Tangency portfolio and T-bills
++ Calculate the expected portfolio returns mu_portfolio_tangency_bill and portfolio volatilities sigma_portfolio_tangency_bill for the set of weights and indicate the proportion that was invested in the tangency portfolio (tangency_weights).
++ Add these new portfolios to the plot that you constructed in the previous exercise with the help of the points() function. For the color code argument use col="blue", for the type use type="b", and as a plotting character use pch=16.
+```{r}
+# All data and CER parameters are preloaded in your workspace.
+# Type "ls()" in the console to see them.
+
+# Annual risk-free rate of 3% per year for the T-bill
+t_bill_rate <- 0.03
+
+# Set of tangency portfolio weights
+tangency_weights <- seq(from=0, to=2, by=0.1)
+
+# Portfolio parameters
+mu_portfolio_tangency_bill <- tangency_portfolio$er*tangency_weights + (1-tangency_weights)*t_bill_rate
+
+sigma_portfolio_tangency_bill <- tangency_weights*tangency_portfolio$sd
+
+# Plot previous exercises
+plot(sigma_portfolio, mu_portfolio, type="b", pch=16, ylim=c(0, max(mu_portfolio)), xlim=c(0, max(sigma_portfolio)), xlab=expression(sigma[p]), ylab=expression(mu[p]),col=c(rep("green", 18), rep("red", 13)))
+text(x=sigma_boeing, y=mu_boeing, labels="Boeing", pos=4)
+text(x=sigma_msft, y=mu_msft, labels="MSFT", pos=4)
+
+# Plot portfolio combinations of tangency portfolio and T-bills
+text(x=tangency_portfolio$sd, y=tangency_portfolio$er, labels="Tangency", pos=2)
+points(sigma_portfolio_tangency_bill,mu_portfolio_tangency_bill,type="b",pch = 16, col = "blue")
+```
+
+# Task 9 An Efficient Portfolio with 30% Tangency
++ Set the tangency_weight to 0.3 and then determine the t_bill_weight.
++ Assign to mu_portfolio_efficient the expected portfolio return and to sd_portfolio_efficient the portfolio standard deviation.
++ Plot this portfolio using points. Use "orange"" as the color for the line, the type is "b", the plotting character is 16, and apply a character expansion cex of 2. The corresponding text() function is already provided.
+```{r}
+# All data and CER parameters are preloaded in your workspace.
+# Type "ls()" in the console to see them.
+
+# Define the portfolio ratio's
+tangency_weight <- 0.3
+t_bill_weight <- 1 - tangency_weight
+  
+# Define the portfolio parameters
+mu_portfolio_efficient <- tangency_weight*tangency_portfolio$er + t_bill_weight*t_bill_rate
+
+sd_portfolio_efficient <- tangency_weight*tangency_portfolio$sd
+
+# Plot previous exercises
+plot(sigma_portfolio, mu_portfolio, type="b", pch=16, ylim=c(0, max(mu_portfolio)), xlim=c(0, max(sigma_portfolio)), xlab=expression(sigma[p]), ylab=expression(mu[p]),col=c(rep("green", 18), rep("red", 13)))
+text(x=sigma_boeing, y=mu_boeing, labels="Boeing", pos=4)
+text(x=sigma_msft, y=mu_msft, labels="MSFT", pos=4)
+text(x=tangency_portfolio$sd, y=tangency_portfolio$er, labels="Tangency", pos=2)
+points(sigma_portfolio_tangency_bill, mu_portfolio_tangency_bill, type="b", col="blue", pch=16)
+
+# Plot Efficient Portfolio with 30% Tangency
+
+text(x=sd_portfolio_efficient, y=mu_portfolio_efficient, labels="Efficient Portfolio with 30% Tangency", pos=4, cex=0.75)
+
+points(sd_portfolio_efficient,mu_portfolio_efficient, type="b",cex = 2, pch = 16, col = "orange")
+```
+
+# Task 10 An Efficient Portfolio with the SD of Boeing
++ Assign the weight of the tangency portfolio to tangency_weight.
++ Calculate the portfolio parameters for this portfolio and assign them to mu_portfolio_efficient and sd_portfolio_efficient.
++ Have a look at the plot.
+```{r}
+# All data and CER parameters are preloaded in your workspace. 
+# Type "ls()" in the console to see them. 
+
+# Define the tangency portfolio ratio
+tangency_weight  <- sigma_boeing/tangency_portfolio$sd
+
+# Calculate the weight of the tangency portfolio in the portfolio
+mu_portfolio_efficient <- t_bill_rate + tangency_weight*(tangency_portfolio$er - t_bill_rate)
+sd_portfolio_efficient <- tangency_weight*tangency_portfolio$sd
+
+# Plot previous exercises
+plot(sigma_portfolio, mu_portfolio,bg="NA", type="b", pch=16, ylim=c(0, max(mu_portfolio)), xlim=c(0, max(sigma_portfolio)), xlab=expression(sigma[p]), ylab=expression(mu[p]),col=c(rep("green", 18), rep("red", 13)))
+text(x=sigma_boeing, y=mu_boeing, labels="Boeing", pos=4)
+text(x=sigma_msft, y=mu_msft, labels="MSFT", pos=4)
+text(x=tangency_portfolio$sd, y=tangency_portfolio$er, labels="Tangency", pos=2)
+points(sigma_portfolio_tangency_bill, mu_portfolio_tangency_bill, type="b", col="blue", pch=16)
+
+# Plot Efficient Portfolio with the same risk as Boeing
+points(sd_portfolio_efficient, mu_portfolio_efficient, type="p", col="orange", pch=16, cex=2)
+text(x=sd_portfolio_efficient, y=mu_portfolio_efficient, labels="Efficient Portfolio with same risk as Boeing", pos=2, cex=0.75)
+```
+
+
+```{r}
+tangency_weight  <- sigma_msft/tangency_portfolio$sd
+
+# Calculate the weight of the tangency portfolio in the portfolio
+mu_portfolio_efficient <- t_bill_rate + tangency_weight*(tangency_portfolio$er - t_bill_rate)
+sd_portfolio_efficient <- tangency_weight*tangency_portfolio$sd
+
+# Plot previous exercises
+plot(sigma_portfolio, mu_portfolio,bg="NA", type="b", pch=16, ylim=c(0, max(mu_portfolio)), xlim=c(0, max(sigma_portfolio)), xlab=expression(sigma[p]), ylab=expression(mu[p]),col=c(rep("green", 18), rep("red", 13)))
+text(x=sigma_boeing, y=mu_boeing, labels="Boeing", pos=4)
+text(x=sigma_msft, y=mu_msft, labels="MSFT", pos=4)
+text(x=tangency_portfolio$sd, y=tangency_portfolio$er, labels="Tangency", pos=2)
+points(sigma_portfolio_tangency_bill, mu_portfolio_tangency_bill, type="b", col="blue", pch=16)
+
+# Plot Efficient Portfolio with the same risk as Boeing
+points(sd_portfolio_efficient, mu_portfolio_efficient, type="p", col="orange", pch=16, cex=2)
+text(x=sd_portfolio_efficient, y=mu_portfolio_efficient, labels="Efficient Portfolio with same risk as Boeing", pos=2, cex=0.75)
+```
+
